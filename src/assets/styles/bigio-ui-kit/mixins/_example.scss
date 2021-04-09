@@ -1,0 +1,6 @@
+@mixin test($bg-color, $color) {
+    .test-content {
+        background-color: $bg-color;
+        color: $color;
+    }
+}
