@@ -1,43 +1,45 @@
-import axios from 'axios';
-import React, { useState, useEffect } from 'react';
-import { withRouter } from 'react-router-dom';
+import React from "react";
+import { reduxForm, Field } from "redux-form";
+import { Button } from "reactstrap";
+import { formInput } from "../components/commons/form";
 
-const Index = () => {
-    const [example, setExample] = useState();
-
-    const foo = async () => {
-        try {
-            const res = await axios.get('https://jsonplaceholder.typicode.com/posts');
-            setExample(res);
-        } catch (error) {
-            console.error("Error: ", error);
-        }
-    }
-    useEffect(() => {
-        document.title = 'React UI Kit'
-        foo();
-    }, []);
-
-    return (
+let Index = ({ handleSubmit }) => {
+  const onSubmit = ({ tulisan }) => {
+    alert(tulisan);
+  };
+  return (
+    <div className="container d-flex mt-3">
+      <form onSubmit={handleSubmit(onSubmit)}>
         <>
-            <h1>Base React UI Kit</h1>
-            {example && example.data && example.data.length ?
-                <ol>
-                    {example.data.map((item, idx) => {
-                        return (
-                            <li
-                                key={idx} //required
-                                className="mb-1"
-                            >
-                                <span>{item.body}</span>
-                            </li>
-                        )
-                    })}
-                </ol>
-                : <span>test</span>
-            }
+          <Field
+            name="tulisan"
+            type="text"
+            placeholder="Tulis disini"
+            component={formInput}
+          />
         </>
-    )
-}
+        <Button type="submit" color="primary" className="primary-button">
+          Kirim
+        </Button>
+      </form>
+    </div>
+  );
+};
 
-export default withRouter(Index);
+const validate = ({ tulisan }) => {
+  const errors = {};
+  if (!tulisan) {
+    errors.tulisan = "Tulisan harus diisi";
+  }
+
+  return errors;
+};
+
+Index = reduxForm({
+  form: "Index",
+  validate: validate,
+  shouldError: () => true,
+  enableReinitialize: true,
+})(Index);
+
+export default Index;

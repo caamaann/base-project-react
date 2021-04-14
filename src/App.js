@@ -11,7 +11,8 @@ import Login from "./views/login";
 const App = () => {
   return (
     <Switch>
-      <Route path="/" exact component={Login} />
+      <Route path="/" exact component={Index} />
+      <Route path="/login" exact component={Login} />
     </Switch>
   );
 };

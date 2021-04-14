@@ -1,2 +1,614 @@
-@import 'bigio-ui-kit/variables';
-@import 'bigio-ui-kit/mixins';
+@import "bigio-ui-kit/variables";
+@import "bigio-ui-kit/mixins";
+
+.text-title {
+  font-size: $font-content-title;
+  font-weight: bold;
+}
+
+.text-subtitle {
+  font-size: $font-content-subtitle;
+}
+
+.btn.primary-button {
+  background-color: $color-primary;
+  width: 100%;
+}
+
+button.btn.export-button {
+  font-size: 12px;
+  padding: 0 26px;
+  height: 40px;
+}
+
+.detail-custom-btn {
+  color: #fff;
+  background-color: $color-primary;
+  padding: 0 5px;
+  border-radius: 3px;
+  &:hover {
+    cursor: pointer;
+    opacity: 0.8;
+  }
+}
+
+.detail-custom-btn.disabled {
+  color: #fff;
+  background-color: $color-dark-grey;
+  &:hover {
+    cursor: default;
+    opacity: 1;
+  }
+}
+
+.content-title {
+  margin-top: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Change Autocomplete styles in Chrome*/
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  border: none;
+  border-bottom: 1px solid #ababab;
+  -webkit-box-shadow: 0 0 0px 1000px #fff inset;
+  transition: background-color 5000s ease-in-out 0s;
+  &:disabled {
+    background-color: transparent;
+    &:hover {
+      border-bottom: 1px solid $color-dark-grey;
+    }
+  }
+  &:hover {
+    border-bottom: 1px solid $color-primary;
+  }
+  &:focus {
+    border-bottom: 1px solid $color-primary;
+  }
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.input-container {
+  position: relative;
+  .input-component {
+    padding: 10px 0;
+    border: none;
+    border-bottom: 1px solid $color-light-grey;
+    box-shadow: none;
+    box-sizing: border-box;
+    width: 100%;
+    outline: none;
+    font-size: 14px;
+    &:disabled {
+      background-color: transparent;
+      &:hover {
+        border-bottom: 1px solid $color-light-grey;
+      }
+      ~ {
+        label.placeholder {
+          font-size: 12px;
+          transform: translateY(-25px);
+        }
+        label.rightPlaceholder {
+          font-size: 12px;
+        }
+      }
+    }
+    &:hover {
+      border-bottom: 1px solid $color-primary;
+    }
+    &:focus,
+    &:valid {
+      border-bottom: 1px solid $color-primary;
+      ~ {
+        label.placeholder {
+          transform: translateY(-25px);
+          font-size: 12px;
+        }
+        label.rightPlaceholder {
+          font-size: 12px;
+        }
+      }
+    }
+  }
+  .input-component.input-error {
+    border-bottom: 1px solid $color-dark-orange;
+    &:hover {
+      border-bottom: 1px solid $color-dark-orange;
+    }
+    &:focus {
+      border-bottom: 1px solid $color-dark-orange;
+    }
+    &:valid {
+      ~ {
+        label.placeholder {
+          transform: translateY(0px);
+          font-size: 14px;
+        }
+        label.rightPlaceholder {
+          display: none;
+        }
+      }
+    }
+  }
+  .input-component.input-invalid {
+    &:focus {
+      ~ {
+        label.placeholder {
+          transform: translateY(-25px);
+          font-size: 12px;
+        }
+        label.rightPlaceholder {
+          font-size: 12px;
+        }
+      }
+    }
+  }
+  .input-component.input-dirty {
+    &:focus,
+    &:valid {
+      ~ {
+        label.placeholder {
+          transform: translateY(-25px);
+          font-size: 12px;
+        }
+        label.rightPlaceholder {
+          font-size: 12px;
+        }
+      }
+    }
+  }
+  .input-component ~ label.placeholder {
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    color: $color-dark-grey;
+    pointer-events: none;
+    transition: all 0.3s ease;
+  }
+  .input-component ~ label.rightPlaceholder {
+    position: absolute;
+    bottom: 10px;
+    right: 0;
+    color: $color-dark-grey;
+    pointer-events: none;
+    transition: all 0.3s ease;
+  }
+  .input-component-border {
+    z-index: 100;
+    width: 300px;
+    height: 40px;
+    border: 1px solid #ececec;
+    border-radius: 5px;
+    padding-left: 15px;
+    font-size: 14px;
+    &::placeholder {
+      font-size: 12px;
+      color: $color-dark-grey;
+    }
+    &:focus,
+    &:valid {
+      outline: none;
+    }
+  }
+  .input-component-border ~ label.placeholder {
+    display: none;
+  }
+
+  .input-end-icon {
+    position: absolute;
+    right: 8px;
+    top: 12px;
+    color: #ababab;
+    font-size: 20px;
+  }
+
+  .input-password-end-icon {
+    position: absolute;
+    right: 0px;
+    top: 10px;
+    color: #ababab;
+    font-size: 25px;
+  }
+}
+.input-end-string {
+  position: absolute;
+  right: 0px;
+  top: 10px;
+}
+
+.textarea-container {
+  position: relative;
+  .textarea-component {
+    padding: 10px 0;
+    border: none;
+    border-bottom: 1px solid $color-light-grey;
+    box-shadow: none;
+    box-sizing: border-box;
+    width: 100%;
+    outline: none;
+    font-size: 14px;
+    &:disabled {
+      background-color: transparent;
+      &:hover {
+        border-bottom: 1px solid $color-light-grey;
+      }
+      ~ {
+        label.placeholder {
+          font-size: 12px;
+          transform: translateY(-25px);
+        }
+      }
+    }
+    &:hover {
+      border-bottom: 1px solid $color-primary;
+    }
+    &:focus,
+    &:valid {
+      border-bottom: 1px solid $color-primary;
+      ~ {
+        label.placeholder {
+          transform: translateY(-25px);
+          font-size: 12px;
+        }
+      }
+    }
+  }
+  .textarea-component.textarea-error {
+    border-bottom: 1px solid $color-dark-orange;
+    &:hover {
+      border-bottom: 1px solid $color-dark-orange;
+    }
+    &:focus {
+      border-bottom: 1px solid $color-dark-orange;
+    }
+    &:valid {
+      ~ {
+        label.placeholder {
+          transform: translateY(-2px);
+          font-size: 14px;
+        }
+      }
+    }
+  }
+  .textarea-component.textarea-invalid {
+    &:focus {
+      ~ {
+        label.placeholder {
+          transform: translateY(-25px);
+          font-size: 12px;
+        }
+      }
+    }
+  }
+  .textarea-component ~ label.placeholder {
+    position: absolute;
+    top: 10px;
+    left: 0;
+    color: $color-dark-grey;
+    pointer-events: none;
+    transition: all 0.3s ease;
+  }
+  .textarea-component-border {
+    z-index: 100;
+    width: 300px;
+    height: 40px;
+    border: 1px solid #ececec;
+    border-radius: 5px;
+    padding-left: 15px;
+    font-size: 14px;
+    &::placeholder {
+      font-size: 12px;
+      color: $color-dark-grey;
+    }
+    &:focus,
+    &:valid {
+      outline: none;
+    }
+  }
+  .textarea-component-border ~ label.placeholder {
+    display: none;
+  }
+
+  .textarea-end-icon {
+    position: absolute;
+    right: 8px;
+    top: 12px;
+    color: #ababab;
+    font-size: 20px;
+  }
+}
+
+.form-validation {
+  font-size: 12px;
+  color: $color-dark-orange;
+}
+
+.text-small-grey {
+  font-size: 12px;
+  color: $color-dark-grey;
+}
+
+.forgot-password,
+.password-toggle {
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.secondary-select {
+  border: none;
+  background-color: #ececec;
+  border-radius: 3px;
+  font-size: 12px;
+  outline: none;
+}
+
+.counter-btn {
+  border: none;
+  border-radius: 50%;
+  background-color: $color-primary;
+  color: #fff;
+  font-weight: bold;
+  width: 25px;
+  height: 25px;
+  padding: initial;
+}
+
+.input-counter-component {
+  border: none;
+  border-bottom: 1px solid $color-primary;
+  outline: none;
+  text-align: center;
+}
+
+.counter-delete-btn {
+  cursor: pointer;
+}
+
+// Modal
+.modal-dialog.modal-small {
+  max-width: $modal-small;
+}
+
+.modal-dialog.modal-large {
+  max-width: $modal-large;
+}
+
+.modal-content .modal-header {
+  border-bottom: none;
+  padding: 30px 30px 0;
+  h5.modal-title {
+    font-size: 18px;
+  }
+}
+
+.modal-content .modal-body {
+  padding: 20px 30px 30px;
+}
+
+// Button
+button.btn {
+  padding: 15px 50px;
+  border-radius: 5px;
+}
+button.btn.btn-primary.small {
+  padding: 12px 17px;
+  border-radius: 5px;
+  font-size: 12px;
+  font-weight: 600;
+}
+button.btn.btn-outline-primary {
+  font-weight: bold;
+  color: $color-primary;
+  border-color: $color-primary;
+  &:hover {
+    background-color: transparent;
+    border-color: $color-primary;
+  }
+  &:focus {
+    background-color: transparent;
+    border-color: $color-primary;
+  }
+  &:active {
+    background-color: transparent;
+    border-color: $color-primary;
+  }
+}
+
+button.btn.btn-primary {
+  font-weight: bold;
+  color: #fff;
+  border-color: $color-primary;
+  background-color: $color-primary;
+  &:hover {
+    background-color: $color-primary;
+  }
+  &:focus {
+    background-color: $color-primary;
+  }
+  &:active {
+    background-color: $color-primary;
+  }
+}
+
+// Material table
+div.MuiPaper-elevation2 {
+  border-radius: 0;
+  border: none;
+  box-shadow: none;
+}
+
+table {
+  thead,
+  tbody {
+    border: 1px solid #ececec;
+  }
+}
+
+tbody tr.MuiTableRow-root:nth-child(odd) {
+  background-color: #fbfbfb;
+}
+
+button.MuiIconButton-root {
+  &:hover {
+    background-color: transparent;
+  }
+}
+
+td.MuiTableCell-root {
+  padding: 0 17px;
+}
+
+tfoot {
+  .MuiTableCell-root {
+    border: none;
+  }
+  span button.MuiButtonBase-root {
+    border: 1px solid #ececec;
+    border-radius: 5px;
+    padding: 2px;
+    margin: 20px 5px 0;
+  }
+  span button.MuiButton-contained.Mui-disabled {
+    background-color: $color-primary;
+    color: white;
+    border-radius: 5px;
+  }
+}
+
+.MuiSvgIcon-root.mui-tbl-detail-icon {
+  font-size: 12px;
+  color: $color-dark-grey;
+}
+
+.tbl-detail {
+  font-size: 14px;
+}
+
+// #TODO: Optimize styling
+
+// React-dates
+.datepicker-container {
+  // margin-bottom: 30px;
+  button.SingleDatePickerInput_clearDate {
+    padding: 10px;
+    margin: 0;
+    width: 35px;
+    &:hover {
+      background: none;
+      opacity: 0.8;
+    }
+  }
+
+  .DateInput {
+    margin: 0;
+    padding: 0;
+    background: #fff;
+    position: relative;
+    display: inline-block;
+    width: 130px;
+    vertical-align: middle;
+    :hover {
+      border-bottom: 1px solid $color-primary;
+    }
+  }
+
+  .DateInput__block {
+    width: 100%;
+  }
+
+  .DateInput_input__focused {
+    outline: 0;
+    background: #fff;
+    border: 0;
+    border-top: 0;
+    border-right: 0;
+    border-bottom: 1px solid $color-primary;
+    border-left: 0;
+  }
+
+  .DateInput_input__small {
+    padding: 10px 0;
+    border-bottom: 1px solid #000;
+    &:active,
+    &:focus,
+    &:hover,
+    &:valid {
+      border-bottom: 1px solid $color-primary;
+    }
+  }
+
+  .CalendarDay__selected_span {
+    background: $color-primary;
+    border: 1px double $color-primary;
+    color: #fff;
+  }
+  .CalendarDay__selected_span:active,
+  .CalendarDay__selected_span:hover {
+    background: $color-primary;
+    border: 1px double $color-primary;
+    color: #fff;
+  }
+  .CalendarDay__selected,
+  .CalendarDay__selected:active,
+  .CalendarDay__selected:hover {
+    background: $color-primary;
+    border: 1px double $color-primary;
+    color: #fff;
+  }
+  .CalendarDay__hovered_span,
+  .CalendarDay__hovered_span:hover {
+    background: #b2f1ec;
+    border: 1px double #80e8e0;
+    color: $color-primary;
+  }
+  .CalendarDay__hovered_span:active {
+    background: #80e8e0;
+    border: 1px double #80e8e0;
+    color: $color-primary;
+  }
+
+  .SingleDatePickerInput__showClearDate {
+    padding: 0;
+  }
+}
+
+.DateRangePickerInput_clearDates_default:focus {
+  background: none;
+  border-radius: 0;
+}
+
+.dashboard-link {
+  font-size: 12px;
+  font-weight: bold;
+  color: #1c37be;
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .content-title {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+  }
+}

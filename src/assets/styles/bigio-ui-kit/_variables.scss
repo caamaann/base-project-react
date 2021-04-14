@@ -1,21 +1,44 @@
-// UI Kit - Q1 2021
-// Add "Title-Subtitle" based on design
+// Order Pakan
 
-// Typography - Color
-$base-color-primary: #00A6CF;
-$base-color-secondary: #DEDEDE;
-$base-color-sucess: #00CF89;
-$base-color-info: #00A6CF;
-$base-color-warning: #FFA426;
-$base-color-danger: #F64F4F;
-$base-color-light: #E3EAEF;
-$base-color-darik: #5A5A5A;
+// Color
+$color-primary: #1c37be;
+$color-dark-grey: #ababab;
+$color-light-grey: #ececec;
+$color-shadow-grey: #353a5d1a;
+$color-orange: #ff691b;
+$color-light-orange: #ffa836;
+$color-dark-orange: #de5252;
+$color-green: #4d7f62;
+$color-red: #ff1b1b;
+$color-light-red: #ff7f7f;
+$color-dark-red: #8b0000;
 
-// Typography - Text Color
-$text-primary: #00A6CF;
-$text-secondary: #A5A5A5;
-$text-success: #00CF89;
-$text-info: #00A6CF;
-$text-warning: #F64F4F;
-$text-light: #DEDEDE;
-$text-dark: #5A5A5A;
+// Font logo
+$font-logo-title: 15px; //circular std
+$font-logo-subtitle: 8px;
+
+// Font input
+$font-input-value-placeholder: 14px; //segoe ui
+$font-input-label: 12px;
+
+// Font content
+$font-content-title: 18px; //segoe ui
+$font-content-subtitle: 14px;
+
+// Font table
+$font-table: 12px;
+
+// Font dashboard
+$font-dashboard-title: 14px;
+$font-dashboard-counter: 32px;
+
+// Material
+$font-material-icon-size: 20px;
+
+// Button
+$btn-normal-width: 150px;
+$btn-normal-height: 50px;
+
+// Modal
+$modal-small: 375px;
+$modal-large: 800px;
