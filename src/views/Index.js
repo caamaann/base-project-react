@@ -14,11 +14,17 @@ let Index = ({ handleSubmit }) => {
           <Field
             name="tulisan"
             type="text"
-            placeholder="Tulis disini"
+            placeholder="Username"
+            component={formInput}
+          />
+          <Field
+            name="password"
+            type="password"
+            placeholder="Password"
             component={formInput}
           />
         </>
-        <Button type="submit" color="primary" className="primary-button">
+        <Button type="submit" color="info" className="primary-button">
           Kirim
         </Button>
       </form>
