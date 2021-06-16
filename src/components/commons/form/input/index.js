@@ -1,7 +1,8 @@
-import VisibilityIcon from "@material-ui/icons/Visibility";
-import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
 import VisibilityOutlinedIcon from "@material-ui/icons/VisibilityOutlined";
 import VisibilityOffOutlinedIcon from "@material-ui/icons/VisibilityOffOutlined";
+import React from "react";
+import { StyleSheet, css } from "aphrodite";
+import { func } from "prop-types";
 
 const index = ({
   value,
@@ -12,6 +13,8 @@ const index = ({
   onClick,
   startIcon,
   endIcon,
+  isTextarea,
+  className,
   isError,
   rightPlaceholder,
   isValid,
@@ -27,35 +30,60 @@ const index = ({
   const StartIcon = startIcon;
   const EndIcon = endIcon;
   return (
-    <div className="input-container">
-      <input
-        type={type}
-        value={defaultValue ? defaultValue : value}
-        onChange={onChange}
-        disabled={disabled}
-        placeholder={hasBorder && placeholder}
-        maxLength={maxLength}
-        className={`${
-          hasBorder ? "input-component-border" : "input-component"
-        } ${isError && "input-error"} ${!isValid && "input-invalid"} ${
-          isDirty && "input-dirty"
-        }`}
-        style={{ width: width }}
-      />
-      <label className="placeholder m-0">{placeholder}</label>
-      <label className="rightPlaceholder m-0">{rightPlaceholder}</label>
-      {startIcon && <StartIcon onClick={onClick} />}
-      {endIcon && <EndIcon className="input-end-icon" />}
+    <div style={{ position: "relative" }}>
+      {isTextarea === true ? (
+        <textarea
+          className={css(
+            styles.input,
+            value && styles.hasValue,
+            startIcon && styles.startContainer,
+            endIcon && styles.endContainer,
+            disabled && styles.disabled,
+            className
+          )}
+          rows={5}
+          placeholder={placeholder}
+          value={value}
+          onChange={onChange}
+          disabled={disabled}
+        />
+      ) : (
+        <input
+          className={css(
+            styles.input,
+            value && styles.hasValue,
+            startIcon && styles.startContainer,
+            endIcon && styles.endContainer,
+            disabled && styles.disabled,
+            className
+          )}
+          type={type}
+          placeholder={placeholder}
+          value={value}
+          onChange={onChange}
+          maxLength={maxLength}
+          disabled={disabled}
+        />
+      )}
+      {startIcon && (
+        <StartIcon
+          onClick={onClick}
+          className={css(styles.icon, styles.start)}
+        />
+      )}
+      {endIcon && (
+        <EndIcon onClick={onClick} className={css(styles.icon, styles.end)} />
+      )}
       {isTypePassword ? (
         isVisible ? (
           <VisibilityOffOutlinedIcon
             onClick={setIsVisible}
-            className="input-password-end-icon password-toggle"
+            className={css(styles.icon, styles.end, styles.passToggle)}
           />
         ) : (
           <VisibilityOutlinedIcon
             onClick={setIsVisible}
-            className="input-password-end-icon password-toggle"
+            className={css(styles.icon, styles.end, styles.passToggle)}
           />
         )
       ) : (
@@ -64,5 +92,79 @@ const index = ({
     </div>
   );
 };
+
+const styles = StyleSheet.create({
+  input: {
+    // color: "#00008B",
+    padding: 10,
+    borderRadius: 4,
+    zIndex: 30,
+    borderWidth: 1,
+    borderColor: "#e0e0e0",
+    borderStyle: "solid",
+    boxShadow: "none",
+    display: "inline-block",
+    boxSizing: "border-box",
+    width: "100%",
+    outline: "none",
+    fontSize: "14px",
+    fontFamily: [
+      "Circular Std Book",
+      "Roboto",
+      "Segoe UI",
+      "Oxygen",
+      "Ubuntu",
+      "Cantarell",
+      "Fira Sans",
+      "Droid Sans",
+      "Helvetica Neue",
+      "sans-serif",
+    ],
+    // backgroundColor: "#EFF0F2",
+    ":hover": {
+      // Overwrittes the different states of border
+      borderColor: "#00008B",
+    },
+    ":focus": {
+      // Overwrittes the different states of border
+      borderColor: "#00008B",
+      backgroundColor: "#EDEDED",
+    },
+    "::placeholder": {
+      color: "#495057",
+      opacity: 0.68,
+    },
+  },
+  hasValue: {
+    borderColor: "#00008B",
+    backgroundColor: "#EDEDED",
+  },
+  disabled: {
+    ":hover": {
+      // cursor: "not-allowed",
+      borderColor: "#EFF0F2",
+    },
+  },
+  icon: {
+    position: "absolute",
+    top: 10,
+    height: 20,
+    color: "#495057",
+    width: 20,
+  },
+  start: {
+    left: 10,
+  },
+  startContainer: { paddingLeft: 35 },
+  end: {
+    right: 10,
+  },
+  endContainer: { paddingRight: 35 },
+  passToggle: {
+    ":hover": {
+      cursor: "pointer",
+    },
+  },
+});
 
 export default index;
