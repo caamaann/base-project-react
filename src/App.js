@@ -13,6 +13,8 @@ import { ThemeProvider } from "@material-ui/styles";
 // views
 import Index from "./views/Index";
 import Login from "./views/login";
+import Jurusan from "./views/master/jurusan";
+import ProgramStudi from "./views/master/program-studi";
 
 const theme = createMuiTheme({
   palette: {
@@ -77,8 +79,29 @@ const App = () => {
         <Switch>
           <PrivateRoute
             head={["Dashboard"]}
-            path="/"
-            roles={[""]}
+            path="/dashboard"
+            roles={["admin", "waliKelas", "ketuaProdi", "ketuaJurusan", "pd3"]}
+            exact
+            component={Index}
+          />
+          <PrivateRoute
+            head={["Data Master", "Jurusan"]}
+            path="/jurusan"
+            roles={["admin"]}
+            exact
+            component={Jurusan}
+          />
+          <PrivateRoute
+            head={["Data Master", "Program Studi"]}
+            path="/program-studi"
+            roles={["admin"]}
+            exact
+            component={ProgramStudi}
+          />
+          <PrivateRoute
+            head={["Profil"]}
+            path="/profile"
+            roles={["mahasiswa"]}
             exact
             component={Index}
           />

@@ -84,7 +84,7 @@ const HeaderComponent = ({
       <Row vertical="center">
         <Column>
           <span className={css(styles.name, styles.cursorPointer)}>
-            {getUser() && getUser().name}
+            {getUser() && getUser().profile.nama}
           </span>
           <span className={css(styles.role, styles.cursorPointer)}>
             {getUser() && getUser().role_name}

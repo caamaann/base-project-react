@@ -12,21 +12,18 @@ import { history } from "../../utils";
 import LoginImage from "../../assets/img/gedung_h.jpg";
 
 // ACTION REDUX
-// import Auth from "../../store/actions/auth";
+import Auth from "../../store/actions/auth";
 
-let Login = ({ handleSubmit }) => {
+let Login = ({ handleSubmit, loggingIn }) => {
   const [isVisible, setIsVisible] = useState(false);
   const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   Auth.logout();
-  // }, []);
+  useEffect(() => {
+    Auth.logout();
+  }, []);
 
-  const onSubmit = ({ email, password }) => {
-    if (email && password) {
-      history.push("/");
-    }
-    // dispatch(Auth.auth_login({ email, password }));
+  const onSubmit = ({ username, password }) => {
+    dispatch(Auth.auth_login({ username, password }));
   };
 
   return (
@@ -66,7 +63,7 @@ let Login = ({ handleSubmit }) => {
             className={css(styles.loginForm)}
           >
             <Field
-              name="email"
+              name="username"
               placeholder="NIM atau NIP"
               component={formInput}
             />
@@ -86,18 +83,18 @@ let Login = ({ handleSubmit }) => {
                 type="submit"
                 variant="contained"
                 color="primary"
-                // disabled={loggingIn}
+                disabled={loggingIn}
                 className={css(styles.approveButton)}
                 startIcon={
-                  // loggingIn ? (
-                  //   <CircularProgress
-                  //     size={14}
-                  //     color="secondary"
-                  //     style={{ marginRight: 10 }}
-                  //   />
-                  // ) : (
-                  <IconInput />
-                  // )
+                  loggingIn ? (
+                    <CircularProgress
+                      size={14}
+                      color="secondary"
+                      style={{ marginRight: 10 }}
+                    />
+                  ) : (
+                    <IconInput />
+                  )
                 }
               >
                 Login
@@ -180,14 +177,10 @@ const styles = StyleSheet.create({
   },
 });
 
-const validate = ({ email, password }) => {
-  const regex_email =
-    /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+const validate = ({ username, password }) => {
   const errors = {};
-  if (!email) {
-    errors.email = "Email harus diisi";
-  } else if (!regex_email.test(email)) {
-    errors.email = "Email tidak valid";
+  if (!username) {
+    errors.username = "Username harus diisi";
   }
   if (!password) {
     errors.password = "Password harus diisi";
@@ -202,8 +195,8 @@ Login = reduxForm({
   enableReinitialize: true,
 })(Login);
 
-const mapStateToProps = ({}) => {
-  return {};
+const mapStateToProps = ({ auth: { loggingIn } }) => {
+  return { loggingIn };
 };
 
 const mapDispatchToProps = (dispatch) => {

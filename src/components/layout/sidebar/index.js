@@ -58,7 +58,7 @@ const Index = ({ onChange, selectedItem }) => {
         >
           <Logo />
           <Column className={css(styles.menuItemList)}>
-            {role === "superadmin" && (
+            {role === "admin" && (
               <>
                 <NavLink to="/dashboard" exact className={css(styles.navlink)}>
                   <MenuItemComponent
@@ -69,121 +69,59 @@ const Index = ({ onChange, selectedItem }) => {
                   />
                 </NavLink>
                 <MenuItemComponent
-                  title="Anggota"
-                  icon={MemberIcon}
-                  onClick={() => onItemClicked("Anggota")}
-                  active={selectedItem === "Anggota"}
-                  child={[
-                    {
-                      icon: RequestIcon,
-                      title: "Permintaan",
-                      link: "/request",
-                    },
-                    {
-                      icon: MemberIcon,
-                      title: "Anggota",
-                      link: "/member",
-                    },
-                    {
-                      icon: AdminIcon,
-                      title: "Pengurus",
-                      link: "/administrator",
-                    },
-                  ]}
-                />
-                <NavLink
-                  to="/message-blast"
-                  exact
-                  className={css(styles.navlink)}
-                >
-                  <MenuItemComponent
-                    title="Message Blast"
-                    icon={MessageBlastIcon}
-                    onClick={() => onItemClicked("Message Blast")}
-                    active={selectedItem === "Message Blast"}
-                  />
-                </NavLink>
-                <NavLink to="/finance" exact className={css(styles.navlink)}>
-                  <MenuItemComponent
-                    title="Keuangan"
-                    icon={FinanceIcon}
-                    onClick={() => onItemClicked("Keuangan")}
-                    active={selectedItem === "Keuangan"}
-                  />
-                </NavLink>
-                <MenuItemComponent
                   title="Data Master"
                   icon={MasterIcon}
                   onClick={() => onItemClicked("Data Master")}
                   active={selectedItem === "Data Master"}
                   child={[
-                    // {
-                    //   icon: MasterIcon,
-                    //   title: "Kategori Konten",
-                    //   link: "/master/content-category",
-                    // },
                     {
                       icon: HealthyIcon,
-                      title: "Alat Kesehatan",
-                      link: "/master/medical-devices",
+                      title: "Program Studi",
+                      link: "/program-studi",
                     },
                     {
                       icon: BenefitIcon,
-                      title: "Benefit",
-                      link: "/master/benefit",
-                    },
-                    {
-                      icon: MasterIcon,
-                      title: "Wilayah",
-                      link: "/master/region",
+                      title: "Jurusan",
+                      link: "/jurusan",
                     },
                   ]}
                 />
-                {/* <NavLink
-                  to="/notification"
-                  exact
-                  className={css(styles.navlink)}
-                >
-                  <MenuItemComponent
-                    title="Notifikasi"
-                    icon={NotificationIcon}
-                    onClick={() => onItemClicked("Notifikasi")}
-                    active={selectedItem === "Notifikasi"}
-                  />
-                </NavLink> */}
-                <NavLink
-                  to="/admin/polling"
-                  exact
-                  className={css(styles.navlink)}
-                >
-                  <MenuItemComponent
-                    title="Polling"
-                    icon={PollingIcon}
-                    onClick={() => onItemClicked("Polling")}
-                    active={selectedItem === "Polling"}
-                  />
-                </NavLink>
                 <MenuItemComponent
-                  title="Sistem"
+                  title="User"
                   icon={SystemIcon}
-                  onClick={() => onItemClicked("Sistem")}
-                  active={selectedItem === "Sistem"}
+                  onClick={() => onItemClicked("User")}
+                  active={selectedItem === "User"}
                   child={[
                     {
                       icon: AdminIcon,
-                      title: "Pengguna",
-                      link: "/system/member",
+                      title: "Mahasiswa",
+                      link: "/user/mahasiswa",
                     },
                     {
-                      icon: SystemIcon,
-                      title: "Audit Trail",
-                      link: "/audit-trail",
+                      icon: AdminIcon,
+                      title: "Wali Kelas",
+                      link: "/user/wali-kelas",
+                    },
+                    {
+                      icon: AdminIcon,
+                      title: "Ketua Program Studi",
+                      link: "/user/ketua-program-studi",
+                    },
+                    {
+                      icon: AdminIcon,
+                      title: "Ketua Jurusan",
+                      link: "/user/ketua-jurusan",
+                    },
+                    {
+                      icon: AdminIcon,
+                      title: "PD III",
+                      link: "/user/pd-3",
                     },
                   ]}
                 />
               </>
             )}
-            {role === "member" && (
+            {role === "mahasiswa" && (
               <>
                 <NavLink to="/profile" exact className={css(styles.navlink)}>
                   <MenuItemComponent
@@ -193,22 +131,32 @@ const Index = ({ onChange, selectedItem }) => {
                     active={selectedItem === "Profil"}
                   />
                 </NavLink>
-                <NavLink to="/iuran" exact className={css(styles.navlink)}>
+                <NavLink to="/beasiswa" exact className={css(styles.navlink)}>
                   <MenuItemComponent
-                    title="Iuran"
+                    title="Beasiswa"
                     icon={FinanceIcon}
-                    onClick={() => onItemClicked("Iuran")}
-                    active={selectedItem === "Iuran"}
+                    onClick={() => onItemClicked("Beasiswa")}
+                    active={selectedItem === "Beasiswa"}
                   />
                 </NavLink>
-                <NavLink to="/polling" exact className={css(styles.navlink)}>
-                  <MenuItemComponent
-                    title="Polling"
-                    icon={PollingIcon}
-                    onClick={() => onItemClicked("Polling")}
-                    active={selectedItem === "Polling"}
-                  />
-                </NavLink>
+                <MenuItemComponent
+                  title="Data Orang Tua"
+                  icon={SystemIcon}
+                  onClick={() => onItemClicked("Data Orang Tua")}
+                  active={selectedItem === "Data Orang Tua"}
+                  child={[
+                    {
+                      icon: AdminIcon,
+                      title: "Ayah",
+                      link: "/orang-tua/ayah",
+                    },
+                    {
+                      icon: AdminIcon,
+                      title: "Ibu",
+                      link: "/orang-tua/ibu",
+                    },
+                  ]}
+                />
               </>
             )}
           </Column>
@@ -243,7 +191,8 @@ const styles = StyleSheet.create({
   mainContainer: {
     height: "100%",
     minHeight: "100vh",
-    backgroundColor: "#495057",
+    background:
+      "linear-gradient(180deg, rgba(54,139,223,1) 0%, rgba(93,213,229,1) 100%);",
   },
   mainContainerMobile: {
     backgroundColor: "transparent",

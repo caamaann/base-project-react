@@ -29,8 +29,9 @@ const MenuItemComponent = (props) => {
               <Column
                 style={{
                   width: "100%",
-                  backgroundColor: "#7F8489",
-
+                  background:
+                    "linear-gradient(180deg, rgba(250,250,250,0.2) 0%, rgba(255,255,255,0.2) 100%)",
+                  // backgroundColor: "#7F8489",
                   borderBottomLeftRadius: 20,
                   padding: "30px 0 10px",
                   paddingLeft: 20,
@@ -79,16 +80,14 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 20,
     borderBottomLeftRadius: 20,
     cursor: "pointer",
-    backgroundColor: "#495057",
+    // backgroundColor: "#495057",
     // backgroundColor: "linear-gradient(rgb(44, 185, 106)",
     paddingLeft: 20,
     paddingRight: 20,
-    // marginLeft: 20,
-    // marginBottom: 10,
     index: 10,
     position: "relative",
     ":hover": {
-      background: "#7F8489 0% 0% no-repeat padding-box",
+      background: "rgba(250,250,250,0.2) 0% 0% no-repeat padding-box",
     },
   },
 

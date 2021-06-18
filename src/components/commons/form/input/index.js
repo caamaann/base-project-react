@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
     },
   },
   hasValue: {
-    borderColor: "#00008B",
+    borderColor: "#EFF0F2",
     backgroundColor: "#EDEDED",
   },
   disabled: {

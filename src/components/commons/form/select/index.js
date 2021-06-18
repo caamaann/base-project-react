@@ -124,8 +124,8 @@ const SelectComponent = (props) => {
     param.search_text = inputValue;
     API.get(asyncUrl, { params: param }).then((res) => {
       callback(
-        res.data.data.map(({ id, name }) => ({
-          label: name,
+        res.data.data.map(({ id, nama }) => ({
+          label: nama,
           value: id,
         }))
       );

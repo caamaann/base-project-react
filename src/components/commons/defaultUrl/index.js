@@ -1,4 +1,8 @@
 export const default_url = {
-  superadmin: "dashboard",
-  member: "profile",
+  admin: "dashboard",
+  mahasiswa: "profile",
+  waliKelas: "dashboard",
+  ketuaProdi: "dashboard",
+  ketuaJurusan: "dashboard",
+  pd3: "dashboard",
 };
