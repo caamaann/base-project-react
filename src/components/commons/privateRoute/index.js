@@ -29,28 +29,28 @@ const Index = ({
       render={(props) => {
         const currentUser = getUser();
 
-        // if (!currentUser) {
-        //   // not logged in so redirect to login page with the return url
-        //   return (
-        //     <Redirect
-        //       to={{ pathname: "/login", state: { from: props.location } }}
-        //     />
-        //   );
-        // }
+        if (!currentUser) {
+          // not logged in so redirect to login page with the return url
+          return (
+            <Redirect
+              to={{ pathname: "/login", state: { from: props.location } }}
+            />
+          );
+        }
 
-        // // check if route is restricted by role
-        // if (roles && !roles.includes(currentUser.role_code.toLowerCase())) {
-        //   // role not authorised so redirect to home page
-        //   return (
-        //     <Redirect
-        //       to={{
-        //         pathname: `/${
-        //           default_url[currentUser.role_code.toLowerCase()]
-        //         }`,
-        //       }}
-        //     />
-        //   );
-        // }
+        // check if route is restricted by role
+        if (roles && !roles.includes(currentUser.role_code.toLowerCase())) {
+          // role not authorised so redirect to home page
+          return (
+            <Redirect
+              to={{
+                pathname: `/${
+                  default_url[currentUser.role_code.toLowerCase()]
+                }`,
+              }}
+            />
+          );
+        }
 
         // authorised so return component
         return <Component {...props} />;

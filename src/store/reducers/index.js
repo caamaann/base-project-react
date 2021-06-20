@@ -10,9 +10,16 @@ import {
 } from "./header";
 import programStudi from "./master/program-studi";
 import jurusan from "./master/jurusan";
+import userMahasiswa from "./user/mahasiswa";
+import userWaliKelas from "./user/wali-kelas";
+import userKetuaProgramStudi from "./user/ketua-program-studi";
+import userKetuaJurusan from "./user/ketua-jurusan";
+import userPembantuDirektur3 from "./user/pembantu-direktur-3";
+import beasiswa from "./beasiswa";
 
 const rootReducer = combineReducers({
   form: formReducer,
+  beasiswa,
   global,
   auth,
   header,
@@ -21,6 +28,11 @@ const rootReducer = combineReducers({
   headerModal,
   programStudi,
   jurusan,
+  userMahasiswa,
+  userWaliKelas,
+  userKetuaProgramStudi,
+  userKetuaJurusan,
+  userPembantuDirektur3,
 });
 
 export default rootReducer;

@@ -15,6 +15,12 @@ import Index from "./views/Index";
 import Login from "./views/login";
 import Jurusan from "./views/master/jurusan";
 import ProgramStudi from "./views/master/program-studi";
+import UserMahasiswa from "./views/user/mahasiswa";
+import UserWaliKelas from "./views/user/wali-kelas";
+import UserKetuaProdi from "./views/user/ketua-program-studi";
+import UserKetuaJurusan from "./views/user/ketua-jurusan";
+import UserPD3 from "./views/user/pembantu-direktrur-3";
+import Dashboard from "./views/dashboard";
 
 const theme = createMuiTheme({
   palette: {
@@ -82,7 +88,7 @@ const App = () => {
             path="/dashboard"
             roles={["admin", "waliKelas", "ketuaProdi", "ketuaJurusan", "pd3"]}
             exact
-            component={Index}
+            component={Dashboard}
           />
           <PrivateRoute
             head={["Data Master", "Jurusan"]}
@@ -99,13 +105,48 @@ const App = () => {
             component={ProgramStudi}
           />
           <PrivateRoute
+            head={["User", "Mahasiswa"]}
+            path="/user/mahasiswa"
+            roles={["admin"]}
+            exact
+            component={UserMahasiswa}
+          />
+          <PrivateRoute
+            head={["User", "Wali Kelas"]}
+            path="/user/wali-kelas"
+            roles={["admin"]}
+            exact
+            component={UserWaliKelas}
+          />
+          <PrivateRoute
+            head={["User", "Ketua Program Studi"]}
+            path="/user/ketua-program-studi"
+            roles={["admin"]}
+            exact
+            component={UserKetuaProdi}
+          />
+          <PrivateRoute
+            head={["User", "Ketua Jurusan"]}
+            path="/user/ketua-jurusan"
+            roles={["admin"]}
+            exact
+            component={UserKetuaJurusan}
+          />
+          <PrivateRoute
+            head={["User", "Pembantu Direktur 3"]}
+            path="/user/pembantu-direktur-3"
+            roles={["admin"]}
+            exact
+            component={UserPD3}
+          />
+          <PrivateRoute
             head={["Profil"]}
             path="/profile"
             roles={["mahasiswa"]}
             exact
             component={Index}
           />
-          <PrivateRoute roles={[]} exact component={() => <div></div>} />
+          <PrivateRoute roles={[]} exact component={Index} />
         </Switch>
       </Layout>
     );

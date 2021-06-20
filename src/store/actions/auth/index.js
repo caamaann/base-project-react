@@ -46,8 +46,8 @@ const auth_login = (param) => (dispatch) => {
       }
       dispatch(actionSuccess(POST_AUTH_LOGIN_SUCCESS, res));
       localStorage.setItem("user_spk_beasiswa", JSON.stringify(res.data.data));
-      history.push(`/${res.data.data.roles[0].name.toLowerCase()}`);
-      // history.push("/")
+      history.push(`/${res.data.data.role_code.toLowerCase()}`);
+      // history.push("/");
       window.location.reload(false);
       toastSuccess(`Selamat Datang ${res.data.data.profile.nama}`);
     })

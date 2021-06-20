@@ -114,8 +114,8 @@ const Index = ({ onChange, selectedItem }) => {
                     },
                     {
                       icon: AdminIcon,
-                      title: "PD III",
-                      link: "/user/pd-3",
+                      title: "Pembantu Direktur III",
+                      link: "/user/pembantu-direktur-3",
                     },
                   ]}
                 />

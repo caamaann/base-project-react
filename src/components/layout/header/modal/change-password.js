@@ -5,7 +5,7 @@ import { ModalBody, ModalHeader } from "reactstrap";
 import { Button } from "@material-ui/core";
 import { formInput } from "../../../commons/form";
 import Header, { setHeaderModal } from "../../../../store/actions/header";
-// import Auth from "../../../../store/actions/auth";
+import Auth from "../../../../store/actions/auth";
 import LabelInputVerticalComponent from "../../../global-components/LabelInputVertical";
 import { regexPassword } from "../../../../utils/constant";
 import { history } from "../../../../utils";
@@ -16,18 +16,18 @@ let Edit = ({ onSetHeaderModal, handleSubmit, handleRefresh, pending }) => {
   const [isVisibleNew, setIsVisibleNew] = useState(false);
   const [isVisibleConfirm, setIsVisibleConfirm] = useState(false);
 
-  const onSubmit = ({ old_password, new_password, confirm_new_password }) => {
+  const onSubmit = ({ old_password, new_password, confirm_password }) => {
     const param = {
       old_password,
       new_password,
-      confirm_new_password,
+      confirm_password,
     };
     const callback = () => {
       onSetHeaderModal("", false);
       // handleRefresh();
       history.push("/login");
     };
-    // dispatch(Auth.change_password(param, callback));
+    dispatch(Auth.change_password(param, callback));
   };
   return (
     <>
@@ -58,7 +58,7 @@ let Edit = ({ onSetHeaderModal, handleSubmit, handleRefresh, pending }) => {
           </LabelInputVerticalComponent>
           <LabelInputVerticalComponent label="Konfirmasi Password">
             <Field
-              name="confirm_new_password"
+              name="confirm_password"
               placeholder="Konfirmasi Password"
               type={!isVisibleConfirm ? "password" : "text"}
               isVisible={isVisibleConfirm}
@@ -93,27 +93,29 @@ let Edit = ({ onSetHeaderModal, handleSubmit, handleRefresh, pending }) => {
   );
 };
 
-const validate = ({ old_password, new_password, confirm_new_password }) => {
+const validate = ({ old_password, new_password, confirm_password }) => {
   const errors = {};
   if (!old_password) {
     errors.old_password = "Password Lama harus diisi";
   }
   if (!new_password) {
     errors.new_password = "Password Baru harus diisi";
+  } else if (old_password === new_password) {
+    errors.new_password = "Password Baru tidak boleh sama dengan password lama";
   }
   //  else if (!regexPassword.test(new_password)) {
   //   errors.new_password = "Password Baru tidak valid";
   // }
-  if (!confirm_new_password) {
-    errors.confirm_new_password = "Konfirmasi Password harus diisi";
-  } else if (new_password !== confirm_new_password) {
-    errors.confirm_new_password = "Konfirmasi Password tidak sama";
+  if (!confirm_password) {
+    errors.confirm_password = "Konfirmasi Password harus diisi";
+  } else if (new_password !== confirm_password) {
+    errors.confirm_password = "Konfirmasi Password tidak sama";
   }
   return errors;
 };
 
 Edit = reduxForm({
-  form: "regionEdit",
+  form: "changePassword",
   validate: validate,
   shouldError: () => true,
   enableReinitialize: true,
