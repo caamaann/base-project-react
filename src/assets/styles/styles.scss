@@ -1,2 +1,423 @@
-@import 'bigio-ui-kit/variables';
-@import 'bigio-ui-kit/mixins';
+@import "bigio-ui-kit/variables";
+@import "bigio-ui-kit/mixins";
+
+/* Change Autocomplete styles in Chrome*/
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  border: none;
+  border-bottom: 1px solid #ababab;
+  -webkit-box-shadow: 0 0 0px 1000px #fff inset;
+  transition: background-color 5000s ease-in-out 0s;
+  &:disabled {
+    background-color: transparent;
+    &:hover {
+      border-bottom: 1px solid $color-dark-grey;
+    }
+  }
+  &:hover {
+    border-bottom: 1px solid $color-primary;
+  }
+  &:focus {
+    border-bottom: 1px solid $color-primary;
+  }
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.form-validation {
+  font-size: 12px;
+  color: $color-dark-orange;
+}
+
+.text-small-grey {
+  font-size: 12px;
+  color: $color-dark-grey;
+}
+
+.forgot-password,
+.password-toggle {
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+// Modal
+.modal-dialog.modal-small {
+  max-width: $modal-small;
+}
+
+.modal-dialog.modal-medium {
+  max-width: $modal-medium;
+}
+
+.modal-dialog.modal-large {
+  max-width: $modal-large;
+}
+
+// Material table
+div.MuiPaper-elevation2 {
+  border-radius: 0;
+  border: none;
+  box-shadow: none;
+}
+
+table {
+  thead,
+  tbody {
+    border: 1px solid #ececec;
+  }
+}
+
+tbody tr.MuiTableRow-root:nth-child(odd) {
+  background-color: #fbfbfb;
+}
+
+button.MuiIconButton-root {
+  &:hover {
+    background-color: transparent;
+  }
+}
+
+td.MuiTableCell-root {
+  padding: 0 17px;
+}
+
+tfoot {
+  .MuiTableCell-root {
+    border: none;
+  }
+  span button.MuiButtonBase-root {
+    border: 1px solid #ececec;
+    border-radius: 5px;
+    padding: 2px;
+    margin: 20px 5px 0;
+  }
+  span button.MuiButton-contained.Mui-disabled {
+    background-color: $color-primary;
+    color: white;
+    border-radius: 5px;
+  }
+}
+
+.MuiSvgIcon-root.mui-tbl-detail-icon {
+  font-size: 12px;
+  color: $color-dark-grey;
+}
+
+.tbl-detail {
+  font-size: 14px;
+}
+
+// #TODO: Optimize styling
+
+// React-dates
+// .datepicker-container {
+//   // margin-bottom: 30px;
+//   button.SingleDatePickerInput_clearDate {
+//     padding: 10px;
+//     margin: 0;
+//     width: 35px;
+//     &:hover {
+//       background: none;
+//       opacity: 0.8;
+//     }
+//   }
+
+//   .DateInput {
+//     margin: 0;
+//     padding: 0;
+//     background: #fff;
+//     position: relative;
+//     display: inline-block;
+//     width: 130px;
+//     vertical-align: middle;
+//     :hover {
+//       border: 1px solid $color-primary;
+//     }
+//   }
+
+//   .DateInput__block {
+//     width: 100%;
+//   }
+
+//   .DateInput_input__focused {
+//     outline: 0;
+//     background: #fff;
+//     // border: 0;
+//     // border-top: 0;
+//     // border-right: 0;
+//     border: 1px solid $color-primary;
+//     // border-left: 0;
+//   }
+
+//   .DateInput_input__small {
+//     padding: 10px 0;
+//     border: 1px solid #000;
+//     &:active,
+//     &:focus,
+//     &:hover,
+//     &:valid {
+//       border: 1px solid $color-primary;
+//     }
+//   }
+
+//   .CalendarDay__selected_span {
+//     background: $color-primary;
+//     border: 1px double $color-primary;
+//     color: #fff;
+//   }
+//   .CalendarDay__selected_span:active,
+//   .CalendarDay__selected_span:hover {
+//     background: $color-primary;
+//     border: 1px double $color-primary;
+//     color: #fff;
+//   }
+//   .CalendarDay__selected,
+//   .CalendarDay__selected:active,
+//   .CalendarDay__selected:hover {
+//     background: $color-primary;
+//     border: 1px double $color-primary;
+//     color: #fff;
+//   }
+//   .CalendarDay__hovered_span,
+//   .CalendarDay__hovered_span:hover {
+//     background: #b2f1ec;
+//     border: 1px double #80e8e0;
+//     color: $color-primary;
+//   }
+//   .CalendarDay__hovered_span:active {
+//     background: #80e8e0;
+//     border: 1px double #80e8e0;
+//     color: $color-primary;
+//   }
+
+//   .SingleDatePickerInput__showClearDate {
+//     padding: 0;
+//   }
+// }
+
+// .DateRangePickerInput_clearDates_default:focus {
+//   background: none;
+//   border-radius: 0;
+// }
+
+.dashboard-link {
+  font-size: 12px;
+  font-weight: bold;
+  color: #1c37be;
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .content-title {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+  }
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Circular Std Book", "Roboto", "Oxygen", "Ubuntu", "Cantarell",
+    "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 14px !important;
+  line-height: 1 !important;
+}
+
+.MuiTableCell-root,
+.MuiMenuItem-root,
+.MuiButton-root,
+.modal {
+  font-family: "Circular Std Book", "Roboto", "Oxygen", "Ubuntu", "Cantarell" !important;
+  font-size: 14px !important;
+}
+
+@font-face {
+  font-family: "Circular Std Book";
+  src: url("../font/circular/860c3ec7bbc5da3e97233ccecafe512e.eot"); /* IE9*/
+  src: url("../font/circular/860c3ec7bbc5da3e97233ccecafe512e.eot?#iefix")
+      format("embedded-opentype"),
+    /* IE6-IE8 */ url("../font/circular/860c3ec7bbc5da3e97233ccecafe512e.woff2")
+      format("woff2"),
+    /* chrome、firefox */
+      url("../font/circular/860c3ec7bbc5da3e97233ccecafe512e.woff")
+      format("woff"),
+    /* chrome、firefox */
+      url("../font/circular/860c3ec7bbc5da3e97233ccecafe512e.ttf")
+      format("truetype"),
+    /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+      url("../font/circular/860c3ec7bbc5da3e97233ccecafe512e.svg#Circular Std Book")
+      format("svg"); /* iOS 4.1- */
+}
+
+@import url("https://fonts.googleapis.com/css?family=Muli");
+
+.MuiTableCell-root.MuiTableCell-footer.MuiTablePagination-root.Component-paginationRoot-1 {
+  border: none !important;
+}
+
+button:focus {
+  outline: none !important;
+}
+
+.modal-header {
+  padding: 20px !important;
+}
+.modal-body {
+  border-bottom: none !important;
+  padding: 20px !important;
+}
+
+.modal-content {
+  border: none !important;
+}
+
+.MuiTypography-h4 {
+  font-size: 2.125rem;
+  font-family: "Circular Std Book", "Roboto", "Oxygen", "Ubuntu", "Cantarell" !important;
+  font-weight: 400;
+  line-height: 1.235;
+  letter-spacing: 0.00735em;
+}
+
+.MuiTypography-body1 {
+  font-size: 1rem;
+  font-family: "Circular Std Book", "Roboto", "Oxygen", "Ubuntu", "Cantarell" !important;
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: 0.00938em;
+}
+.MuiTypography-body1 {
+  font-size: 1rem;
+  font-family: "Circular Std Book", "Roboto", "Oxygen", "Ubuntu", "Cantarell" !important;
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: 0.00938em;
+}
+.MuiTypography-body2 {
+  font-size: 1rem;
+  font-family: "Circular Std Book", "Roboto", "Oxygen", "Ubuntu", "Cantarell" !important;
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: 0.00938em;
+}
+.MuiTypography-caption {
+  font-size: 0.75rem;
+  font-family: "Circular Std Book", "Roboto", "Oxygen", "Ubuntu", "Cantarell" !important;
+  font-weight: 400;
+  line-height: 1.66;
+  letter-spacing: 0.03333em;
+}
+
+.MuiFormLabel-root {
+  color: rgba(0, 0, 0, 0.54);
+  padding: 0;
+  font-size: 1rem;
+  font-family: "Circular Std Book", "Roboto", "Oxygen", "Ubuntu", "Cantarell" !important;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: 0.00938em;
+}
+
+.MuiInputBase-input {
+  font-size: 14px !important;
+  font-family: "Circular Std Book", "Roboto", "Oxygen", "Ubuntu", "Cantarell" !important;
+}
+
+.__react_component_tooltip.show {
+  opacity: 0.5 !important;
+}
+
+.MuiCircularProgress-colorSecondary {
+  color: white !important;
+}
+
+.pengantar > p {
+  margin-bottom: 0 !important;
+  min-height: 14px;
+  line-height: 1.6;
+  color: #7f8388 !important;
+}
+.support > p {
+  margin-bottom: 0 !important;
+  min-height: 14px;
+  line-height: 1.6;
+  /* color: #7f8388 !important; */
+}
+
+.MuiExpansionPanel-root {
+  box-shadow: none !important;
+  border-top: none !important;
+  border-bottom: 2px solid #ededee !important;
+  padding: 5px 0px;
+}
+/* 
+Mui-expanded {
+} */
+
+.MuiExpansionPanel-root:before {
+  background-color: transparent !important;
+}
+
+.MuiExpansionPanel-root.Mui-expanded {
+  margin: 0 !important;
+}
+
+.canvasjs-chart-credit {
+  display: none !important;
+}
+
+.canvasjs-chart-canvas {
+  font-family: "arial";
+}
+
+.dotmaps {
+  -webkit-box-shadow: 0px 0px 8px 10px #75ce9f;
+  -moz-box-shadow: 0px 0px 8px 10px #75ce9f;
+  box-shadow: 0px 0px 8px 10px #75ce9f;
+  animation-name: dot;
+  animation-duration: 0.5s;
+}
+
+@keyframes dot {
+  0% {
+    transform: scale(1);
+  }
+  70% {
+    transform: scale(1.8);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.demo-editor {
+  font-family: "Circular Std Book", "Roboto", "Oxygen", "Ubuntu", "Cantarell",
+    "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif !important;
+  font-size: 14px;
+}
+
+.MuiOutlinedInput-input {
+  padding: 10px !important;
+}
