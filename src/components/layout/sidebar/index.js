@@ -159,6 +159,26 @@ const Index = ({ onChange, selectedItem }) => {
                 />
               </>
             )}
+            {role === "pd3" && (
+              <>
+                <NavLink to="/dashboard" exact className={css(styles.navlink)}>
+                  <MenuItemComponent
+                    title="Dashboard"
+                    icon={AdminIcon}
+                    onClick={() => onItemClicked("Dashboard")}
+                    active={selectedItem === "Dashboard"}
+                  />
+                </NavLink>
+                <NavLink to="/beasiswa" exact className={css(styles.navlink)}>
+                  <MenuItemComponent
+                    title="Beasiswa"
+                    icon={FinanceIcon}
+                    onClick={() => onItemClicked("Beasiswa")}
+                    active={selectedItem === "Beasiswa"}
+                  />
+                </NavLink>
+              </>
+            )}
           </Column>
         </Column>
         {isMobile && expanded && (

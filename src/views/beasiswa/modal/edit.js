@@ -3,17 +3,12 @@ import { connect, useDispatch } from "react-redux";
 import { reduxForm, Field } from "redux-form";
 import { ModalBody, ModalHeader } from "reactstrap";
 import { Button } from "@material-ui/core";
-import {
-  formInput,
-  formInputNumber,
-} from "../../../../components/commons/form";
-import PembantuDirektur3, {
-  setPembantuDirektur3Modal,
-} from "../../../../store/actions/user/pembantu-direktur-3";
-import LabelInputVerticalComponent from "../../../../components/global-components/LabelInputVertical";
+import { formInput } from "../../../components/commons/form";
+import Beasiswa, { setBeasiswaModal } from "../../../store/actions/beasiswa";
+import LabelInputVerticalComponent from "../../../components/global-components/LabelInputVertical";
 
 let Edit = ({
-  onSetPembantuDirektur3Modal,
+  onSetBeasiswaModal,
   handleSubmit,
   detailData,
   handleRefresh,
@@ -21,45 +16,37 @@ let Edit = ({
 }) => {
   const dispatch = useDispatch();
 
-  const onSubmit = ({ nip, nama }) => {
+  const onSubmit = ({ nama }) => {
     const param = {
       id: detailData.id,
-      nip: nip,
       nama,
     };
     const callback = () => {
-      onSetPembantuDirektur3Modal("", false);
+      onSetBeasiswaModal("", false);
       handleRefresh();
     };
-    dispatch(PembantuDirektur3.put(param, callback));
+    dispatch(Beasiswa.put(param, callback));
   };
-
   return (
     <>
-      <ModalHeader>Edit Pembantu Direktur 3</ModalHeader>
+      <ModalHeader>Edit Beasiswa</ModalHeader>
       <ModalBody>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <LabelInputVerticalComponent label="NIP">
-            <Field
-              name="nip"
-              placeholder="NIP Pembantu Direktur 3"
-              component={formInputNumber}
-            />
-          </LabelInputVerticalComponent>
-          <LabelInputVerticalComponent label="Nama">
+          <LabelInputVerticalComponent label="Nama Beasiswa">
             <Field
               name="nama"
-              placeholder="Nama Pembantu Direktur 3"
+              placeholder="Nama Beasiswa"
               component={formInput}
             />
           </LabelInputVerticalComponent>
+
           <div className="d-flex justify-content-between">
             <Button
               variant="outlined"
               className="mt-3"
               disabled={pending}
               color="primary"
-              onClick={() => onSetPembantuDirektur3Modal("", false)}
+              onClick={() => onSetBeasiswaModal("", false)}
             >
               Batal
             </Button>
@@ -79,33 +66,28 @@ let Edit = ({
   );
 };
 
-const validate = ({ nip, nama }) => {
+const validate = ({ nama }) => {
   const errors = {};
-  if (!nip) {
-    errors.nip = "NIP harus diisi";
-  }
   if (!nama) {
-    errors.nama = "Nama Pembantu Direktur 3 harus diisi";
+    errors.nama = "Nama beasiswa harus diisi";
   }
 
   return errors;
 };
 
 Edit = reduxForm({
-  form: "userPembantuDirektur3Edit",
+  form: "beasiswaEdit",
   validate: validate,
   shouldError: () => true,
   enableReinitialize: true,
 })(Edit);
 
-const mapStateToProps = ({
-  userPembantuDirektur3: { detailData, pending },
-}) => {
+const mapStateToProps = ({ beasiswa: { detailData, pending } }) => {
   let initialValues = {};
   if (detailData) {
     initialValues = {
+      code: detailData.code,
       nama: detailData.nama,
-      nip: detailData.nip,
     };
   }
   return {
@@ -117,8 +99,8 @@ const mapStateToProps = ({
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onSetPembantuDirektur3Modal: (modalType, isOpen) =>
-      dispatch(setPembantuDirektur3Modal(modalType, isOpen)),
+    onSetBeasiswaModal: (modalType, isOpen) =>
+      dispatch(setBeasiswaModal(modalType, isOpen)),
   };
 };
 

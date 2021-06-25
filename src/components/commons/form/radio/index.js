@@ -1,6 +1,5 @@
 import * as React from "react";
 import { Field } from "redux-form";
-import "./radio.scss";
 
 export const Radio = (props) => {
   if (props && props.input && props.options) {
@@ -9,7 +8,9 @@ export const Radio = (props) => {
         <label
           key={`${index}`}
           // htmlFor={`${props.input.name}-${index}`}
-          className="custom-radio-second"
+          className={`custom-radio ${
+            props.disabled && "custom-radio-disabled"
+          }`}
         >
           {props.options[key]}
           <Field
@@ -27,7 +28,11 @@ export const Radio = (props) => {
             }}
             disabled={props.disabled}
           />
-          <span className="checkmark-second"></span>
+          <span
+            className={`checkmark-radio ${
+              props.disabled && "checkmark-radio-disabled"
+            }`}
+          ></span>
         </label>
       );
     };

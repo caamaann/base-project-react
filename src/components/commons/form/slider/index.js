@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Field } from "redux-form";
 import Slider from "@material-ui/core/Slider";
+import { optionsAHP } from "../../../../utils/constant";
 
 export const Index = ({
   input: { onDragStart, onChange, name, value },
@@ -11,20 +12,16 @@ export const Index = ({
   max,
   ...props
 }) => {
-  const length = max && min ? max - min + 1 : 10;
-  const marks = Array.from(Array(length), (_, index) =>
-    min ? index + min : index + 1
-  ).map((item) => {
-    return { value: item, label: item };
-  });
   return (
     <div>
       <Slider
         name={name}
-        value={value}
-        min={min ? min : 1}
-        max={max ? max : 10}
-        marks={marks}
+        value={value !== "" ? value : 1}
+        min={-7}
+        max={9}
+        step={null}
+        track={false}
+        marks={optionsAHP}
         aria-labelledby="discrete-slider"
         onChange={(event, value) => {
           onChange(value);

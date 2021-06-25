@@ -44,7 +44,7 @@ const Index = ({ onSetBeasiswaModal, onSetBeasiswaData, pending }) => {
     <Container>
       <Modal handleRefresh={(state) => handleRefresh(state)} />
       <Row className="m-3 justify-content-between">
-        <Button
+        {/* <Button
           color="primary"
           variant="contained"
           disabled={pending}
@@ -56,7 +56,7 @@ const Index = ({ onSetBeasiswaModal, onSetBeasiswaData, pending }) => {
           onChange={(e) => handleSearchChange(e)}
           placeholder="Cari nama beasiswa"
           endIcon={SearchIcon}
-        />
+        /> */}
       </Row>
       <div className="m-3">
         <MaterialTable

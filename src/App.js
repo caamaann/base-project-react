@@ -21,6 +21,8 @@ import UserKetuaProdi from "./views/user/ketua-program-studi";
 import UserKetuaJurusan from "./views/user/ketua-jurusan";
 import UserPD3 from "./views/user/pembantu-direktrur-3";
 import Dashboard from "./views/dashboard";
+import Beasiswa from "./views/beasiswa";
+import AddBeasiswa from "./views/beasiswa/add";
 
 const theme = createMuiTheme({
   palette: {
@@ -146,7 +148,22 @@ const App = () => {
             exact
             component={Index}
           />
-          <PrivateRoute roles={[]} exact component={Index} />
+          <PrivateRoute
+            head={["Beasiswa"]}
+            path="/beasiswa"
+            roles={["pd3"]}
+            exact
+            component={Beasiswa}
+          />
+          <PrivateRoute
+            head={["Beasiswa", "Tambah Beasiswa"]}
+            path="/beasiswa/add"
+            roles={["pd3"]}
+            exact
+            goBack
+            component={AddBeasiswa}
+          />
+          <PrivateRoute roles={[]} exact component={() => <div></div>} />
         </Switch>
       </Layout>
     );

@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Modal } from "reactstrap";
-import { setMahasiswaModal } from "../../../../store/actions/user/mahasiswa";
+import { setBeasiswaModal } from "../../../store/actions/beasiswa";
 import Detail from "./detail";
 import Add from "./add";
 import Edit from "./edit";
@@ -10,10 +10,10 @@ import Delete from "./delete";
 const index = ({
   isOpenModal,
   modalType,
-  onSetMahasiswaModal,
+  onSetBeasiswaModal,
   handleRefresh,
 }) => {
-  const toggle = () => onSetMahasiswaModal("", !isOpenModal);
+  const toggle = () => onSetBeasiswaModal("", !isOpenModal);
   const child = (modalType) => {
     switch (modalType) {
       case "add":
@@ -28,7 +28,7 @@ const index = ({
   };
   return (
     <Modal
-      className={modalType === "delete" ? "modal-small" : "modal-large"}
+      className="modal-small"
       isOpen={isOpenModal}
       toggle={toggle}
       centered
@@ -38,14 +38,14 @@ const index = ({
   );
 };
 
-const mapStateToProps = ({ userMahasiswa: { isOpenModal, modalType } }) => {
+const mapStateToProps = ({ beasiswa: { isOpenModal, modalType } }) => {
   return { isOpenModal, modalType };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onSetMahasiswaModal: (type, isOpen) =>
-      dispatch(setMahasiswaModal(type, isOpen)),
+    onSetBeasiswaModal: (type, isOpen) =>
+      dispatch(setBeasiswaModal(type, isOpen)),
   };
 };
 

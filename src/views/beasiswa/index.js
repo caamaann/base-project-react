@@ -1,31 +1,24 @@
 import React, { useState, useRef, useEffect } from "react";
 import { withRouter } from "react-router-dom";
 import { connect, useDispatch } from "react-redux";
-import KetuaJurusan, {
-  setKetuaJurusanData,
-  setKetuaJurusanModal,
-} from "../../../store/actions/user/ketua-jurusan";
-import Jurusan from "../../../store/actions/master/jurusan";
-import ProgramStudi from "../../../store/actions/master/program-studi";
+import Beasiswa, {
+  setBeasiswaData,
+  setBeasiswaModal,
+} from "../../store/actions/beasiswa";
 import { Row } from "simple-flexbox";
 import MaterialTable from "material-table";
 import SearchIcon from "@material-ui/icons/Search";
 import { Paper, Button, MenuItem } from "@material-ui/core";
-import DetailButtonComponent from "../../../components/global-components/DetailButton";
-import InputComponent from "../../../components/commons/form/input";
-import SelectComponent from "../../../components/commons/form/select";
-import Container from "../../../components/container";
+import DetailButtonComponent from "../../components/global-components/DetailButton";
+import InputComponent from "../../components/commons/form/input";
+import Container from "../../components/container";
 import Modal from "./modal";
 import debounce from "lodash.debounce";
+import { history } from "../../utils";
+import moment from "moment";
 
-const Index = ({
-  onSetKetuaJurusanModal,
-  onSetKetuaJurusanData,
-  pending,
-  jurusan,
-}) => {
+const Index = ({ onSetBeasiswaModal, onSetBeasiswaData, pending }) => {
   const [searchText, setSearchText] = useState("");
-  const [jurusanId, setJurusanId] = useState("");
   const dispatch = useDispatch();
   const tableRef = useRef();
 
@@ -43,34 +36,9 @@ const Index = ({
   };
 
   const setModal = (modalType, isOpen, data) => {
-    onSetKetuaJurusanModal(modalType, isOpen);
-    onSetKetuaJurusanData(data);
+    onSetBeasiswaModal(modalType, isOpen);
+    onSetBeasiswaData(data);
   };
-
-  const handleJurusanChange = (e) => {
-    if (e) {
-      setJurusanId(e.value);
-    } else {
-      setJurusanId("");
-    }
-    tableRef.current && tableRef.current.onQueryChange();
-  };
-
-  let jurusanOptions;
-  if (jurusan.data) {
-    jurusanOptions = jurusan.data.data.data.map((item) => {
-      return {
-        label: item.nama,
-        value: item.id,
-      };
-    });
-  }
-
-  useEffect(() => {
-    getJurusan();
-  }, []);
-
-  const getJurusan = () => dispatch(Jurusan.get());
 
   return (
     <Container>
@@ -78,33 +46,23 @@ const Index = ({
       <Row className="m-3 justify-content-between">
         <Button
           color="primary"
-          disabled={pending}
           variant="contained"
-          onClick={() => setModal("add", true, null)}
+          disabled={pending}
+          // onClick={() => setModal("add", true, null)}
+          onClick={() => history.push("/beasiswa/add")}
         >
-          Tambah Ketua Jurusan
+          Tambah Beasiswa
         </Button>
-        <Row className="justify-content-end">
-          <div style={{ width: 200, marginRight: 20 }}>
-            <SelectComponent
-              onChange={(e) => handleJurusanChange(e)}
-              placeholder="Jurusan"
-              options={jurusanOptions}
-              isAsync
-              asyncUrl="/jurusan"
-            />
-          </div>
-          <InputComponent
-            onChange={(e) => handleSearchChange(e)}
-            placeholder="Cari nama ketua jurusan"
-            endIcon={SearchIcon}
-          />
-        </Row>
+        <InputComponent
+          onChange={(e) => handleSearchChange(e)}
+          placeholder="Cari nama beasiswa"
+          endIcon={SearchIcon}
+        />
       </Row>
       <div className="m-3">
         <MaterialTable
           tableRef={tableRef}
-          title="KetuaJurusan"
+          title="Beasiswa"
           columns={[
             {
               title: "No",
@@ -112,15 +70,25 @@ const Index = ({
               width: 40,
             },
             {
-              title: "Nama Ketua Jurusan",
+              title: "Nama Beasiswa",
               render: ({ nama }) => {
                 return nama ? nama : "-";
               },
             },
             {
-              title: "Jurusan",
-              render: ({ jurusan }) => {
-                return jurusan?.nama ? jurusan.nama : "-";
+              title: "Awal Pendaftaran",
+              render: ({ awal_pendaftaran }) => {
+                return awal_pendaftaran
+                  ? moment(awal_pendaftaran).format("DD MMMM YYYY")
+                  : "-";
+              },
+            },
+            {
+              title: "Akhir Pendaftaran",
+              render: ({ akhir_pendaftaran }) => {
+                return akhir_pendaftaran
+                  ? moment(akhir_pendaftaran).format("DD MMMM YYYY")
+                  : "-";
               },
             },
             {
@@ -152,9 +120,8 @@ const Index = ({
                 page: q.page + 1,
                 length: 10,
                 search_text: searchText,
-                jurusan_id: jurusanId,
               };
-              dispatch(KetuaJurusan.get(param, resolve));
+              dispatch(Beasiswa.get(param, resolve));
             })
           }
           options={{
@@ -184,19 +151,15 @@ const Index = ({
   );
 };
 
-const mapStateToProps = ({
-  userKetuaJurusan: { pending },
-  jurusan,
-  programStudi,
-}) => {
-  return { pending, jurusan, programStudi };
+const mapStateToProps = ({ beasiswa: { pending } }) => {
+  return { pending };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onSetKetuaJurusanModal: (modalType, isOpen) =>
-      dispatch(setKetuaJurusanModal(modalType, isOpen)),
-    onSetKetuaJurusanData: (data) => dispatch(setKetuaJurusanData(data)),
+    onSetBeasiswaModal: (modalType, isOpen) =>
+      dispatch(setBeasiswaModal(modalType, isOpen)),
+    onSetBeasiswaData: (data) => dispatch(setBeasiswaData(data)),
   };
 };
 

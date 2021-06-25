@@ -3,51 +3,32 @@ import { connect, useDispatch } from "react-redux";
 import { reduxForm, Field } from "redux-form";
 import { ModalBody, ModalHeader } from "reactstrap";
 import { Button } from "@material-ui/core";
-import {
-  formInput,
-  formInputNumber,
-} from "../../../../components/commons/form";
-import LabelInputVerticalComponent from "../../../../components/global-components/LabelInputVertical";
-import PembantuDirektur3, {
-  setPembantuDirektur3Modal,
-} from "../../../../store/actions/user/pembantu-direktur-3";
+import { formInput } from "../../../components/commons/form";
+import LabelInputVerticalComponent from "../../../components/global-components/LabelInputVertical";
+import Beasiswa, { setBeasiswaModal } from "../../../store/actions/beasiswa";
 
-let Add = ({
-  onSetPembantuDirektur3Modal,
-  handleSubmit,
-  handleRefresh,
-  pending,
-}) => {
+let Add = ({ onSetBeasiswaModal, handleSubmit, handleRefresh, pending }) => {
   const dispatch = useDispatch();
 
-  const onSubmit = ({ nama, nip }) => {
+  const onSubmit = ({ nama }) => {
     const param = {
-      nip,
       nama,
     };
     const callback = () => {
-      onSetPembantuDirektur3Modal("", false);
+      onSetBeasiswaModal("", false);
       handleRefresh();
     };
-    dispatch(PembantuDirektur3.post(param, callback));
+    dispatch(Beasiswa.post(param, callback));
   };
-
   return (
     <>
-      <ModalHeader>Tambah Pembantu Direktur 3</ModalHeader>
+      <ModalHeader>Tambah Beasiswa</ModalHeader>
       <ModalBody>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <LabelInputVerticalComponent label="NIP">
-            <Field
-              name="nip"
-              placeholder="NIP Pembantu Direktur 3"
-              component={formInputNumber}
-            />
-          </LabelInputVerticalComponent>
-          <LabelInputVerticalComponent label="Nama">
+          <LabelInputVerticalComponent label="Nama Beasiswa">
             <Field
               name="nama"
-              placeholder="Nama Pembantu Direktur 3"
+              placeholder="Nama Beasiswa"
               component={formInput}
             />
           </LabelInputVerticalComponent>
@@ -57,7 +38,7 @@ let Add = ({
               className="mt-3"
               disabled={pending}
               color="primary"
-              onClick={() => onSetPembantuDirektur3Modal("", false)}
+              onClick={() => onSetBeasiswaModal("", false)}
             >
               Batal
             </Button>
@@ -77,33 +58,30 @@ let Add = ({
   );
 };
 
-const validate = ({ nip, nama }) => {
+const validate = ({ nama }) => {
   const errors = {};
   if (!nama) {
-    errors.nama = "Nama Pembantu Direktur 3 harus diisi";
-  }
-  if (!nip) {
-    errors.nip = "NIP harus diisi";
+    errors.nama = "Nama beasiswa harus diisi";
   }
 
   return errors;
 };
 
 Add = reduxForm({
-  form: "userPembantuDirektur3Add",
+  form: "beasiswaAdd",
   validate: validate,
   shouldError: () => true,
   enableReinitialize: true,
 })(Add);
 
-const mapStateToProps = ({ userPembantuDirektur3: { pending } }) => {
+const mapStateToProps = ({ beasiswa: { pending } }) => {
   return { pending };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onSetPembantuDirektur3Modal: (modalType, isOpen) =>
-      dispatch(setPembantuDirektur3Modal(modalType, isOpen)),
+    onSetBeasiswaModal: (modalType, isOpen) =>
+      dispatch(setBeasiswaModal(modalType, isOpen)),
   };
 };
 

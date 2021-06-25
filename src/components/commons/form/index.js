@@ -295,19 +295,64 @@ export function formYearPicker({
   );
 }
 
+export function formDatePicker({
+  input,
+  isDetail,
+  placeholder,
+  fullWidth,
+  disabled,
+  meta,
+}) {
+  let value = input.value;
+  return (
+    <>
+      {isDetail ? (
+        moment(input.value).format("DD MMMM YYYY")
+      ) : (
+        <div>
+          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <DatePicker
+              {...input}
+              // emptyLabel={placeholder}
+              autoOk
+              fullWidth={fullWidth}
+              variant="inline"
+              inputVariant="outlined"
+              disabled={disabled}
+              // InputAdornmentProps={{ position: `${position}` }}
+              value={value ? value : null}
+              format="dd MMMM yyyy"
+            />
+          </MuiPickersUtilsProvider>
+          <div className="mb-1"></div>
+          <span className="form-validation">{meta.touched && meta.error}</span>
+          <div className="mb-1"></div>
+        </div>
+      )}
+    </>
+  );
+}
+
 export const formCheckbox = (field) => {
   const {
     input: { value },
+    meta,
+    disabled,
   } = field;
   return (
     <div>
       <div className="mb-1"></div>
-      <input type="checkbox" {...field.input} checked={value} />
-      <label className="ml-2">{field.label}</label>
+      <label className={`custom-check ${disabled && "custom-check-disabled"}`}>
+        {field.label}
+        <input type="checkbox" {...field.input} checked={value} />
+        <span
+          className={`checkmark-check ${
+            disabled && "checkmark-check-disabled"
+          }`}
+        ></span>
+      </label>
       <div className="mb-1"></div>
-      <span className="form-validation">
-        {field.meta.touched && field.meta.error}
-      </span>
+      <span className="form-validation">{meta.touched && meta.error}</span>
       <div className="mb-1"></div>
     </div>
   );
