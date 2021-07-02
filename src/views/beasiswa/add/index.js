@@ -104,7 +104,7 @@ let Index = ({
         onSetAddBeasiswaData(null);
         onSetBeasiswaStep(0);
       };
-      // dispatch(Beasiswa.post(param, callback));
+      dispatch(Beasiswa.post(param, callback));
     }
   };
 
