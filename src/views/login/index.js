@@ -9,7 +9,7 @@ import IconInput from "../../assets/icon/icon-input";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Grid from "@material-ui/core/Grid";
 import { history } from "../../utils";
-import LoginImage from "../../assets/img/gedung_h.jpg";
+import LoginImage from "../../assets/img/gedung_h-2.jpg";
 
 // ACTION REDUX
 import Auth from "../../store/actions/auth";

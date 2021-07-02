@@ -81,6 +81,12 @@ let Index = ({
         penghasilan_orang_tua_maksimal: values.penghasilan_orang_tua_maksimal
           ? values.penghasilan_orang_tua_maksimal.toString().replace(/\D/g, "")
           : null,
+        biaya_pendidikan: values.biaya_pendidikan
+          ? values.biaya_pendidikan.toString().replace(/\D/g, "")
+          : null,
+        biaya_hidup: values.biaya_hidup
+          ? values.biaya_hidup.toString().replace(/\D/g, "")
+          : null,
         prestasi: values.prestasi ? 1 : 0,
         organisasi: values.organisasi ? 1 : 0,
         sikap: values.sikap ? 1 : 0,
@@ -169,7 +175,24 @@ let Index = ({
               thousandSeparator
               component={formInputNumber}
             />
+          </LabelInputVerticalComponent>          
+          <LabelInputVerticalComponent label="Nominal Bantuan Pendidikan">
+            <Field
+              name="biaya_pendidikan"
+              placeholder="Nominal Bantuan Pendidikan"
+              thousandSeparator
+              component={formInputNumber}
+            />
+          </LabelInputVerticalComponent>          
+          <LabelInputVerticalComponent label="Nominal Bantuan Biaya Hidup">
+            <Field
+              name="biaya_hidup"
+              placeholder="Nominal Bantuan Biaya Hidup"
+              thousandSeparator
+              component={formInputNumber}
+            />
           </LabelInputVerticalComponent>
+
           <LabelInputVerticalComponent label="Kriteria Lainnya">
             <Field
               name="prestasi"
@@ -246,6 +269,8 @@ const validate = (values, allProps) => {
     akhir_penerimaan,
     ipk_minimal,
     penghasilan_orang_tua_maksimal,
+    biaya_pendidikan,
+    biaya_hidup,
     prestasi,
     organisasi,
     sikap,
@@ -276,6 +301,14 @@ const validate = (values, allProps) => {
     errors.penghasilan_orang_tua_maksimal =
       "Penghasilan Orangtua Maksimal harus diisi";
   }
+  if (!biaya_hidup) {
+    errors.biaya_hidup =
+      "Nominal Bantuan Biaya Hidup harus diisi";
+  }
+  if (!biaya_pendidikan) {
+    errors.biaya_pendidikan =
+      "Nominal Bantuan Biaya Pendidikan harus diisi";
+  }
 
   for (let i = 0; i < allProps.total; i++) {
     if (!values["perbandingan_" + i] && values["perbandingan_" + i] !== 0) {
@@ -304,6 +337,8 @@ const mapStateToProps = ({ beasiswa: { step, data } }) => {
     akhir_penerimaan: data?.akhir_penerimaan,
     ipk_minimal: data?.ipk_minimal,
     penghasilan_orang_tua_maksimal: data?.penghasilan_orang_tua_maksimal,
+    biaya_pendidikan: data?.biaya_pendidikan,
+    biaya_hidup: data?.biaya_hidup,
     prestasi: data?.prestasi,
     organisasi: data?.organisasi,
     sikap: data?.sikap,
