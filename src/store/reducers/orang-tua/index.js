@@ -1,19 +1,21 @@
 import {
-  GET_USER_PEMBANTU_DIREKTUR_3_PENDING,
-  GET_USER_PEMBANTU_DIREKTUR_3_SUCCESS,
-  GET_USER_PEMBANTU_DIREKTUR_3_ERROR,
-  POST_USER_PEMBANTU_DIREKTUR_3_PENDING,
-  POST_USER_PEMBANTU_DIREKTUR_3_SUCCESS,
-  POST_USER_PEMBANTU_DIREKTUR_3_ERROR,
-  PUT_USER_PEMBANTU_DIREKTUR_3_PENDING,
-  PUT_USER_PEMBANTU_DIREKTUR_3_SUCCESS,
-  PUT_USER_PEMBANTU_DIREKTUR_3_ERROR,
-  DELETE_USER_PEMBANTU_DIREKTUR_3_PENDING,
-  DELETE_USER_PEMBANTU_DIREKTUR_3_SUCCESS,
-  DELETE_USER_PEMBANTU_DIREKTUR_3_ERROR,
-  USER_PEMBANTU_DIREKTUR_3_DATA,
-  SET_USER_PEMBANTU_DIREKTUR_3_MODAL,
-} from "../../../actions/user/pembantu-direktur-3";
+  GET_ORANG_TUA_PENDING,
+  GET_ORANG_TUA_SUCCESS,
+  GET_ORANG_TUA_ERROR,
+  POST_ORANG_TUA_PENDING,
+  POST_ORANG_TUA_SUCCESS,
+  POST_ORANG_TUA_ERROR,
+  PUT_ORANG_TUA_PENDING,
+  PUT_ORANG_TUA_SUCCESS,
+  PUT_ORANG_TUA_ERROR,
+  DELETE_ORANG_TUA_PENDING,
+  DELETE_ORANG_TUA_SUCCESS,
+  DELETE_ORANG_TUA_ERROR,
+  ORANG_TUA_DATA,
+  ADD_ORANG_TUA_DATA,
+  SET_ORANG_TUA_MODAL,
+  ORANG_TUA_STEP,
+} from "../../actions/orang-tua";
 
 const initialState = {
   pending: false,
@@ -22,92 +24,103 @@ const initialState = {
   detailData: null,
   isOpenModal: false,
   modalType: "",
+  step: 0,
 };
 
-const pembantuDirektur3 = (state = initialState, action) => {
+const orangTua = (state = initialState, action) => {
   switch (action.type) {
-    case GET_USER_PEMBANTU_DIREKTUR_3_PENDING:
+    case GET_ORANG_TUA_PENDING:
       return {
         ...state,
         pending: true,
       };
-    case GET_USER_PEMBANTU_DIREKTUR_3_SUCCESS:
+    case GET_ORANG_TUA_SUCCESS:
       return {
         ...state,
         pending: false,
-        data: action.data,
+        detailData: action.data.data.data[0],
       };
-    case GET_USER_PEMBANTU_DIREKTUR_3_ERROR:
+    case GET_ORANG_TUA_ERROR:
       return {
         ...state,
         pending: false,
         error: action.error,
       };
-    case POST_USER_PEMBANTU_DIREKTUR_3_PENDING:
+    case POST_ORANG_TUA_PENDING:
       return {
         ...state,
         pending: true,
       };
-    case POST_USER_PEMBANTU_DIREKTUR_3_SUCCESS:
+    case POST_ORANG_TUA_SUCCESS:
       return {
         ...state,
         pending: false,
         data: action.data,
       };
-    case POST_USER_PEMBANTU_DIREKTUR_3_ERROR:
+    case POST_ORANG_TUA_ERROR:
       return {
         ...state,
         pending: false,
         error: action.error,
       };
-    case PUT_USER_PEMBANTU_DIREKTUR_3_PENDING:
+    case PUT_ORANG_TUA_PENDING:
       return {
         ...state,
         pending: true,
       };
-    case PUT_USER_PEMBANTU_DIREKTUR_3_SUCCESS:
+    case PUT_ORANG_TUA_SUCCESS:
       return {
         ...state,
         pending: false,
         data: action.data,
       };
-    case PUT_USER_PEMBANTU_DIREKTUR_3_ERROR:
+    case PUT_ORANG_TUA_ERROR:
       return {
         ...state,
         pending: false,
         error: action.error,
       };
-    case DELETE_USER_PEMBANTU_DIREKTUR_3_PENDING:
+    case DELETE_ORANG_TUA_PENDING:
       return {
         ...state,
         pending: true,
       };
-    case DELETE_USER_PEMBANTU_DIREKTUR_3_SUCCESS:
+    case DELETE_ORANG_TUA_SUCCESS:
       return {
         ...state,
         pending: false,
         data: action.data,
       };
-    case DELETE_USER_PEMBANTU_DIREKTUR_3_ERROR:
+    case DELETE_ORANG_TUA_ERROR:
       return {
         ...state,
         pending: false,
         error: action.error,
       };
-    case USER_PEMBANTU_DIREKTUR_3_DATA:
+    case ORANG_TUA_DATA:
       return {
         ...state,
         detailData: action.data,
       };
-    case SET_USER_PEMBANTU_DIREKTUR_3_MODAL:
+    case SET_ORANG_TUA_MODAL:
       return {
         ...state,
         isOpenModal: action.data.isOpen,
         modalType: action.data.modalType,
+      };
+    case ORANG_TUA_STEP:
+      return {
+        ...state,
+        step: action.step,
+      };
+    case ADD_ORANG_TUA_DATA:
+      return {
+        ...state,
+        data: action.data,
       };
     default:
       return state;
   }
 };
 
-export default pembantuDirektur3;
+export default orangTua;

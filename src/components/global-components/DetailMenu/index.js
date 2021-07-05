@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     color: "#495057",
   },
   menuNameActive: {
-    color: "#2CB96A",
+    color: "#49aee2",
   },
   menuNameInvalid: {
     color: "#e35279",
