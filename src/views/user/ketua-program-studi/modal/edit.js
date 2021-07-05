@@ -3,12 +3,16 @@ import { connect, useDispatch } from "react-redux";
 import { reduxForm, Field } from "redux-form";
 import { ModalBody, ModalHeader } from "reactstrap";
 import { Button } from "@material-ui/core";
-import { formInput, formSelect } from "../../../../components/commons/form";
+import {
+  formInput,
+  formSelect,
+  formInputNumber,
+} from "../../../../components/commons/form";
 import KetuaProgramStudi, {
   setKetuaProgramStudiModal,
 } from "../../../../store/actions/user/ketua-program-studi";
 import LabelInputVerticalComponent from "../../../../components/global-components/LabelInputVertical";
-import Jurusan from "../../../../store/actions/master/jurusan";
+import ProgramStudi from "../../../../store/actions/master/program-studi";
 
 let Edit = ({
   onSetKetuaProgramStudiModal,
@@ -16,14 +20,15 @@ let Edit = ({
   detailData,
   handleRefresh,
   pending,
-  jurusan,
+  programStudi,
 }) => {
   const dispatch = useDispatch();
 
-  const onSubmit = ({ jurusan, nama }) => {
+  const onSubmit = ({ nip, program_studi, nama }) => {
     const param = {
       id: detailData.id,
-      jurusan_id: jurusan.value,
+      nip,
+      program_studi_id: program_studi.value,
       nama,
     };
     const callback = () => {
@@ -32,9 +37,10 @@ let Edit = ({
     };
     dispatch(KetuaProgramStudi.put(param, callback));
   };
-  let jurusanOptions;
-  if (jurusan.data) {
-    jurusanOptions = jurusan.data.data.data.map((item) => {
+
+  let programStudiOptions;
+  if (programStudi.data) {
+    programStudiOptions = programStudi.data.data.data.map((item) => {
       return {
         label: item.nama,
         value: item.id,
@@ -43,30 +49,37 @@ let Edit = ({
   }
 
   useEffect(() => {
-    getJurusan();
+    getProgramStudi();
   }, []);
 
-  const getJurusan = () => dispatch(Jurusan.get());
+  const getProgramStudi = () => dispatch(ProgramStudi.get());
   return (
     <>
       <ModalHeader>Edit Ketua Program Studi</ModalHeader>
       <ModalBody>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <LabelInputVerticalComponent label="Nama Ketua Program Studi">
+          <LabelInputVerticalComponent label="NIP">
+            <Field
+              name="nip"
+              placeholder="NIP Ketua Program Studi"
+              component={formInputNumber}
+            />
+          </LabelInputVerticalComponent>
+          <LabelInputVerticalComponent label="Nama">
             <Field
               name="nama"
               placeholder="Nama Ketua Program Studi"
               component={formInput}
             />
           </LabelInputVerticalComponent>
-          <LabelInputVerticalComponent label="Nama Jurusan">
+          <LabelInputVerticalComponent label="Program Studi">
             <Field
-              name="jurusan"
-              placeholder="Jurusan"
+              name="program_studi"
+              placeholder="Program Studi"
               component={formSelect}
-              options={jurusanOptions}
+              options={programStudiOptions}
               isAsync
-              asyncUrl="/jurusan"
+              asyncUrl="/program_studi"
             />
           </LabelInputVerticalComponent>
           <div className="d-flex justify-content-between">
@@ -95,13 +108,16 @@ let Edit = ({
   );
 };
 
-const validate = ({ jurusan, nama }) => {
+const validate = ({ nip, program_studi, nama }) => {
   const errors = {};
-  if (!jurusan) {
-    errors.jurusan = "Nama jurusan harus diisi";
+  if (!nip) {
+    errors.nip = "NIP harus diisi";
   }
   if (!nama) {
-    errors.nama = "Nama wilayah harus diisi";
+    errors.nama = "Nama harus diisi";
+  }
+  if (!program_studi) {
+    errors.program_studi = "Program Studi harus diisi";
   }
 
   return errors;
@@ -116,12 +132,16 @@ Edit = reduxForm({
 
 const mapStateToProps = ({
   userKetuaProgramStudi: { detailData, pending },
-  jurusan,
+  programStudi,
 }) => {
   let initialValues = {};
   if (detailData) {
     initialValues = {
-      jurusan: { value: detailData.jurusan_id, label: detailData.jurusan_nama },
+      nip: detailData.nip,
+      program_studi: {
+        value: detailData.program_studi.id,
+        label: detailData.program_studi.nama,
+      },
       nama: detailData.nama,
     };
   }
@@ -129,7 +149,7 @@ const mapStateToProps = ({
     detailData,
     initialValues,
     pending,
-    jurusan,
+    programStudi,
   };
 };
 

@@ -17,8 +17,6 @@ import SelectComponent from "../../../components/commons/form/select";
 import Container from "../../../components/container";
 import Modal from "./modal";
 import debounce from "lodash.debounce";
-import { history } from "../../../utils";
-import { yearOptions } from "../../../utils/date";
 
 const Index = ({
   onSetKetuaJurusanModal,

@@ -3,25 +3,30 @@ import { connect, useDispatch } from "react-redux";
 import { reduxForm, Field } from "redux-form";
 import { ModalBody, ModalHeader } from "reactstrap";
 import { Button } from "@material-ui/core";
-import { formInput, formSelect } from "../../../../components/commons/form";
+import {
+  formInput,
+  formSelect,
+  formInputNumber,
+} from "../../../../components/commons/form";
 import LabelInputVerticalComponent from "../../../../components/global-components/LabelInputVertical";
 import KetuaProgramStudi, {
   setKetuaProgramStudiModal,
 } from "../../../../store/actions/user/ketua-program-studi";
-import Jurusan from "../../../../store/actions/master/jurusan";
+import ProgramStudi from "../../../../store/actions/master/program-studi";
 
 let Add = ({
   onSetKetuaProgramStudiModal,
   handleSubmit,
   handleRefresh,
   pending,
-  jurusan,
+  programStudi,
 }) => {
   const dispatch = useDispatch();
 
-  const onSubmit = ({ nama, jurusan }) => {
+  const onSubmit = ({ nip, nama, program_studi }) => {
     const param = {
-      jurusan_id: jurusan.value,
+      nip,
+      program_studi_id: program_studi.value,
       nama,
     };
     const callback = () => {
@@ -31,9 +36,9 @@ let Add = ({
     dispatch(KetuaProgramStudi.post(param, callback));
   };
 
-  let jurusanOptions;
-  if (jurusan.data) {
-    jurusanOptions = jurusan.data.data.data.map((item) => {
+  let programStudiOptions;
+  if (programStudi.data) {
+    programStudiOptions = programStudi.data.data.data.map((item) => {
       return {
         label: item.nama,
         value: item.id,
@@ -42,30 +47,37 @@ let Add = ({
   }
 
   useEffect(() => {
-    getJurusan();
+    getProgramStudi();
   }, []);
 
-  const getJurusan = () => dispatch(Jurusan.get());
+  const getProgramStudi = () => dispatch(ProgramStudi.get());
   return (
     <>
       <ModalHeader>Tambah Ketua Program Studi</ModalHeader>
       <ModalBody>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <LabelInputVerticalComponent label="Nama Ketua Program Studi">
+          <LabelInputVerticalComponent label="NIP">
+            <Field
+              name="nip"
+              placeholder="NIP Ketua Program Studi"
+              component={formInputNumber}
+            />
+          </LabelInputVerticalComponent>
+          <LabelInputVerticalComponent label="Nama">
             <Field
               name="nama"
               placeholder="Nama Ketua Program Studi"
               component={formInput}
             />
           </LabelInputVerticalComponent>
-          <LabelInputVerticalComponent label="Nama Jurusan">
+          <LabelInputVerticalComponent label="Program Studi">
             <Field
-              name="jurusan"
-              placeholder="Jurusan"
+              name="program_studi"
+              placeholder="Program Studi"
               component={formSelect}
-              options={jurusanOptions}
+              options={programStudiOptions}
               isAsync
-              asyncUrl="/jurusan"
+              asyncUrl="/program_studi"
             />
           </LabelInputVerticalComponent>
           <div className="d-flex justify-content-between">
@@ -94,13 +106,16 @@ let Add = ({
   );
 };
 
-const validate = ({ jurusan, nama }) => {
+const validate = ({ nip, program_studi, nama }) => {
   const errors = {};
-  if (!nama) {
-    errors.nama = "Nama program studi harus diisi";
+  if (!nip) {
+    errors.nip = "NIP harus diisi";
   }
-  if (!jurusan) {
-    errors.jurusan = "Nama jurusan harus diisi";
+  if (!nama) {
+    errors.nama = "Nama harus diisi";
+  }
+  if (!program_studi) {
+    errors.program_studi = "Program Studi harus diisi";
   }
 
   return errors;
@@ -113,8 +128,11 @@ Add = reduxForm({
   enableReinitialize: true,
 })(Add);
 
-const mapStateToProps = ({ userKetuaProgramStudi: { pending }, jurusan }) => {
-  return { pending, jurusan };
+const mapStateToProps = ({
+  userKetuaProgramStudi: { pending },
+  programStudi,
+}) => {
+  return { pending, programStudi };
 };
 
 const mapDispatchToProps = (dispatch) => {

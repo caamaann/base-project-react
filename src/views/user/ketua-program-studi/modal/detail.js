@@ -13,18 +13,26 @@ let detail = ({ onSetKetuaProgramStudiModal, pending }) => {
       <ModalHeader>Lihat Ketua Program Studi</ModalHeader>
       <ModalBody>
         <form>
-          <LabelInputVerticalComponent label="Nama Ketua Program Studi">
+          <LabelInputVerticalComponent label="NIP">
+            <Field
+              name="nip"
+              placeholder="NIP Ketua Program Studi"
+              disabled
+              component={formInput}
+            />
+          </LabelInputVerticalComponent>
+          <LabelInputVerticalComponent label="Nama">
             <Field
               name="nama"
               placeholder="Nama Ketua Program Studi"
-              component={formInput}
               disabled
+              component={formInput}
             />
           </LabelInputVerticalComponent>
-          <LabelInputVerticalComponent label="Nama Jurusan">
+          <LabelInputVerticalComponent label="Program Studi">
             <Field
-              name="jurusan"
-              placeholder="Nama Jurusan"
+              name="program_studi"
+              placeholder="Program Studi"
               component={formInput}
               disabled
             />
@@ -48,11 +56,14 @@ detail = reduxForm({
   form: "userKetuaProgramStudiDetail",
 })(detail);
 
-const mapStateToProps = ({ userKetuaProgramStudi: { detailData, pending } }) => {
+const mapStateToProps = ({
+  userKetuaProgramStudi: { detailData, pending },
+}) => {
   let initialValues = {};
   if (detailData) {
     initialValues = {
-      jurusan: detailData.jurusan_nama,
+      nip: detailData.nip,
+      program_studi: detailData.program_studi.nama,
       nama: detailData.nama,
     };
   }

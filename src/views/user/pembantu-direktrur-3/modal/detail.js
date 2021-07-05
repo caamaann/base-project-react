@@ -13,18 +13,18 @@ let detail = ({ onSetPembantuDirektur3Modal, pending }) => {
       <ModalHeader>Lihat Pembantu Direktur 3</ModalHeader>
       <ModalBody>
         <form>
-          <LabelInputVerticalComponent label="Nama Pembantu Direktur 3">
+          <LabelInputVerticalComponent label="NIP">
             <Field
-              name="nama"
-              placeholder="Nama Pembantu Direktur 3"
+              name="nip"
+              placeholder="NIP Pembantu Direktur 3"
               component={formInput}
               disabled
             />
           </LabelInputVerticalComponent>
-          <LabelInputVerticalComponent label="Nama Jurusan">
+          <LabelInputVerticalComponent label="Nama">
             <Field
-              name="jurusan"
-              placeholder="Nama Jurusan"
+              name="nama"
+              placeholder="Nama Pembantu Direktur 3"
               component={formInput}
               disabled
             />
@@ -48,11 +48,13 @@ detail = reduxForm({
   form: "userPembantuDirektur3Detail",
 })(detail);
 
-const mapStateToProps = ({ userPembantuDirektur3: { detailData, pending } }) => {
+const mapStateToProps = ({
+  userPembantuDirektur3: { detailData, pending },
+}) => {
   let initialValues = {};
   if (detailData) {
     initialValues = {
-      jurusan: detailData.jurusan_nama,
+      nip: detailData.nip,
       nama: detailData.nama,
     };
   }

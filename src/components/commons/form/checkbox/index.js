@@ -11,46 +11,38 @@ const index = ({
   startIcon,
   endIcon,
   hasBorder,
-  label,
   className,
+  label,
 }) => {
-  const StartIcon = startIcon;
-  const EndIcon = endIcon;
   return (
     <div style={{ position: "relative" }}>
-      <input
-        type="checkbox"
-        value={value}
-        onChange={onChange}
-        checked={checked}
-        disabled={disabled}
-        placeholder={placeholder}
-        className={css(
-          styles.input,
-          value && styles.hasValue,
-          startIcon && styles.startContainer,
-          endIcon && styles.endContainer,
-          disabled && styles.disabled,
-          className
-        )}
-      />
-      <label>{label}</label>
-      {startIcon && (
-        <StartIcon
-          onClick={onClick}
-          className={css(styles.icon, styles.start)}
+      <label className="custom-check">
+        {label}
+        <input
+          type="checkbox"
+          value={value}
+          onChange={onChange}
+          checked={checked}
+          disabled={disabled}
+          placeholder={placeholder}
+          className={css(
+            styles.input,
+            value && styles.hasValue,
+            startIcon && styles.startContainer,
+            endIcon && styles.endContainer,
+            disabled && styles.disabled,
+            className
+          )}
         />
-      )}
-      {endIcon && (
-        <EndIcon onClick={onClick} className={css(styles.icon, styles.end)} />
-      )}
+        <span className="checkmark-check"></span>
+      </label>
     </div>
   );
 };
 
 const styles = StyleSheet.create({
   input: {
-    // color: "#00008B",
+    // color: "#2CB96A",
     padding: 10,
     borderRadius: 4,
     zIndex: 30,
@@ -78,12 +70,12 @@ const styles = StyleSheet.create({
     // backgroundColor: "#EFF0F2",
     ":hover": {
       // Overwrittes the different states of border
-      borderColor: "#00008B",
+      borderColor: "#2CB96A",
     },
     ":focus": {
       // Overwrittes the different states of border
-      borderColor: "#00008B",
-      backgroundColor: "#EDEDED",
+      borderColor: "#2CB96A",
+      backgroundColor: "#2CB96A1A",
     },
     "::placeholder": {
       color: "#495057",
@@ -91,8 +83,8 @@ const styles = StyleSheet.create({
     },
   },
   hasValue: {
-    borderColor: "#00008B",
-    backgroundColor: "#EDEDED",
+    borderColor: "#2CB96A1A",
+    backgroundColor: "#2CB96A1A",
   },
   disabled: {
     ":hover": {

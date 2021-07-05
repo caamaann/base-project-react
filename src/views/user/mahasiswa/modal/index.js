@@ -28,7 +28,7 @@ const index = ({
   };
   return (
     <Modal
-      className="modal-small"
+      className={modalType === "delete" ? "modal-small" : "modal-large"}
       isOpen={isOpenModal}
       toggle={toggle}
       centered

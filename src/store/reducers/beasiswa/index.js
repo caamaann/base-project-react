@@ -12,7 +12,9 @@ import {
   DELETE_BEASISWA_SUCCESS,
   DELETE_BEASISWA_ERROR,
   BEASISWA_DATA,
+  ADD_BEASISWA_DATA,
   SET_BEASISWA_MODAL,
+  BEASISWA_STEP,
 } from "../../actions/beasiswa";
 
 const initialState = {
@@ -22,6 +24,7 @@ const initialState = {
   detailData: null,
   isOpenModal: false,
   modalType: "",
+  step: 0,
 };
 
 const beasiswa = (state = initialState, action) => {
@@ -104,6 +107,16 @@ const beasiswa = (state = initialState, action) => {
         ...state,
         isOpenModal: action.data.isOpen,
         modalType: action.data.modalType,
+      };
+    case BEASISWA_STEP:
+      return {
+        ...state,
+        step: action.step,
+      };
+    case ADD_BEASISWA_DATA:
+      return {
+        ...state,
+        data: action.data,
       };
     default:
       return state;

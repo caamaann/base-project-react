@@ -3,7 +3,11 @@ import { connect, useDispatch } from "react-redux";
 import { reduxForm, Field } from "redux-form";
 import { ModalBody, ModalHeader } from "reactstrap";
 import { Button } from "@material-ui/core";
-import { formInput, formSelect } from "../../../../components/commons/form";
+import {
+  formInput,
+  formSelect,
+  formInputNumber,
+} from "../../../../components/commons/form";
 import KetuaJurusan, {
   setKetuaJurusanModal,
 } from "../../../../store/actions/user/ketua-jurusan";
@@ -20,9 +24,10 @@ let Edit = ({
 }) => {
   const dispatch = useDispatch();
 
-  const onSubmit = ({ jurusan, nama }) => {
+  const onSubmit = ({ nip, jurusan, nama }) => {
     const param = {
       id: detailData.id,
+      nip,
       jurusan_id: jurusan.value,
       nama,
     };
@@ -52,14 +57,21 @@ let Edit = ({
       <ModalHeader>Edit Ketua Jurusan</ModalHeader>
       <ModalBody>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <LabelInputVerticalComponent label="Nama Ketua Jurusan">
+          <LabelInputVerticalComponent label="NIP">
+            <Field
+              name="nip"
+              placeholder="NIP Ketua Jurusan"
+              component={formInputNumber}
+            />
+          </LabelInputVerticalComponent>
+          <LabelInputVerticalComponent label="Nama">
             <Field
               name="nama"
               placeholder="Nama Ketua Jurusan"
               component={formInput}
             />
           </LabelInputVerticalComponent>
-          <LabelInputVerticalComponent label="Nama Jurusan">
+          <LabelInputVerticalComponent label="Jurusan">
             <Field
               name="jurusan"
               placeholder="Jurusan"
@@ -95,8 +107,11 @@ let Edit = ({
   );
 };
 
-const validate = ({ jurusan, nama }) => {
+const validate = ({ nip, jurusan, nama }) => {
   const errors = {};
+  if (!nip) {
+    errors.nip = "NIP harus diisi";
+  }
   if (!jurusan) {
     errors.jurusan = "Nama jurusan harus diisi";
   }
@@ -121,7 +136,8 @@ const mapStateToProps = ({
   let initialValues = {};
   if (detailData) {
     initialValues = {
-      jurusan: { value: detailData.jurusan_id, label: detailData.jurusan_nama },
+      nip: detailData.nip,
+      jurusan: { value: detailData.jurusan.id, label: detailData.jurusan.nama },
       nama: detailData.nama,
     };
   }

@@ -13,7 +13,15 @@ let detail = ({ onSetKetuaJurusanModal, pending }) => {
       <ModalHeader>Lihat Ketua Jurusan</ModalHeader>
       <ModalBody>
         <form>
-          <LabelInputVerticalComponent label="Nama Ketua Jurusan">
+          <LabelInputVerticalComponent label="NIP">
+            <Field
+              name="nip"
+              placeholder="NamaNIP Ketua Jurusan"
+              component={formInput}
+              disabled
+            />
+          </LabelInputVerticalComponent>
+          <LabelInputVerticalComponent label="Nama">
             <Field
               name="nama"
               placeholder="Nama Ketua Jurusan"
@@ -21,7 +29,7 @@ let detail = ({ onSetKetuaJurusanModal, pending }) => {
               disabled
             />
           </LabelInputVerticalComponent>
-          <LabelInputVerticalComponent label="Nama Jurusan">
+          <LabelInputVerticalComponent label="Jurusan">
             <Field
               name="jurusan"
               placeholder="Nama Jurusan"
@@ -52,7 +60,8 @@ const mapStateToProps = ({ userKetuaJurusan: { detailData, pending } }) => {
   let initialValues = {};
   if (detailData) {
     initialValues = {
-      jurusan: detailData.jurusan_nama,
+      nip: detailData.nip,
+      jurusan: detailData.jurusan.nama,
       nama: detailData.nama,
     };
   }

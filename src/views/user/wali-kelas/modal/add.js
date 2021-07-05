@@ -3,7 +3,11 @@ import { connect, useDispatch } from "react-redux";
 import { reduxForm, Field } from "redux-form";
 import { ModalBody, ModalHeader } from "reactstrap";
 import { Button } from "@material-ui/core";
-import { formInput, formSelect } from "../../../../components/commons/form";
+import {
+  formInput,
+  formSelect,
+  formInputNumber,
+} from "../../../../components/commons/form";
 import LabelInputVerticalComponent from "../../../../components/global-components/LabelInputVertical";
 import WaliKelas, {
   setWaliKelasModal,
@@ -19,8 +23,9 @@ let Add = ({
 }) => {
   const dispatch = useDispatch();
 
-  const onSubmit = ({ nama, jurusan }) => {
+  const onSubmit = ({ nip, nama, jurusan }) => {
     const param = {
+      nip,
       jurusan_id: jurusan.value,
       nama,
     };
@@ -51,14 +56,21 @@ let Add = ({
       <ModalHeader>Tambah Wali Kelas</ModalHeader>
       <ModalBody>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <LabelInputVerticalComponent label="Nama Wali Kelas">
+          <LabelInputVerticalComponent label="NIP">
+            <Field
+              name="nip"
+              placeholder="NIP Wali Kelas"
+              component={formInputNumber}
+            />
+          </LabelInputVerticalComponent>
+          <LabelInputVerticalComponent label="Nama">
             <Field
               name="nama"
               placeholder="Nama Wali Kelas"
               component={formInput}
             />
           </LabelInputVerticalComponent>
-          <LabelInputVerticalComponent label="Nama Jurusan">
+          <LabelInputVerticalComponent label="Jurusan">
             <Field
               name="jurusan"
               placeholder="Jurusan"
@@ -94,13 +106,16 @@ let Add = ({
   );
 };
 
-const validate = ({ jurusan, nama }) => {
+const validate = ({ nip, jurusan, nama }) => {
   const errors = {};
+  if (!nip) {
+    errors.nip = "NIP harus diisi";
+  }
   if (!nama) {
-    errors.nama = "Nama program studi harus diisi";
+    errors.nama = "Nama wali kelas harus diisi";
   }
   if (!jurusan) {
-    errors.jurusan = "Nama jurusan harus diisi";
+    errors.jurusan = "Jurusan harus diisi";
   }
 
   return errors;

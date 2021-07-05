@@ -139,7 +139,15 @@ const Index = ({ onChange, selectedItem }) => {
                     active={selectedItem === "Beasiswa"}
                   />
                 </NavLink>
-                <MenuItemComponent
+                <NavLink to="/orang-tua" exact className={css(styles.navlink)}>
+                  <MenuItemComponent
+                    title="Orang Tua"
+                    icon={AdminIcon}
+                    onClick={() => onItemClicked("Orang Tua")}
+                    active={selectedItem === "Orang Tua"}
+                  />
+                </NavLink>
+                {/* <MenuItemComponent
                   title="Data Orang Tua"
                   icon={SystemIcon}
                   onClick={() => onItemClicked("Data Orang Tua")}
@@ -156,7 +164,27 @@ const Index = ({ onChange, selectedItem }) => {
                       link: "/orang-tua/ibu",
                     },
                   ]}
-                />
+                /> */}
+              </>
+            )}
+            {role === "pd3" && (
+              <>
+                <NavLink to="/dashboard" exact className={css(styles.navlink)}>
+                  <MenuItemComponent
+                    title="Dashboard"
+                    icon={AdminIcon}
+                    onClick={() => onItemClicked("Dashboard")}
+                    active={selectedItem === "Dashboard"}
+                  />
+                </NavLink>
+                <NavLink to="/beasiswa" exact className={css(styles.navlink)}>
+                  <MenuItemComponent
+                    title="Beasiswa"
+                    icon={FinanceIcon}
+                    onClick={() => onItemClicked("Beasiswa")}
+                    active={selectedItem === "Beasiswa"}
+                  />
+                </NavLink>
               </>
             )}
           </Column>

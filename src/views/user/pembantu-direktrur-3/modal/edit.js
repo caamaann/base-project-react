@@ -3,12 +3,14 @@ import { connect, useDispatch } from "react-redux";
 import { reduxForm, Field } from "redux-form";
 import { ModalBody, ModalHeader } from "reactstrap";
 import { Button } from "@material-ui/core";
-import { formInput, formSelect } from "../../../../components/commons/form";
+import {
+  formInput,
+  formInputNumber,
+} from "../../../../components/commons/form";
 import PembantuDirektur3, {
   setPembantuDirektur3Modal,
 } from "../../../../store/actions/user/pembantu-direktur-3";
 import LabelInputVerticalComponent from "../../../../components/global-components/LabelInputVertical";
-import Jurusan from "../../../../store/actions/master/jurusan";
 
 let Edit = ({
   onSetPembantuDirektur3Modal,
@@ -16,14 +18,13 @@ let Edit = ({
   detailData,
   handleRefresh,
   pending,
-  jurusan,
 }) => {
   const dispatch = useDispatch();
 
-  const onSubmit = ({ jurusan, nama }) => {
+  const onSubmit = ({ nip, nama }) => {
     const param = {
       id: detailData.id,
-      jurusan_id: jurusan.value,
+      nip: nip,
       nama,
     };
     const callback = () => {
@@ -32,41 +33,24 @@ let Edit = ({
     };
     dispatch(PembantuDirektur3.put(param, callback));
   };
-  let jurusanOptions;
-  if (jurusan.data) {
-    jurusanOptions = jurusan.data.data.data.map((item) => {
-      return {
-        label: item.nama,
-        value: item.id,
-      };
-    });
-  }
 
-  useEffect(() => {
-    getJurusan();
-  }, []);
-
-  const getJurusan = () => dispatch(Jurusan.get());
   return (
     <>
       <ModalHeader>Edit Pembantu Direktur 3</ModalHeader>
       <ModalBody>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <LabelInputVerticalComponent label="Nama Pembantu Direktur 3">
+          <LabelInputVerticalComponent label="NIP">
+            <Field
+              name="nip"
+              placeholder="NIP Pembantu Direktur 3"
+              component={formInputNumber}
+            />
+          </LabelInputVerticalComponent>
+          <LabelInputVerticalComponent label="Nama">
             <Field
               name="nama"
               placeholder="Nama Pembantu Direktur 3"
               component={formInput}
-            />
-          </LabelInputVerticalComponent>
-          <LabelInputVerticalComponent label="Nama Jurusan">
-            <Field
-              name="jurusan"
-              placeholder="Jurusan"
-              component={formSelect}
-              options={jurusanOptions}
-              isAsync
-              asyncUrl="/jurusan"
             />
           </LabelInputVerticalComponent>
           <div className="d-flex justify-content-between">
@@ -95,13 +79,13 @@ let Edit = ({
   );
 };
 
-const validate = ({ jurusan, nama }) => {
+const validate = ({ nip, nama }) => {
   const errors = {};
-  if (!jurusan) {
-    errors.jurusan = "Nama jurusan harus diisi";
+  if (!nip) {
+    errors.nip = "NIP harus diisi";
   }
   if (!nama) {
-    errors.nama = "Nama wilayah harus diisi";
+    errors.nama = "Nama Pembantu Direktur 3 harus diisi";
   }
 
   return errors;
@@ -116,20 +100,18 @@ Edit = reduxForm({
 
 const mapStateToProps = ({
   userPembantuDirektur3: { detailData, pending },
-  jurusan,
 }) => {
   let initialValues = {};
   if (detailData) {
     initialValues = {
-      jurusan: { value: detailData.jurusan_id, label: detailData.jurusan_nama },
       nama: detailData.nama,
+      nip: detailData.nip,
     };
   }
   return {
     detailData,
     initialValues,
     pending,
-    jurusan,
   };
 };
 

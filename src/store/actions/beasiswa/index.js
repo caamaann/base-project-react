@@ -18,6 +18,8 @@ export const DELETE_BEASISWA_SUCCESS = "DELETE_BEASISWA_SUCCESS";
 export const DELETE_BEASISWA_ERROR = "DELETE_BEASISWA_ERROR";
 
 export const BEASISWA_DATA = "BEASISWA_DATA";
+export const ADD_BEASISWA_DATA = "ADD_BEASISWA_DATA";
+export const BEASISWA_STEP = "BEASISWA_STEP";
 export const SET_BEASISWA_MODAL = "SET_BEASISWA_MODAL";
 
 // URL: URL_{URL}
@@ -120,3 +122,9 @@ export const setBeasiswaModal = (modalType, isOpen) => (dispatch) =>
   dispatch(
     actionSuccess(SET_BEASISWA_MODAL, { modalType: modalType, isOpen: isOpen })
   );
+
+export const setBeasiswaStep = (step) => (dispatch) =>
+  dispatch({ type: BEASISWA_STEP, step });
+
+export const setAddBeasiswaData = (data) => (dispatch) =>
+  dispatch({ type: ADD_BEASISWA_DATA, data });
