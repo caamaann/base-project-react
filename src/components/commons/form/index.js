@@ -304,6 +304,7 @@ export function formDatePicker({
   meta,
 }) {
   let value = input.value;
+  console.log(value);
   return (
     <>
       {isDetail ? (

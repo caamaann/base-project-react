@@ -23,6 +23,7 @@ import UserPD3 from "./views/user/pembantu-direktrur-3";
 import Dashboard from "./views/dashboard";
 import Beasiswa from "./views/beasiswa";
 import AddBeasiswa from "./views/beasiswa/add";
+import Profile from "./views/profile";
 
 const theme = createMuiTheme({
   palette: {
@@ -142,11 +143,11 @@ const App = () => {
             component={UserPD3}
           />
           <PrivateRoute
-            head={["Profil"]}
+            head={["Profil Mahasiswa"]}
             path="/profile"
             roles={["mahasiswa"]}
             exact
-            component={Index}
+            component={Profile}
           />
           <PrivateRoute
             head={["Beasiswa"]}

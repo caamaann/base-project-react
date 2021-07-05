@@ -1,18 +1,18 @@
 import {
-  GET_WALI_KELAS_PENDING,
-  GET_WALI_KELAS_SUCCESS,
-  GET_WALI_KELAS_ERROR,
-  POST_WALI_KELAS_PENDING,
-  POST_WALI_KELAS_SUCCESS,
-  POST_WALI_KELAS_ERROR,
-  PUT_WALI_KELAS_PENDING,
-  PUT_WALI_KELAS_SUCCESS,
-  PUT_WALI_KELAS_ERROR,
-  DELETE_WALI_KELAS_PENDING,
-  DELETE_WALI_KELAS_SUCCESS,
-  DELETE_WALI_KELAS_ERROR,
-  WALI_KELAS_DATA,
-  SET_WALI_KELAS_MODAL,
+  GET_USER_WALI_KELAS_PENDING,
+  GET_USER_WALI_KELAS_SUCCESS,
+  GET_USER_WALI_KELAS_ERROR,
+  POST_USER_WALI_KELAS_PENDING,
+  POST_USER_WALI_KELAS_SUCCESS,
+  POST_USER_WALI_KELAS_ERROR,
+  PUT_USER_WALI_KELAS_PENDING,
+  PUT_USER_WALI_KELAS_SUCCESS,
+  PUT_USER_WALI_KELAS_ERROR,
+  DELETE_USER_WALI_KELAS_PENDING,
+  DELETE_USER_WALI_KELAS_SUCCESS,
+  DELETE_USER_WALI_KELAS_ERROR,
+  USER_WALI_KELAS_DATA,
+  SET_USER_WALI_KELAS_MODAL,
 } from "../../../actions/user/wali-kelas";
 
 const initialState = {
@@ -26,80 +26,80 @@ const initialState = {
 
 const waliKelas = (state = initialState, action) => {
   switch (action.type) {
-    case GET_WALI_KELAS_PENDING:
+    case GET_USER_WALI_KELAS_PENDING:
       return {
         ...state,
         pending: true,
       };
-    case GET_WALI_KELAS_SUCCESS:
+    case GET_USER_WALI_KELAS_SUCCESS:
       return {
         ...state,
         pending: false,
         data: action.data,
       };
-    case GET_WALI_KELAS_ERROR:
+    case GET_USER_WALI_KELAS_ERROR:
       return {
         ...state,
         pending: false,
         error: action.error,
       };
-    case POST_WALI_KELAS_PENDING:
+    case POST_USER_WALI_KELAS_PENDING:
       return {
         ...state,
         pending: true,
       };
-    case POST_WALI_KELAS_SUCCESS:
+    case POST_USER_WALI_KELAS_SUCCESS:
       return {
         ...state,
         pending: false,
         data: action.data,
       };
-    case POST_WALI_KELAS_ERROR:
+    case POST_USER_WALI_KELAS_ERROR:
       return {
         ...state,
         pending: false,
         error: action.error,
       };
-    case PUT_WALI_KELAS_PENDING:
+    case PUT_USER_WALI_KELAS_PENDING:
       return {
         ...state,
         pending: true,
       };
-    case PUT_WALI_KELAS_SUCCESS:
+    case PUT_USER_WALI_KELAS_SUCCESS:
       return {
         ...state,
         pending: false,
         data: action.data,
       };
-    case PUT_WALI_KELAS_ERROR:
+    case PUT_USER_WALI_KELAS_ERROR:
       return {
         ...state,
         pending: false,
         error: action.error,
       };
-    case DELETE_WALI_KELAS_PENDING:
+    case DELETE_USER_WALI_KELAS_PENDING:
       return {
         ...state,
         pending: true,
       };
-    case DELETE_WALI_KELAS_SUCCESS:
+    case DELETE_USER_WALI_KELAS_SUCCESS:
       return {
         ...state,
         pending: false,
         data: action.data,
       };
-    case DELETE_WALI_KELAS_ERROR:
+    case DELETE_USER_WALI_KELAS_ERROR:
       return {
         ...state,
         pending: false,
         error: action.error,
       };
-    case WALI_KELAS_DATA:
+    case USER_WALI_KELAS_DATA:
       return {
         ...state,
         detailData: action.data,
       };
-    case SET_WALI_KELAS_MODAL:
+    case SET_USER_WALI_KELAS_MODAL:
       return {
         ...state,
         isOpenModal: action.data.isOpen,

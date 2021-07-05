@@ -1,19 +1,21 @@
 import {
-  GET_USER_PEMBANTU_DIREKTUR_3_PENDING,
-  GET_USER_PEMBANTU_DIREKTUR_3_SUCCESS,
-  GET_USER_PEMBANTU_DIREKTUR_3_ERROR,
-  POST_USER_PEMBANTU_DIREKTUR_3_PENDING,
-  POST_USER_PEMBANTU_DIREKTUR_3_SUCCESS,
-  POST_USER_PEMBANTU_DIREKTUR_3_ERROR,
-  PUT_USER_PEMBANTU_DIREKTUR_3_PENDING,
-  PUT_USER_PEMBANTU_DIREKTUR_3_SUCCESS,
-  PUT_USER_PEMBANTU_DIREKTUR_3_ERROR,
-  DELETE_USER_PEMBANTU_DIREKTUR_3_PENDING,
-  DELETE_USER_PEMBANTU_DIREKTUR_3_SUCCESS,
-  DELETE_USER_PEMBANTU_DIREKTUR_3_ERROR,
-  USER_PEMBANTU_DIREKTUR_3_DATA,
-  SET_USER_PEMBANTU_DIREKTUR_3_MODAL,
-} from "../../../actions/user/pembantu-direktur-3";
+  GET_MAHASISWA_PENDING,
+  GET_MAHASISWA_SUCCESS,
+  GET_MAHASISWA_ERROR,
+  POST_MAHASISWA_PENDING,
+  POST_MAHASISWA_SUCCESS,
+  POST_MAHASISWA_ERROR,
+  PUT_MAHASISWA_PENDING,
+  PUT_MAHASISWA_SUCCESS,
+  PUT_MAHASISWA_ERROR,
+  DELETE_MAHASISWA_PENDING,
+  DELETE_MAHASISWA_SUCCESS,
+  DELETE_MAHASISWA_ERROR,
+  MAHASISWA_DATA,
+  ADD_MAHASISWA_DATA,
+  SET_MAHASISWA_MODAL,
+  MAHASISWA_STEP,
+} from "../../actions/mahasiswa";
 
 const initialState = {
   pending: false,
@@ -22,92 +24,103 @@ const initialState = {
   detailData: null,
   isOpenModal: false,
   modalType: "",
+  step: 0,
 };
 
-const pembantuDirektur3 = (state = initialState, action) => {
+const mahasiswa = (state = initialState, action) => {
   switch (action.type) {
-    case GET_USER_PEMBANTU_DIREKTUR_3_PENDING:
+    case GET_MAHASISWA_PENDING:
       return {
         ...state,
         pending: true,
       };
-    case GET_USER_PEMBANTU_DIREKTUR_3_SUCCESS:
+    case GET_MAHASISWA_SUCCESS:
       return {
         ...state,
         pending: false,
         data: action.data,
       };
-    case GET_USER_PEMBANTU_DIREKTUR_3_ERROR:
+    case GET_MAHASISWA_ERROR:
       return {
         ...state,
         pending: false,
         error: action.error,
       };
-    case POST_USER_PEMBANTU_DIREKTUR_3_PENDING:
+    case POST_MAHASISWA_PENDING:
       return {
         ...state,
         pending: true,
       };
-    case POST_USER_PEMBANTU_DIREKTUR_3_SUCCESS:
+    case POST_MAHASISWA_SUCCESS:
       return {
         ...state,
         pending: false,
         data: action.data,
       };
-    case POST_USER_PEMBANTU_DIREKTUR_3_ERROR:
+    case POST_MAHASISWA_ERROR:
       return {
         ...state,
         pending: false,
         error: action.error,
       };
-    case PUT_USER_PEMBANTU_DIREKTUR_3_PENDING:
+    case PUT_MAHASISWA_PENDING:
       return {
         ...state,
         pending: true,
       };
-    case PUT_USER_PEMBANTU_DIREKTUR_3_SUCCESS:
+    case PUT_MAHASISWA_SUCCESS:
       return {
         ...state,
         pending: false,
         data: action.data,
       };
-    case PUT_USER_PEMBANTU_DIREKTUR_3_ERROR:
+    case PUT_MAHASISWA_ERROR:
       return {
         ...state,
         pending: false,
         error: action.error,
       };
-    case DELETE_USER_PEMBANTU_DIREKTUR_3_PENDING:
+    case DELETE_MAHASISWA_PENDING:
       return {
         ...state,
         pending: true,
       };
-    case DELETE_USER_PEMBANTU_DIREKTUR_3_SUCCESS:
+    case DELETE_MAHASISWA_SUCCESS:
       return {
         ...state,
         pending: false,
         data: action.data,
       };
-    case DELETE_USER_PEMBANTU_DIREKTUR_3_ERROR:
+    case DELETE_MAHASISWA_ERROR:
       return {
         ...state,
         pending: false,
         error: action.error,
       };
-    case USER_PEMBANTU_DIREKTUR_3_DATA:
+    case MAHASISWA_DATA:
       return {
         ...state,
         detailData: action.data,
       };
-    case SET_USER_PEMBANTU_DIREKTUR_3_MODAL:
+    case SET_MAHASISWA_MODAL:
       return {
         ...state,
         isOpenModal: action.data.isOpen,
         modalType: action.data.modalType,
+      };
+    case MAHASISWA_STEP:
+      return {
+        ...state,
+        step: action.step,
+      };
+    case ADD_MAHASISWA_DATA:
+      return {
+        ...state,
+        data: action.data,
       };
     default:
       return state;
   }
 };
 
-export default pembantuDirektur3;
+export default mahasiswa;
