@@ -105,7 +105,15 @@ export const formInputNumber = ({
   meta,
 }) => {
   return isDetail ? (
-    <label>{input.value || "-"}</label>
+    thousandSeparator ? (
+      <label>
+        {input.value ? prefix : ""}
+        {input.value.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.") ||
+          "-"}
+      </label>
+    ) : (
+      <label>{input.value || "-"}</label>
+    )
   ) : (
     <div>
       <div className="mb-1"></div>
@@ -304,11 +312,14 @@ export function formDatePicker({
   meta,
 }) {
   let value = input.value;
-  console.log(value);
   return (
     <>
       {isDetail ? (
-        moment(input.value).format("DD MMMM YYYY")
+        input.value ? (
+          moment(input.value).format("DD MMMM YYYY")
+        ) : (
+          "-"
+        )
       ) : (
         <div>
           <MuiPickersUtilsProvider utils={DateFnsUtils}>

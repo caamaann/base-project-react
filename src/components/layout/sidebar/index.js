@@ -139,7 +139,15 @@ const Index = ({ onChange, selectedItem }) => {
                     active={selectedItem === "Beasiswa"}
                   />
                 </NavLink>
-                <MenuItemComponent
+                <NavLink to="/orang-tua" exact className={css(styles.navlink)}>
+                  <MenuItemComponent
+                    title="Orang Tua"
+                    icon={AdminIcon}
+                    onClick={() => onItemClicked("Orang Tua")}
+                    active={selectedItem === "Orang Tua"}
+                  />
+                </NavLink>
+                {/* <MenuItemComponent
                   title="Data Orang Tua"
                   icon={SystemIcon}
                   onClick={() => onItemClicked("Data Orang Tua")}
@@ -156,7 +164,7 @@ const Index = ({ onChange, selectedItem }) => {
                       link: "/orang-tua/ibu",
                     },
                   ]}
-                />
+                /> */}
               </>
             )}
             {role === "pd3" && (

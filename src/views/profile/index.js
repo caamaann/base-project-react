@@ -32,27 +32,32 @@ let Index = ({ detailData, pending }) => {
     <Container>
       <Row>
         <LeftContainer horizontal="center">
-          {pending ? (
+          {/* {pending ? (
             <CircularProgress color="primary" />
           ) : (
-            <>
-              <Profile
-                img_profile={avatarImage}
-                name={detailData?.nama}
-                prodi={detailData?.program_studi?.nama}
-              />
-              <DetailStatus>
-                <Row className={css(styles.detailMahasiswaStatusID)}>
-                  <span className={css(styles.detailMahasiswaStatusIDFont)}>
-                    NIM {detailData?.nim ? detailData.nim : "-"}
-                  </span>
-                </Row>
-              </DetailStatus>
-            </>
-          )}
+            <> */}
+          <Profile
+            img_profile={avatarImage}
+            name={detailData?.nama}
+            prodi={detailData?.program_studi?.nama}
+          />
+          <DetailStatus>
+            <Row className={css(styles.detailMahasiswaStatusID)}>
+              <span className={css(styles.detailMahasiswaStatusIDFont)}>
+                NIM {detailData?.nim ? detailData.nim : "-"}
+              </span>
+            </Row>
+            <Row className={css(styles.detailMemberStatusButton)}>
+              <span className={css(styles.detailMemberStatusButtonFont)}>
+                IPK {detailData?.ipk ? detailData.ipk : "-"}
+              </span>
+            </Row>
+          </DetailStatus>
+          {/* </>
+          )} */}
         </LeftContainer>
         <RightContainer>
-          <DataMahasiswa />
+          {pending ? <CircularProgress color="primary" /> : <DataMahasiswa />}
         </RightContainer>
       </Row>
     </Container>
@@ -63,7 +68,6 @@ const mapStateToProps = ({
   userMahasiswa: { data, detailData, pending },
   region,
 }) => {
-  console.log(detailData);
   return { data, detailData, pending, region };
 };
 
@@ -79,10 +83,24 @@ const styles = StyleSheet.create({
   detailMahasiswaStatusID: {
     padding: "10px 20px",
     border: "2px solid #49aee2",
-    borderRadius: 20,
+    borderTopLeftRadius: 20,
+    borderBottomLeftRadius: 20,
   },
   detailMahasiswaStatusIDFont: {
     color: "#49aee2",
+  },
+  detailMemberStatusButton: {
+    padding: "10px",
+    backgroundColor: "#49aee2",
+    border: "2px solid #49aee2",
+    borderTopRightRadius: 20,
+    borderBottomRightRadius: 20,
+    height: "100%",
+    alignItems: "center",
+  },
+  detailMemberStatusButtonFont: {
+    color: "#FFFFFF",
+    marginRight: 20,
   },
 });
 

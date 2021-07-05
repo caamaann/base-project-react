@@ -91,13 +91,13 @@ const styles = StyleSheet.create({
     },
   },
   hasValue: {
-    borderColor: "#00008B",
+    borderColor: "#EFF0F2",
     backgroundColor: "#EDEDED",
   },
   disabled: {
     ":hover": {
       // cursor: "not-allowed",
-      borderColor: "#e0e0e0",
+      borderColor: "#EFF0F2",
     },
   },
   icon: {

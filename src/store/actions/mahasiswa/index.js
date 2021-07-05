@@ -63,7 +63,7 @@ const post = (param, callback) => (dispatch) => {
         throw res.error;
       }
       dispatch(actionSuccess(POST_MAHASISWA_SUCCESS, res));
-      toastSuccess("Data Mahasiswa berhasil ditambahkan");
+      toastSuccess("Berhasil mendaftar beasiswa");
       if (callback) {
         callback();
       }

@@ -155,7 +155,7 @@ let Index = ({
           component={formInputNumber}
         />
       </FormContainer> */}
-      <FormContainer label="Program Studi">
+      {/* <FormContainer label="Program Studi">
         <Field
           isDetail
           placeholder="Program Studi"
@@ -165,7 +165,7 @@ let Index = ({
           asyncUrl="/program_studi"
           component={formSelect}
         />
-      </FormContainer>
+      </FormContainer> */}
       <FormContainer label="Tempat Lahir">
         <Field
           isDetail={!isEdit}
@@ -188,8 +188,8 @@ let Index = ({
           <Field
             name="gender"
             options={{
-              l: "Laki-laki",
-              p: "Perempuan",
+              "Laki-laki": "Laki-laki",
+              Perempuan: "Perempuan",
             }}
             component={Radio}
           />
@@ -308,14 +308,18 @@ const validate = ({
 };
 
 Index = reduxForm({
-  form: "userMahasiswaEditData",
+  form: "mahasiswaEditData",
   validate: validate,
   shouldError: () => true,
   enableReinitialize: true,
 })(Index);
 
-const mapStateToProps = ({ userMahasiswa, programStudi }) => {
-  const { data, detailData, pending } = userMahasiswa;
+const mapStateToProps = ({
+  userMahasiswa,
+  programStudi,
+  mahasiswa: { pending },
+}) => {
+  const { data, detailData } = userMahasiswa;
   const path = window.location.pathname.split("/");
   let initialValues = {};
   if (detailData) {
@@ -323,7 +327,7 @@ const mapStateToProps = ({ userMahasiswa, programStudi }) => {
       nama: detailData.nama,
       // nik: detailData.nik,
       tempat_lahir: detailData.tempat_lahir,
-      tanggal_lahir: moment(detailData.tanggal_lahir),
+      tanggal_lahir: detailData.tanggal_lahir,
       program_studi_name: detailData.program_studi
         ? {
             label: detailData.program_studi.nama,

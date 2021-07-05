@@ -17,6 +17,7 @@ import userKetuaJurusan from "./user/ketua-jurusan";
 import userPembantuDirektur3 from "./user/pembantu-direktur-3";
 import beasiswa from "./beasiswa";
 import mahasiswa from "./mahasiswa";
+import orangTua from "./orang-tua";
 
 const rootReducer = combineReducers({
   form: formReducer,
@@ -35,6 +36,7 @@ const rootReducer = combineReducers({
   userKetuaJurusan,
   userPembantuDirektur3,
   mahasiswa,
+  orangTua,
 });
 
 export default rootReducer;

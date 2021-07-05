@@ -23,7 +23,10 @@ import UserPD3 from "./views/user/pembantu-direktrur-3";
 import Dashboard from "./views/dashboard";
 import Beasiswa from "./views/beasiswa";
 import AddBeasiswa from "./views/beasiswa/add";
+import EditBeasiswa from "./views/beasiswa/edit";
+import DetailBeasiswa from "./views/beasiswa/detail";
 import Profile from "./views/profile";
+import OrangTua from "./views/orang-tua";
 
 const theme = createMuiTheme({
   palette: {
@@ -152,7 +155,7 @@ const App = () => {
           <PrivateRoute
             head={["Beasiswa"]}
             path="/beasiswa"
-            roles={["pd3"]}
+            roles={["pd3", "mahasiswa"]}
             exact
             component={Beasiswa}
           />
@@ -163,6 +166,44 @@ const App = () => {
             exact
             goBack
             component={AddBeasiswa}
+          />
+          <PrivateRoute
+            head={["Beasiswa", "Edit Beasiswa"]}
+            path="/beasiswa/edit/:id"
+            roles={["pd3"]}
+            exact
+            goBack
+            component={EditBeasiswa}
+          />
+          <PrivateRoute
+            head={["Beasiswa", "Detail Beasiswa"]}
+            path="/beasiswa/detail/:id"
+            roles={["pd3", "mahasiswa"]}
+            exact
+            goBack
+            component={DetailBeasiswa}
+          />
+          <PrivateRoute
+            head={["Data Orang Tua"]}
+            path="/orang-tua"
+            roles={["mahasiswa"]}
+            exact
+            component={OrangTua}
+            // component={() => <div>OrangTua</div>}
+          />
+          <PrivateRoute
+            head={["Data Orang Tua", "Ayah"]}
+            path="/orang-tua/ayah"
+            roles={["mahasiswa"]}
+            exact
+            component={() => <div>Ayah</div>}
+          />
+          <PrivateRoute
+            head={["Data Orang Tua", "Ibu"]}
+            path="/orang-tua/ibu"
+            roles={["mahasiswa"]}
+            exact
+            component={() => <div>Ibu</div>}
           />
           <PrivateRoute roles={[]} exact component={() => <div></div>} />
         </Switch>
