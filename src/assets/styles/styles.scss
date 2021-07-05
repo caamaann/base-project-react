@@ -1,5 +1,5 @@
-@import 'bigio-ui-kit/variables';
-@import 'bigio-ui-kit/mixins';
+@import "bigio-ui-kit/variables";
+@import "bigio-ui-kit/mixins";
 
 /* Change Autocomplete styles in Chrome*/
 input:-webkit-autofill,
@@ -37,7 +37,7 @@ input::-webkit-inner-spin-button {
 }
 
 /* Firefox */
-input[type='number'] {
+input[type="number"] {
   -moz-appearance: textfield;
 }
 
@@ -237,8 +237,8 @@ tfoot {
 body {
   margin: 0;
   padding: 0;
-  font-family: 'Poppins', 'Circular Std Book', 'Roboto', 'Oxygen', 'Ubuntu',
-    'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif !important;
+  font-family: "Poppins", "Circular Std Book", "Roboto", "Oxygen", "Ubuntu",
+    "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-size: 14px !important;
@@ -249,32 +249,32 @@ body {
 .MuiMenuItem-root,
 .MuiButton-root,
 .modal {
-  font-family: 'Poppins', 'Circular Std Book', 'Roboto', 'Oxygen', 'Ubuntu',
-    'Cantarell' !important;
+  font-family: "Poppins", "Circular Std Book", "Roboto", "Oxygen", "Ubuntu",
+    "Cantarell" !important;
   font-size: 14px !important;
 }
 
 @font-face {
-  font-family: 'Circular Std Book';
-  src: url('../font/circular/860c3ec7bbc5da3e97233ccecafe512e.eot'); /* IE9*/
-  src: url('../font/circular/860c3ec7bbc5da3e97233ccecafe512e.eot?#iefix')
-      format('embedded-opentype'),
-    /* IE6-IE8 */ url('../font/circular/860c3ec7bbc5da3e97233ccecafe512e.woff2')
-      format('woff2'),
+  font-family: "Circular Std Book";
+  src: url("../font/circular/860c3ec7bbc5da3e97233ccecafe512e.eot"); /* IE9*/
+  src: url("../font/circular/860c3ec7bbc5da3e97233ccecafe512e.eot?#iefix")
+      format("embedded-opentype"),
+    /* IE6-IE8 */ url("../font/circular/860c3ec7bbc5da3e97233ccecafe512e.woff2")
+      format("woff2"),
     /* chrome、firefox */
-      url('../font/circular/860c3ec7bbc5da3e97233ccecafe512e.woff')
-      format('woff'),
+      url("../font/circular/860c3ec7bbc5da3e97233ccecafe512e.woff")
+      format("woff"),
     /* chrome、firefox */
-      url('../font/circular/860c3ec7bbc5da3e97233ccecafe512e.ttf')
-      format('truetype'),
+      url("../font/circular/860c3ec7bbc5da3e97233ccecafe512e.ttf")
+      format("truetype"),
     /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
-      url('../font/circular/860c3ec7bbc5da3e97233ccecafe512e.svg#Circular Std Book')
-      format('svg'); /* iOS 4.1- */
+      url("../font/circular/860c3ec7bbc5da3e97233ccecafe512e.svg#Circular Std Book")
+      format("svg"); /* iOS 4.1- */
 }
 
-@import url('https://fonts.googleapis.com/css?family=Muli');
+@import url("https://fonts.googleapis.com/css?family=Muli");
 
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
 
 .MuiTableCell-root.MuiTableCell-footer.MuiTablePagination-root.Component-paginationRoot-1 {
   border: none !important;
@@ -298,8 +298,8 @@ button:focus {
 
 .MuiTypography-h4 {
   font-size: 2.125rem;
-  font-family: 'Circular Std Book', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell',
-    'Poppins' !important;
+  font-family: "Circular Std Book", "Roboto", "Oxygen", "Ubuntu", "Cantarell",
+    "Poppins" !important;
   font-weight: 400;
   line-height: 1.235;
   letter-spacing: 0.00735em;
@@ -307,32 +307,32 @@ button:focus {
 
 .MuiTypography-body1 {
   font-size: 1rem;
-  font-family: 'Circular Std Book', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell',
-    'Poppins' !important;
+  font-family: "Circular Std Book", "Roboto", "Oxygen", "Ubuntu", "Cantarell",
+    "Poppins" !important;
   font-weight: 400;
   line-height: 1.5;
   letter-spacing: 0.00938em;
 }
 .MuiTypography-body1 {
   font-size: 1rem;
-  font-family: 'Circular Std Book', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell',
-    'Poppins' !important;
+  font-family: "Circular Std Book", "Roboto", "Oxygen", "Ubuntu", "Cantarell",
+    "Poppins" !important;
   font-weight: 400;
   line-height: 1.5;
   letter-spacing: 0.00938em;
 }
 .MuiTypography-body2 {
   font-size: 1rem;
-  font-family: 'Circular Std Book', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell',
-    'Poppins' !important;
+  font-family: "Circular Std Book", "Roboto", "Oxygen", "Ubuntu", "Cantarell",
+    "Poppins" !important;
   font-weight: 400;
   line-height: 1.5;
   letter-spacing: 0.00938em;
 }
 .MuiTypography-caption {
   font-size: 0.75rem;
-  font-family: 'Circular Std Book', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell',
-    'Poppins' !important;
+  font-family: "Circular Std Book", "Roboto", "Oxygen", "Ubuntu", "Cantarell",
+    "Poppins" !important;
   font-weight: 400;
   line-height: 1.66;
   letter-spacing: 0.03333em;
@@ -342,8 +342,8 @@ button:focus {
   color: rgba(0, 0, 0, 0.54);
   padding: 0;
   font-size: 1rem;
-  font-family: 'Circular Std Book', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell',
-    'Poppins' !important;
+  font-family: "Circular Std Book", "Roboto", "Oxygen", "Ubuntu", "Cantarell",
+    "Poppins" !important;
   font-weight: 400;
   line-height: 1;
   letter-spacing: 0.00938em;
@@ -351,8 +351,8 @@ button:focus {
 
 .MuiInputBase-input {
   font-size: 14px !important;
-  font-family: 'Circular Std Book', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell',
-    'Poppins' !important;
+  font-family: "Circular Std Book", "Roboto", "Oxygen", "Ubuntu", "Cantarell",
+    "Poppins" !important;
 }
 
 .__react_component_tooltip.show {
@@ -399,7 +399,7 @@ Mui-expanded {
 }
 
 .canvasjs-chart-canvas {
-  font-family: 'arial';
+  font-family: "arial";
 }
 
 .dotmaps {
@@ -423,8 +423,8 @@ Mui-expanded {
 }
 
 .demo-editor {
-  font-family: 'Circular Std Book', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell',
-    'Poppins', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif !important;
+  font-family: "Circular Std Book", "Roboto", "Oxygen", "Ubuntu", "Cantarell",
+    "Poppins", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif !important;
   font-size: 14px;
 }
 
@@ -488,7 +488,7 @@ Mui-expanded {
 
 /* Create the indicator (the dot/circle - hidden when not checked) */
 .checkmark-radio:after {
-  content: '';
+  content: "";
   position: absolute;
   display: none;
 }
@@ -563,7 +563,7 @@ Mui-expanded {
 
 /* Create the checkmark/indicator (hidden when not checked) */
 .checkmark-check:after {
-  content: '';
+  content: "";
   position: absolute;
   display: none;
 }
