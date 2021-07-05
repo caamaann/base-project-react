@@ -57,7 +57,8 @@ let Login = ({ handleSubmit, loggingIn }) => {
           <span className={css(styles.loginDesc)}>
             Masukkan NIM atau NIP dan password Anda
           </span>
-          <hr className={css(styles.loginSeparator)} />
+          {/* <hr className={css(styles.loginSeparator)} /> */}
+          <div className={css(styles.loginSeparator)}></div>
           <form
             onSubmit={handleSubmit(onSubmit)}
             className={css(styles.loginForm)}
@@ -134,7 +135,7 @@ const styles = StyleSheet.create({
   loginSeparator: {
     maxWidth: 400,
     margin: '20px 15px',
-    borderTop: '2px solid rgba(0,0,0,0.1)',
+    // borderTop: '2px solid rgba(0,0,0,0.1)',
     '@media (max-width: 480px)': {
       width: '100%',
     },
