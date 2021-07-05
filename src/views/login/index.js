@@ -81,11 +81,23 @@ let Login = ({ handleSubmit, loggingIn }) => {
             />
             <Row horizontal="space-between">
               <Button
+                style={{ width: '120px' }}
                 type="submit"
                 variant="contained"
                 color="primary"
                 disabled={loggingIn}
                 className={css(styles.approveButton)}
+                startIcon={
+                  loggingIn ? (
+                    <CircularProgress
+                      size={14}
+                      color="secondary"
+                      style={{ marginRight: 10 }}
+                    />
+                  ) : (
+                    <></>
+                  )
+                }
               >
                 Login
               </Button>
