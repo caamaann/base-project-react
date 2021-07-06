@@ -21,6 +21,7 @@ import MemberIcon from "../../../assets/icon/icon-member";
 import MessageBlastIcon from "../../../assets/icon/icon-message-blast";
 import NotificationIcon from "../../../assets/icon/icon-notification";
 import PollingIcon from "../../../assets/icon/icon-polling";
+import PositionIcon from "../../../assets/icon/icon-position";
 import RequestIcon from "../../../assets/icon/icon-request";
 import SystemIcon from "../../../assets/icon/icon-system";
 import UserIcon from "../../../assets/icon/icon-user";
@@ -133,7 +134,11 @@ const Index = ({ onChange, selectedItem }) => {
                     active={selectedItem === "Profil"}
                   />
                 </NavLink>
-                <NavLink to="/beasiswa" exact className={css(styles.navlink)}>
+                <NavLink
+                  to="/mahasiswa/beasiswa"
+                  exact
+                  className={css(styles.navlink)}
+                >
                   <MenuItemComponent
                     title="Beasiswa"
                     icon={FinanceIcon}
@@ -144,7 +149,7 @@ const Index = ({ onChange, selectedItem }) => {
                 <NavLink to="/orang-tua" exact className={css(styles.navlink)}>
                   <MenuItemComponent
                     title="Orang Tua"
-                    icon={AdminIcon}
+                    icon={MemberIcon}
                     onClick={() => onItemClicked("Orang Tua")}
                     active={selectedItem === "Orang Tua"}
                   />
@@ -169,42 +174,89 @@ const Index = ({ onChange, selectedItem }) => {
                     active={selectedItem === "Data Berkas"}
                   />
                 </NavLink>
-                {/* <MenuItemComponent
-                  title="Data Berkas"
+                <MenuItemComponent
+                  title="Sertifikat"
                   icon={BerkasIcon}
-                  onClick={() => onItemClicked("Data Orang Tua")}
-                  active={selectedItem === "Data Orang Tua"}
+                  onClick={() => onItemClicked("Sertifikat")}
+                  active={selectedItem === "Sertifikat"}
                   child={[
                     {
                       icon: Berkas2Icon,
-                      title: "Berkas Wajib",
-                      link: "/berkas-sertifikat",
-                    },
-                    {
-                      icon: Berkas2Icon,
-                      title: "Sertifikat Organisasi",
-                      link: "/sertifikat/organisasi",
-                    },
-                    {
-                      icon: Berkas2Icon,
-                      title: "Sertifikat Prestasi",
+                      title: "Prestasi",
                       link: "/sertifikat/prestasi",
                     },
+                    {
+                      icon: Berkas2Icon,
+                      title: "Organisasi",
+                      link: "/sertifikat/organisasi",
+                    },
                   ]}
-                /> */}
+                />
+              </>
+            )}
+            {role === "waliKelas" && (
+              <>
+                <NavLink
+                  to="/wali-kelas/beasiswa"
+                  exact
+                  className={css(styles.navlink)}
+                >
+                  <MenuItemComponent
+                    title="Beasiswa"
+                    icon={FinanceIcon}
+                    onClick={() => onItemClicked("Beasiswa")}
+                    active={selectedItem === "Beasiswa"}
+                  />
+                </NavLink>
+              </>
+            )}
+            {role === "ketuaProdi" && (
+              <>
+                <NavLink
+                  to="/ketua-prodi/beasiswa"
+                  exact
+                  className={css(styles.navlink)}
+                >
+                  <MenuItemComponent
+                    title="Beasiswa"
+                    icon={FinanceIcon}
+                    onClick={() => onItemClicked("Beasiswa")}
+                    active={selectedItem === "Beasiswa"}
+                  />
+                </NavLink>
+              </>
+            )}
+            {role === "ketuaJurusan" && (
+              <>
+                <NavLink
+                  to="/ketua-jurusan/beasiswa"
+                  exact
+                  className={css(styles.navlink)}
+                >
+                  <MenuItemComponent
+                    title="Beasiswa"
+                    icon={FinanceIcon}
+                    onClick={() => onItemClicked("Beasiswa")}
+                    active={selectedItem === "Beasiswa"}
+                  />
+                </NavLink>
               </>
             )}
             {role === "pd3" && (
               <>
-                <NavLink to="/dashboard" exact className={css(styles.navlink)}>
+                {/* <NavLink to="/dashboard" exact className={css(styles.navlink)}>
                   <MenuItemComponent
                     title="Dashboard"
                     icon={AdminIcon}
                     onClick={() => onItemClicked("Dashboard")}
                     active={selectedItem === "Dashboard"}
                   />
-                </NavLink>
-                <NavLink to="/beasiswa" exact className={css(styles.navlink)}>
+                </NavLink> */}
+                <NavLink
+                  to="/pd-3/beasiswa"
+                  exact
+                  className={css(styles.navlink)}
+                >
                   <MenuItemComponent
                     title="Beasiswa"
                     icon={FinanceIcon}

@@ -19,6 +19,8 @@ import beasiswa from "./beasiswa";
 import mahasiswa from "./mahasiswa";
 import orangTua from "./orang-tua";
 import saudara from "./saudara";
+import sertifikatOrganisasi from "./sertifikat/organisasi";
+import sertifikatPrestasi from "./sertifikat/prestasi";
 
 const appReducer = combineReducers({
   form: formReducer,
@@ -39,6 +41,8 @@ const appReducer = combineReducers({
   mahasiswa,
   orangTua,
   saudara,
+  sertifikatOrganisasi,
+  sertifikatPrestasi,
 });
 
 const rootReducer = (state, action) => {

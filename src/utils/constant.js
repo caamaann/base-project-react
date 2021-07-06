@@ -76,3 +76,33 @@ export const optionsAHP = [
     label: 9,
   },
 ];
+
+export const optionsSertifikatPrestasi = [
+  {
+    value: "Internasional",
+    label: "Internasional",
+  },
+  {
+    value: "Nasional",
+    label: "Nasional",
+  },
+  {
+    value: "Provinsi",
+    label: "Provinsi",
+  },
+  {
+    value: "Kota",
+    label: "Kota",
+  },
+];
+
+export const optionsSertifikatOrganisasi = [
+  {
+    value: "Pengurus Organisasi",
+    label: "Pengurus Organisasi",
+  },
+  {
+    value: "Kepanitiaan Program Kerja Kemahasiswaan",
+    label: "Kepanitiaan Program Kerja Kemahasiswaan",
+  },
+];

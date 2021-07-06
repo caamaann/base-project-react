@@ -4,27 +4,19 @@ import { reduxForm, Field } from "redux-form";
 import { ModalBody, ModalHeader } from "reactstrap";
 import { Button } from "@material-ui/core";
 import { formInput } from "../../../../components/commons/form";
-import { setProgramStudiModal } from "../../../../store/actions/master/program-studi";
+import { setSertifikatOrganisasiModal } from "../../../../store/actions/sertifikat/organisasi";
 import LabelInputVerticalComponent from "../../../../components/global-components/LabelInputVertical";
 
-let detail = ({ onSetProgramStudiModal, pending }) => {
+let detail = ({ onSetSertifikatOrganisasiModal, pending }) => {
   return (
     <>
-      <ModalHeader>Lihat Program Studi</ModalHeader>
+      <ModalHeader>Lihat SertifikatOrganisasi</ModalHeader>
       <ModalBody>
         <form>
-          <LabelInputVerticalComponent label="Nama Program Studi">
+          <LabelInputVerticalComponent label="Nama SertifikatOrganisasi">
             <Field
               name="nama"
-              placeholder="Nama Program Studi"
-              component={formInput}
-              disabled
-            />
-          </LabelInputVerticalComponent>
-          <LabelInputVerticalComponent label="Nama Jurusan">
-            <Field
-              name="jurusan"
-              placeholder="Nama Jurusan"
+              placeholder="Nama SertifikatOrganisasi"
               component={formInput}
               disabled
             />
@@ -32,10 +24,10 @@ let detail = ({ onSetProgramStudiModal, pending }) => {
         </form>
         <Button
           variant="outlined"
-          disabled={pending}
           className="mt-3"
+          disabled={pending}
           color="primary"
-          onClick={() => onSetProgramStudiModal("", false)}
+          onClick={() => onSetSertifikatOrganisasiModal("", false)}
         >
           Kembali
         </Button>
@@ -45,14 +37,13 @@ let detail = ({ onSetProgramStudiModal, pending }) => {
 };
 
 detail = reduxForm({
-  form: "programStudiDetail",
+  form: "sertifikatOrganisasiDetail",
 })(detail);
 
-const mapStateToProps = ({ programStudi: { detailData, pending } }) => {
+const mapStateToProps = ({ sertifikatOrganisasi: { detailData, pending } }) => {
   let initialValues = {};
   if (detailData) {
     initialValues = {
-      jurusan: detailData.jurusan_nama,
       nama: detailData.nama,
     };
   }
@@ -64,8 +55,8 @@ const mapStateToProps = ({ programStudi: { detailData, pending } }) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onSetProgramStudiModal: (modalType, isOpen) =>
-      dispatch(setProgramStudiModal(modalType, isOpen)),
+    onSetSertifikatOrganisasiModal: (modalType, isOpen) =>
+      dispatch(setSertifikatOrganisasiModal(modalType, isOpen)),
   };
 };
 

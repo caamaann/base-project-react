@@ -1,10 +1,10 @@
 import React, { useState, useRef, useEffect } from "react";
 import { withRouter } from "react-router-dom";
 import { connect, useDispatch } from "react-redux";
-import Jurusan, {
-  setJurusanData,
-  setJurusanModal,
-} from "../../../store/actions/master/jurusan";
+import SertifikatPrestasi, {
+  setSertifikatPrestasiData,
+  setSertifikatPrestasiModal,
+} from "../../../store/actions/sertifikat/prestasi";
 import { Row } from "simple-flexbox";
 import MaterialTable from "material-table";
 import SearchIcon from "@material-ui/icons/Search";
@@ -15,8 +15,14 @@ import Container from "../../../components/container";
 import Modal from "./modal";
 import debounce from "lodash.debounce";
 import { history } from "../../../utils";
+import { FOLDER_SERTIFIKAT_PRESTASI } from "../../../utils/constant";
+import DetailContentLihatBerkas from "../../../components/global-components/DetailContent/LihatBerkas";
 
-const Index = ({ onSetJurusanModal, onSetJurusanData, pending }) => {
+const Index = ({
+  onSetSertifikatPrestasiModal,
+  onSetSertifikatPrestasiData,
+  pending,
+}) => {
   const [searchText, setSearchText] = useState("");
   const dispatch = useDispatch();
   const tableRef = useRef();
@@ -34,9 +40,9 @@ const Index = ({ onSetJurusanModal, onSetJurusanData, pending }) => {
     delayedQuery(e.target.value);
   };
 
-  const setModal = (modalType, isOpen, data) => {
-    onSetJurusanModal(modalType, isOpen);
-    onSetJurusanData(data);
+  const setModal = (modalType, isOpen, data, folderName, fileName) => {
+    onSetSertifikatPrestasiModal(modalType, isOpen, data, folderName, fileName);
+    onSetSertifikatPrestasiData(data);
   };
 
   return (
@@ -49,18 +55,18 @@ const Index = ({ onSetJurusanModal, onSetJurusanData, pending }) => {
           disabled={pending}
           onClick={() => setModal("add", true, null)}
         >
-          Tambah Jurusan
+          Tambah Sertifikat Prestasi
         </Button>
-        <InputComponent
+        {/* <InputComponent
           onChange={(e) => handleSearchChange(e)}
-          placeholder="Cari nama jurusan"
+          placeholder="Cari nama sertifikatPrestasi"
           endIcon={SearchIcon}
-        />
+        /> */}
       </Row>
       <div className="m-3">
         <MaterialTable
           tableRef={tableRef}
-          title="Jurusan"
+          title="SertifikatPrestasi"
           columns={[
             {
               title: "No",
@@ -68,9 +74,29 @@ const Index = ({ onSetJurusanModal, onSetJurusanData, pending }) => {
               width: 40,
             },
             {
-              title: "Nama",
-              render: ({ nama }) => {
-                return nama ? nama : "-";
+              title: "Berkas",
+              render: ({ file_sertifikat }) => {
+                return file_sertifikat ? (
+                  <DetailContentLihatBerkas
+                    onClick={() =>
+                      setModal(
+                        "show-document",
+                        true,
+                        "Sertifikat Prestasi",
+                        FOLDER_SERTIFIKAT_PRESTASI,
+                        file_sertifikat
+                      )
+                    }
+                  />
+                ) : (
+                  <span>Belum ada berkas</span>
+                );
+              },
+            },
+            {
+              title: "Tingkat Prestasi",
+              render: ({ tingkat_prestasi }) => {
+                return tingkat_prestasi ? tingkat_prestasi : "-";
               },
             },
             {
@@ -82,9 +108,9 @@ const Index = ({ onSetJurusanModal, onSetJurusanData, pending }) => {
               render: (rowData) => {
                 return (
                   <DetailButtonComponent>
-                    <MenuItem onClick={() => setModal("detail", true, rowData)}>
+                    {/* <MenuItem onClick={() => setModal("detail", true, rowData)}>
                       Lihat Detail
-                    </MenuItem>
+                    </MenuItem> */}
                     <MenuItem onClick={() => setModal("edit", true, rowData)}>
                       Edit Data
                     </MenuItem>
@@ -103,7 +129,7 @@ const Index = ({ onSetJurusanModal, onSetJurusanData, pending }) => {
                 length: 10,
                 search_text: searchText,
               };
-              dispatch(Jurusan.get(param, resolve));
+              dispatch(SertifikatPrestasi.get(param, resolve));
             })
           }
           options={{
@@ -133,15 +159,30 @@ const Index = ({ onSetJurusanModal, onSetJurusanData, pending }) => {
   );
 };
 
-const mapStateToProps = ({ jurusan: { pending } }) => {
+const mapStateToProps = ({ sertifikatPrestasi: { pending } }) => {
   return { pending };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onSetJurusanModal: (modalType, isOpen) =>
-      dispatch(setJurusanModal(modalType, isOpen)),
-    onSetJurusanData: (data) => dispatch(setJurusanData(data)),
+    onSetSertifikatPrestasiModal: (
+      modalType,
+      isOpen,
+      title,
+      folderName,
+      fileName
+    ) =>
+      dispatch(
+        setSertifikatPrestasiModal(
+          modalType,
+          isOpen,
+          title,
+          folderName,
+          fileName
+        )
+      ),
+    onSetSertifikatPrestasiData: (data) =>
+      dispatch(setSertifikatPrestasiData(data)),
   };
 };
 

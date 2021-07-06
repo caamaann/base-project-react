@@ -1,19 +1,23 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Modal } from "reactstrap";
-import { setProgramStudiModal } from "../../../../store/actions/master/program-studi";
+import { setSertifikatOrganisasiModal } from "../../../../store/actions/sertifikat/organisasi";
 import Detail from "./detail";
 import Add from "./add";
 import Edit from "./edit";
 import Delete from "./delete";
+import ShowDocument from "./show-document";
 
 const index = ({
   isOpenModal,
   modalType,
-  onSetProgramStudiModal,
+  onSetSertifikatOrganisasiModal,
   handleRefresh,
+  title,
+  fileName,
+  folderName,
 }) => {
-  const toggle = () => onSetProgramStudiModal("", !isOpenModal);
+  const toggle = () => onSetSertifikatOrganisasiModal("", !isOpenModal);
   const child = (modalType) => {
     switch (modalType) {
       case "add":
@@ -24,11 +28,19 @@ const index = ({
         return <Edit handleRefresh={handleRefresh} />;
       case "delete":
         return <Delete handleRefresh={handleRefresh} />;
+      case "show-document":
+        return (
+          <ShowDocument
+            title={title}
+            fileName={fileName}
+            folderName={folderName}
+          />
+        );
     }
   };
   return (
     <Modal
-      className="modal-small"
+      className="modal-medium"
       isOpen={isOpenModal}
       toggle={toggle}
       centered
@@ -38,14 +50,16 @@ const index = ({
   );
 };
 
-const mapStateToProps = ({ programStudi: { isOpenModal, modalType } }) => {
-  return { isOpenModal, modalType };
+const mapStateToProps = ({
+  sertifikatOrganisasi: { isOpenModal, modalType, title, folderName, fileName },
+}) => {
+  return { isOpenModal, modalType, title, folderName, fileName };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onSetProgramStudiModal: (type, isOpen) =>
-      dispatch(setProgramStudiModal(type, isOpen)),
+    onSetSertifikatOrganisasiModal: (type, isOpen) =>
+      dispatch(setSertifikatOrganisasiModal(type, isOpen)),
   };
 };
 

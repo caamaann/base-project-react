@@ -1,0 +1,119 @@
+import {
+  GET_SERTIFIKAT_ORGANISASI_PENDING,
+  GET_SERTIFIKAT_ORGANISASI_SUCCESS,
+  GET_SERTIFIKAT_ORGANISASI_ERROR,
+  POST_SERTIFIKAT_ORGANISASI_PENDING,
+  POST_SERTIFIKAT_ORGANISASI_SUCCESS,
+  POST_SERTIFIKAT_ORGANISASI_ERROR,
+  PUT_SERTIFIKAT_ORGANISASI_PENDING,
+  PUT_SERTIFIKAT_ORGANISASI_SUCCESS,
+  PUT_SERTIFIKAT_ORGANISASI_ERROR,
+  DELETE_SERTIFIKAT_ORGANISASI_PENDING,
+  DELETE_SERTIFIKAT_ORGANISASI_SUCCESS,
+  DELETE_SERTIFIKAT_ORGANISASI_ERROR,
+  SERTIFIKAT_ORGANISASI_DATA,
+  SET_SERTIFIKAT_ORGANISASI_MODAL,
+} from "../../../actions/sertifikat/organisasi";
+
+const initialState = {
+  pending: false,
+  error: null,
+  data: null,
+  detailData: null,
+  isOpenModal: false,
+  modalType: "",
+  title: "",
+  folderName: "",
+  fileName: "",
+};
+
+const sertifikatOrganisasi = (state = initialState, action) => {
+  switch (action.type) {
+    case GET_SERTIFIKAT_ORGANISASI_PENDING:
+      return {
+        ...state,
+        pending: true,
+      };
+    case GET_SERTIFIKAT_ORGANISASI_SUCCESS:
+      return {
+        ...state,
+        pending: false,
+        data: action.data,
+      };
+    case GET_SERTIFIKAT_ORGANISASI_ERROR:
+      return {
+        ...state,
+        pending: false,
+        error: action.error,
+      };
+    case POST_SERTIFIKAT_ORGANISASI_PENDING:
+      return {
+        ...state,
+        pending: true,
+      };
+    case POST_SERTIFIKAT_ORGANISASI_SUCCESS:
+      return {
+        ...state,
+        pending: false,
+        data: action.data,
+      };
+    case POST_SERTIFIKAT_ORGANISASI_ERROR:
+      return {
+        ...state,
+        pending: false,
+        error: action.error,
+      };
+    case PUT_SERTIFIKAT_ORGANISASI_PENDING:
+      return {
+        ...state,
+        pending: true,
+      };
+    case PUT_SERTIFIKAT_ORGANISASI_SUCCESS:
+      return {
+        ...state,
+        pending: false,
+        data: action.data,
+      };
+    case PUT_SERTIFIKAT_ORGANISASI_ERROR:
+      return {
+        ...state,
+        pending: false,
+        error: action.error,
+      };
+    case DELETE_SERTIFIKAT_ORGANISASI_PENDING:
+      return {
+        ...state,
+        pending: true,
+      };
+    case DELETE_SERTIFIKAT_ORGANISASI_SUCCESS:
+      return {
+        ...state,
+        pending: false,
+        data: action.data,
+      };
+    case DELETE_SERTIFIKAT_ORGANISASI_ERROR:
+      return {
+        ...state,
+        pending: false,
+        error: action.error,
+      };
+    case SERTIFIKAT_ORGANISASI_DATA:
+      return {
+        ...state,
+        detailData: action.data,
+      };
+    case SET_SERTIFIKAT_ORGANISASI_MODAL:
+      return {
+        ...state,
+        isOpenModal: action.data.isOpen,
+        modalType: action.data.modalType,
+        title: action.data.title,
+        folderName: action.data.folderName,
+        fileName: action.data.fileName,
+      };
+    default:
+      return state;
+  }
+};
+
+export default sertifikatOrganisasi;

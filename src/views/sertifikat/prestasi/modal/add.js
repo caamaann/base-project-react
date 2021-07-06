@@ -3,35 +3,53 @@ import { connect, useDispatch } from "react-redux";
 import { reduxForm, Field } from "redux-form";
 import { ModalBody, ModalHeader } from "reactstrap";
 import { Button } from "@material-ui/core";
-import { formInput } from "../../../../components/commons/form";
+import { formSelect, formFile } from "../../../../components/commons/form";
 import LabelInputVerticalComponent from "../../../../components/global-components/LabelInputVertical";
-import Jurusan, {
-  setJurusanModal,
-} from "../../../../store/actions/master/jurusan";
+import SertifikatPrestasi, {
+  setSertifikatPrestasiModal,
+} from "../../../../store/actions/sertifikat/prestasi";
+import { optionsSertifikatPrestasi } from "../../../../utils/constant";
 
-let Add = ({ onSetJurusanModal, handleSubmit, handleRefresh, pending }) => {
+let Add = ({
+  onSetSertifikatPrestasiModal,
+  handleSubmit,
+  handleRefresh,
+  pending,
+}) => {
   const dispatch = useDispatch();
 
-  const onSubmit = ({ nama }) => {
-    const param = {
-      nama,
-    };
+  const onSubmit = ({ file_sertifikat, tingkat_prestasi }) => {
+    let formData = new FormData();
+    formData.append("file_sertifikat", file_sertifikat);
+    formData.append("tingkat_prestasi", tingkat_prestasi.value);
+
     const callback = () => {
-      onSetJurusanModal("", false);
+      onSetSertifikatPrestasiModal("", false);
       handleRefresh();
     };
-    dispatch(Jurusan.post(param, callback));
+    dispatch(SertifikatPrestasi.post(formData, callback));
   };
   return (
     <>
-      <ModalHeader>Tambah Jurusan</ModalHeader>
+      <ModalHeader>Tambah Sertifikat Prestasi</ModalHeader>
       <ModalBody>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <LabelInputVerticalComponent label="Nama Jurusan">
+          <LabelInputVerticalComponent label="Tingkat Prestasi">
             <Field
-              name="nama"
-              placeholder="Nama Jurusan"
-              component={formInput}
+              name="tingkat_prestasi"
+              placeholder="Tingkat Prestasi"
+              options={optionsSertifikatPrestasi}
+              component={formSelect}
+            />
+          </LabelInputVerticalComponent>
+          <LabelInputVerticalComponent label="File Sertifikat">
+            <Field
+              name="file_sertifikat"
+              type="file"
+              fileType="pdf/image"
+              title="Masukkan Berkas"
+              message="PDF / JPG"
+              component={formFile}
             />
           </LabelInputVerticalComponent>
           <div className="d-flex justify-content-between">
@@ -40,7 +58,7 @@ let Add = ({ onSetJurusanModal, handleSubmit, handleRefresh, pending }) => {
               className="mt-3"
               disabled={pending}
               color="primary"
-              onClick={() => onSetJurusanModal("", false)}
+              onClick={() => onSetSertifikatPrestasiModal("", false)}
             >
               Batal
             </Button>
@@ -60,30 +78,33 @@ let Add = ({ onSetJurusanModal, handleSubmit, handleRefresh, pending }) => {
   );
 };
 
-const validate = ({ nama }) => {
+const validate = ({ file_sertifikat, tingkat_prestasi }) => {
   const errors = {};
-  if (!nama) {
-    errors.nama = "Nama jurusan harus diisi";
+  if (!file_sertifikat) {
+    errors.file_sertifikat = "Sertifikat prestasi harus diisi";
+  }
+  if (!tingkat_prestasi) {
+    errors.tingkat_prestasi = "Tingkat prestasi harus diisi";
   }
 
   return errors;
 };
 
 Add = reduxForm({
-  form: "jurusanAdd",
+  form: "sertifikatPrestasiAdd",
   validate: validate,
   shouldError: () => true,
   enableReinitialize: true,
 })(Add);
 
-const mapStateToProps = ({ jurusan: { pending } }) => {
+const mapStateToProps = ({ sertifikatPrestasi: { pending } }) => {
   return { pending };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onSetJurusanModal: (modalType, isOpen) =>
-      dispatch(setJurusanModal(modalType, isOpen)),
+    onSetSertifikatPrestasiModal: (modalType, isOpen) =>
+      dispatch(setSertifikatPrestasiModal(modalType, isOpen)),
   };
 };
 

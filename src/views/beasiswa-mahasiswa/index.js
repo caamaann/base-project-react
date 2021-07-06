@@ -11,9 +11,9 @@ import MaterialTable from "material-table";
 import SearchIcon from "@material-ui/icons/Search";
 import { Paper, Button, MenuItem } from "@material-ui/core";
 import DetailButtonComponent from "../../components/global-components/DetailButton";
+import TableStatus from "../../components/global-components/TableStatus";
 import InputComponent from "../../components/commons/form/input";
 import Container from "../../components/container";
-import Modal from "./modal";
 import debounce from "lodash.debounce";
 import { history } from "../../utils";
 import { getUser } from "../../utils/user";
@@ -51,7 +51,7 @@ const Index = ({
   const setDetail = (type, data) => {
     onSetAddBeasiswaData(data);
     // onSetBeasiswaData(data);
-    history.push(`/beasiswa/${type}/${data.id}`);
+    history.push(`/mahasiswa/beasiswa/${type}/${data.id}`);
   };
 
   let columns = [
@@ -94,16 +94,6 @@ const Index = ({
             <MenuItem onClick={() => setDetail("detail", rowData)}>
               Lihat Detail
             </MenuItem>
-            {user.role_code === "pd3" && (
-              <>
-                <MenuItem onClick={() => setDetail("edit", rowData)}>
-                  Edit Data
-                </MenuItem>
-                <MenuItem onClick={() => setModal("delete", true, rowData)}>
-                  Hapus Data
-                </MenuItem>
-              </>
-            )}
           </DetailButtonComponent>
         );
       },
@@ -114,19 +104,24 @@ const Index = ({
     columns.splice(4, 0, {
       title: "Status Pendaftaran",
       render: ({ status }) => {
-        return status
-          ? status === 0
-            ? "Belum mendaftar"
-            : status === 1
-            ? "Sudah mendaftar"
-            : "-"
-          : "-";
+        return status > -1 ? (
+          <TableStatus
+            status={
+              status === 0
+                ? "Belum mendaftar"
+                : status === 1
+                ? "Sudah mendaftar"
+                : "Menerima beasiswa"
+            }
+          />
+        ) : (
+          "-"
+        );
       },
     });
   }
   return (
     <Container>
-      <Modal handleRefresh={(state) => handleRefresh(state)} />
       <Row className="m-3 justify-content-between">
         {user.role_code === "pd3" ? (
           <Button

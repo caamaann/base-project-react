@@ -3,70 +3,56 @@ import { connect, useDispatch } from "react-redux";
 import { reduxForm, Field } from "redux-form";
 import { ModalBody, ModalHeader } from "reactstrap";
 import { Button } from "@material-ui/core";
-import { formInput, formSelect } from "../../../../components/commons/form";
-import ProgramStudi, {
-  setProgramStudiModal,
-} from "../../../../store/actions/master/program-studi";
+import { formSelect, formFile } from "../../../../components/commons/form";
+import SertifikatOrganisasi, {
+  setSertifikatOrganisasiModal,
+} from "../../../../store/actions/sertifikat/organisasi";
 import LabelInputVerticalComponent from "../../../../components/global-components/LabelInputVertical";
-import Jurusan from "../../../../store/actions/master/jurusan";
+import { optionsSertifikatOrganisasi } from "../../../../utils/constant";
 
 let Edit = ({
-  onSetProgramStudiModal,
+  onSetSertifikatOrganisasiModal,
   handleSubmit,
   detailData,
   handleRefresh,
   pending,
-  jurusan,
 }) => {
   const dispatch = useDispatch();
 
-  const onSubmit = ({ jurusan, nama }) => {
-    const param = {
-      id: detailData.id,
-      jurusan_id: jurusan.value,
-      nama,
-    };
+  const onSubmit = ({ file_sertifikat, jenis }) => {
+    let formData = new FormData();
+    formData.append("id", detailData.id);
+    formData.append("file_sertifikat", file_sertifikat);
+    formData.append("jenis", jenis.value);
+    formData.append("_method", "PUT");
+
     const callback = () => {
-      onSetProgramStudiModal("", false);
+      onSetSertifikatOrganisasiModal("", false);
       handleRefresh();
     };
-    dispatch(ProgramStudi.put(param, callback));
+    dispatch(SertifikatOrganisasi.put(formData, callback));
   };
-  let jurusanOptions;
-  if (jurusan.data) {
-    jurusanOptions = jurusan.data.data.data.map((item) => {
-      return {
-        label: item.nama,
-        value: item.id,
-      };
-    });
-  }
-
-  useEffect(() => {
-    getJurusan();
-  }, []);
-
-  const getJurusan = () => dispatch(Jurusan.get());
   return (
     <>
-      <ModalHeader>Edit Program Studi</ModalHeader>
+      <ModalHeader>Edit Sertifikat Organisasi</ModalHeader>
       <ModalBody>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <LabelInputVerticalComponent label="Nama Program Studi">
+          <LabelInputVerticalComponent label="Jenis">
             <Field
-              name="nama"
-              placeholder="Nama Program Studi"
-              component={formInput}
+              name="jenis"
+              placeholder="Jenis"
+              options={optionsSertifikatOrganisasi}
+              component={formSelect}
             />
           </LabelInputVerticalComponent>
-          <LabelInputVerticalComponent label="Nama Jurusan">
+          <LabelInputVerticalComponent label="File Sertifikat">
             <Field
-              name="jurusan"
-              placeholder="Jurusan"
-              component={formSelect}
-              options={jurusanOptions}
-              isAsync
-              asyncUrl="/jurusan"
+              name="file_sertifikat"
+              type="file"
+              fileType="pdf/image"
+              title="Masukkan Berkas"
+              message="PDF / JPG"
+              component={formFile}
             />
           </LabelInputVerticalComponent>
           <div className="d-flex justify-content-between">
@@ -75,7 +61,7 @@ let Edit = ({
               className="mt-3"
               disabled={pending}
               color="primary"
-              onClick={() => onSetProgramStudiModal("", false)}
+              onClick={() => onSetSertifikatOrganisasiModal("", false)}
             >
               Batal
             </Button>
@@ -95,48 +81,47 @@ let Edit = ({
   );
 };
 
-const validate = ({ jurusan, nama }) => {
+const validate = ({ file_sertifikat, jenis }) => {
   const errors = {};
-  if (!jurusan) {
-    errors.jurusan = "Nama jurusan harus diisi";
+  if (!file_sertifikat) {
+    errors.file_sertifikat = "Sertifikat organisasi harus diisi";
   }
-  if (!nama) {
-    errors.nama = "Nama wilayah harus diisi";
+  if (!jenis) {
+    errors.jenis = "Tingkat organisasi harus diisi";
   }
 
   return errors;
 };
 
 Edit = reduxForm({
-  form: "programStudiEdit",
+  form: "sertifikatOrganisasiEdit",
   validate: validate,
   shouldError: () => true,
   enableReinitialize: true,
 })(Edit);
 
-const mapStateToProps = ({
-  programStudi: { detailData, pending },
-  jurusan,
-}) => {
+const mapStateToProps = ({ sertifikatOrganisasi: { detailData, pending } }) => {
   let initialValues = {};
   if (detailData) {
     initialValues = {
-      jurusan: { value: detailData.jurusan_id, label: detailData.jurusan_nama },
-      nama: detailData.nama,
+      file_sertifikat: detailData.file_sertifikat,
+      jenis: {
+        value: detailData.jenis,
+        label: detailData.jenis,
+      },
     };
   }
   return {
     detailData,
     initialValues,
     pending,
-    jurusan,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onSetProgramStudiModal: (modalType, isOpen) =>
-      dispatch(setProgramStudiModal(modalType, isOpen)),
+    onSetSertifikatOrganisasiModal: (modalType, isOpen) =>
+      dispatch(setSertifikatOrganisasiModal(modalType, isOpen)),
   };
 };
 

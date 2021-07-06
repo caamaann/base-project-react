@@ -21,14 +21,24 @@ import UserKetuaProdi from "./views/user/ketua-program-studi";
 import UserKetuaJurusan from "./views/user/ketua-jurusan";
 import UserPD3 from "./views/user/pembantu-direktrur-3";
 import Dashboard from "./views/dashboard";
-import Beasiswa from "./views/beasiswa";
-import AddBeasiswa from "./views/beasiswa/add";
-import EditBeasiswa from "./views/beasiswa/edit";
-import DetailBeasiswa from "./views/beasiswa/detail";
+import Beasiswa from "./views/beasiswa-pd3";
+import AddBeasiswa from "./views/beasiswa-pd3/add";
+import EditBeasiswa from "./views/beasiswa-pd3/edit";
+import DetailBeasiswa from "./views/beasiswa-pd3/detail";
 import Profile from "./views/profile";
 import OrangTua from "./views/orang-tua";
 import Saudara from "./views/saudara";
 import Berkas from "./views/berkas";
+import SertifikatPrestasi from "./views/sertifikat/prestasi";
+import SertifikatOrganisasi from "./views/sertifikat/organisasi";
+import BeasiswaMahasiswa from "./views/beasiswa-mahasiswa";
+import DetailBeasiswaMahasiswa from "./views/beasiswa-mahasiswa/detail";
+import BeasiswaWaliKelas from "./views/beasiswa-walikelas";
+import DetailBeasiswaWaliKelas from "./views/beasiswa-walikelas/detail";
+import BeasiswaKetuaProdi from "./views/beasiswa-ketuaprodi";
+import DetailBeasiswaKetuaProdi from "./views/beasiswa-ketuaprodi/detail";
+import BeasiswaKetuaJurusan from "./views/beasiswa-ketuajurusan";
+import DetailBeasiswaKetuaJurusan from "./views/beasiswa-ketuajurusan/detail";
 
 const theme = createMuiTheme({
   palette: {
@@ -95,7 +105,7 @@ const App = () => {
           <PrivateRoute
             head={["Dashboard"]}
             path="/dashboard"
-            roles={["admin", "waliKelas", "ketuaProdi", "ketuaJurusan", "pd3"]}
+            roles={["admin"]}
             exact
             component={Dashboard}
           />
@@ -157,14 +167,14 @@ const App = () => {
           />
           <PrivateRoute
             head={["Beasiswa"]}
-            path="/beasiswa"
-            roles={["pd3", "mahasiswa"]}
+            path="/pd3/beasiswa"
+            roles={["pd3"]}
             exact
             component={Beasiswa}
           />
           <PrivateRoute
             head={["Beasiswa", "Tambah Beasiswa"]}
-            path="/beasiswa/add"
+            path="/pd3/beasiswa/add"
             roles={["pd3"]}
             exact
             goBack
@@ -172,7 +182,7 @@ const App = () => {
           />
           <PrivateRoute
             head={["Beasiswa", "Edit Beasiswa"]}
-            path="/beasiswa/edit/:id"
+            path="/pd3/beasiswa/edit/:id"
             roles={["pd3"]}
             exact
             goBack
@@ -180,11 +190,71 @@ const App = () => {
           />
           <PrivateRoute
             head={["Beasiswa", "Detail Beasiswa"]}
-            path="/beasiswa/detail/:id"
-            roles={["pd3", "mahasiswa"]}
+            path="/pd3/beasiswa/detail/:id"
+            roles={["pd3"]}
             exact
             goBack
             component={DetailBeasiswa}
+          />
+          <PrivateRoute
+            head={["Beasiswa"]}
+            path="/mahasiswa/beasiswa"
+            roles={["mahasiswa"]}
+            exact
+            component={BeasiswaMahasiswa}
+          />
+          <PrivateRoute
+            head={["Beasiswa", "Detail Beasiswa"]}
+            path="/mahasiswa/beasiswa/detail/:id"
+            roles={["mahasiswa"]}
+            exact
+            goBack
+            component={DetailBeasiswaMahasiswa}
+          />
+          <PrivateRoute
+            head={["Beasiswa"]}
+            path="/wali-kelas/beasiswa"
+            roles={["walikelas"]}
+            exact
+            component={BeasiswaWaliKelas}
+          />
+          <PrivateRoute
+            head={["Beasiswa", "Detail Beasiswa"]}
+            path="/wali-kelas/beasiswa/detail/:id"
+            roles={["walikelas"]}
+            exact
+            goBack
+            component={DetailBeasiswaWaliKelas}
+          />
+          <PrivateRoute
+            head={["Beasiswa"]}
+            path="/ketua-prodi/beasiswa"
+            roles={["ketuaprodi"]}
+            exact
+            component={BeasiswaKetuaProdi}
+          />
+          <PrivateRoute
+            head={["Beasiswa", "Detail Beasiswa"]}
+            path="/ketua-prodi/beasiswa/detail/:id"
+            roles={["ketuaprodi"]}
+            exact
+            goBack
+            component={DetailBeasiswaKetuaProdi}
+          />
+          <PrivateRoute
+            head={["Beasiswa"]}
+            path="/ketua-jurusan/beasiswa"
+            roles={["ketuajurusan"]}
+            exact
+            component={BeasiswaKetuaJurusan}
+          />
+          <PrivateRoute
+            head={["Beasiswa", "Detail Beasiswa"]}
+            path="/ketua-jurusan/beasiswa/detail/:id"
+            roles={["ketuajurusan"]}
+            exact
+            goBack
+            component={DetailBeasiswaKetuaJurusan}
           />
           <PrivateRoute
             head={["Data Orang Tua"]}
@@ -207,28 +277,25 @@ const App = () => {
             exact
             component={Berkas}
           />
-          {/* <PrivateRoute
-            head={["Data Berkas", "Berkas & Sertifikat Wajib"]}
-            path="/berkas-sertifikat"
-            roles={["mahasiswa"]}
-            exact
-            component={() => <div>Berkas & Sertifikat Wajib</div>}
-          />
           <PrivateRoute
-            head={["Data Berkas", "Sertifikat Organisasi"]}
+            head={["Sertifikat", "Organisasi"]}
             path="/sertifikat/organisasi"
             roles={["mahasiswa"]}
             exact
-            component={() => <div>Sertifikat Organisasi</div>}
+            component={SertifikatOrganisasi}
           />
           <PrivateRoute
-            head={["Data Berkas", "Sertifikat Prestasi"]}
+            head={["Sertifikat", "Prestasi"]}
             path="/sertifikat/prestasi"
             roles={["mahasiswa"]}
             exact
-            component={() => <div>Sertifikat Prestasi</div>}
-          /> */}
-          <PrivateRoute roles={[]} exact component={() => <div></div>} />
+            component={SertifikatPrestasi}
+          />
+          <PrivateRoute
+            roles={[]}
+            exact
+            component={() => <div>Naha Kadieu</div>}
+          />
         </Switch>
       </Layout>
     );

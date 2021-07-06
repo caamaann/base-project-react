@@ -3,14 +3,15 @@ import { connect, useDispatch } from "react-redux";
 import { reduxForm, Field } from "redux-form";
 import { ModalBody, ModalHeader } from "reactstrap";
 import { Button } from "@material-ui/core";
-import { formInput } from "../../../../components/commons/form";
-import Jurusan, {
-  setJurusanModal,
-} from "../../../../store/actions/master/jurusan";
+import { formSelect, formFile } from "../../../../components/commons/form";
+import SertifikatPrestasi, {
+  setSertifikatPrestasiModal,
+} from "../../../../store/actions/sertifikat/prestasi";
 import LabelInputVerticalComponent from "../../../../components/global-components/LabelInputVertical";
+import { optionsSertifikatPrestasi } from "../../../../utils/constant";
 
 let Edit = ({
-  onSetJurusanModal,
+  onSetSertifikatPrestasiModal,
   handleSubmit,
   detailData,
   handleRefresh,
@@ -18,37 +19,49 @@ let Edit = ({
 }) => {
   const dispatch = useDispatch();
 
-  const onSubmit = ({ nama }) => {
-    const param = {
-      id: detailData.id,
-      nama,
-    };
+  const onSubmit = ({ file_sertifikat, tingkat_prestasi }) => {
+    let formData = new FormData();
+    formData.append("id", detailData.id);
+    formData.append("file_sertifikat", file_sertifikat);
+    formData.append("tingkat_prestasi", tingkat_prestasi.value);
+    formData.append("_method", "PUT");
+
     const callback = () => {
-      onSetJurusanModal("", false);
+      onSetSertifikatPrestasiModal("", false);
       handleRefresh();
     };
-    dispatch(Jurusan.put(param, callback));
+    dispatch(SertifikatPrestasi.put(formData, callback));
   };
   return (
     <>
-      <ModalHeader>Edit Jurusan</ModalHeader>
+      <ModalHeader>Edit Sertifikat Prestasi</ModalHeader>
       <ModalBody>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <LabelInputVerticalComponent label="Nama Jurusan">
+          <LabelInputVerticalComponent label="Tingkat Prestasi">
             <Field
-              name="nama"
-              placeholder="Nama Jurusan"
-              component={formInput}
+              name="tingkat_prestasi"
+              placeholder="Tingkat Prestasi"
+              options={optionsSertifikatPrestasi}
+              component={formSelect}
             />
           </LabelInputVerticalComponent>
-
+          <LabelInputVerticalComponent label="File Sertifikat">
+            <Field
+              name="file_sertifikat"
+              type="file"
+              fileType="pdf/image"
+              title="Masukkan Berkas"
+              message="PDF / JPG"
+              component={formFile}
+            />
+          </LabelInputVerticalComponent>
           <div className="d-flex justify-content-between">
             <Button
               variant="outlined"
               className="mt-3"
               disabled={pending}
               color="primary"
-              onClick={() => onSetJurusanModal("", false)}
+              onClick={() => onSetSertifikatPrestasiModal("", false)}
             >
               Batal
             </Button>
@@ -68,28 +81,34 @@ let Edit = ({
   );
 };
 
-const validate = ({ nama }) => {
+const validate = ({ file_sertifikat, tingkat_prestasi }) => {
   const errors = {};
-  if (!nama) {
-    errors.nama = "Nama jurusan harus diisi";
+  if (!file_sertifikat) {
+    errors.file_sertifikat = "Sertifikat prestasi harus diisi";
+  }
+  if (!tingkat_prestasi) {
+    errors.tingkat_prestasi = "Tingkat prestasi harus diisi";
   }
 
   return errors;
 };
 
 Edit = reduxForm({
-  form: "jurusanEdit",
+  form: "sertifikatPrestasiEdit",
   validate: validate,
   shouldError: () => true,
   enableReinitialize: true,
 })(Edit);
 
-const mapStateToProps = ({ jurusan: { detailData, pending } }) => {
+const mapStateToProps = ({ sertifikatPrestasi: { detailData, pending } }) => {
   let initialValues = {};
   if (detailData) {
     initialValues = {
-      code: detailData.code,
-      nama: detailData.nama,
+      file_sertifikat: detailData.file_sertifikat,
+      tingkat_prestasi: {
+        value: detailData.tingkat_prestasi,
+        label: detailData.tingkat_prestasi,
+      },
     };
   }
   return {
@@ -101,8 +120,8 @@ const mapStateToProps = ({ jurusan: { detailData, pending } }) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onSetJurusanModal: (modalType, isOpen) =>
-      dispatch(setJurusanModal(modalType, isOpen)),
+    onSetSertifikatPrestasiModal: (modalType, isOpen) =>
+      dispatch(setSertifikatPrestasiModal(modalType, isOpen)),
   };
 };
 

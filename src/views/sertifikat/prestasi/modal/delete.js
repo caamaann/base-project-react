@@ -3,12 +3,12 @@ import { connect, useDispatch } from "react-redux";
 import { reduxForm } from "redux-form";
 import { ModalBody, ModalHeader } from "reactstrap";
 import { Button } from "@material-ui/core";
-import Jurusan, {
-  setJurusanModal,
-} from "../../../../store/actions/master/jurusan";
+import SertifikatPrestasi, {
+  setSertifikatPrestasiModal,
+} from "../../../../store/actions/sertifikat/prestasi";
 
 let Delete = ({
-  onSetJurusanModal,
+  onSetSertifikatPrestasiModal,
   handleSubmit,
   detailData,
   handleRefresh,
@@ -21,16 +21,16 @@ let Delete = ({
       id: detailData.id,
     };
     const callback = () => {
-      onSetJurusanModal("", false);
+      onSetSertifikatPrestasiModal("", false);
       handleRefresh();
     };
-    dispatch(Jurusan.deleted(param, callback));
+    dispatch(SertifikatPrestasi.deleted(param, callback));
   };
   return (
     <>
-      <ModalHeader>Hapus Jurusan</ModalHeader>
+      <ModalHeader>Hapus Sertifikat Prestasi</ModalHeader>
       <ModalBody>
-        Apakah anda yakin untuk menghapus jurusan {detailData.nama} ?
+        Apakah anda yakin untuk menghapus sertifikat Prestasi ?
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="d-flex justify-content-between">
             <Button
@@ -38,7 +38,7 @@ let Delete = ({
               className="mt-3"
               disabled={pending}
               color="primary"
-              onClick={() => onSetJurusanModal("", false)}
+              onClick={() => onSetSertifikatPrestasiModal("", false)}
             >
               Batal
             </Button>
@@ -59,10 +59,10 @@ let Delete = ({
 };
 
 Delete = reduxForm({
-  form: "jurusanDelete",
+  form: "sertifikatPrestasiDelete",
 })(Delete);
 
-const mapStateToProps = ({ jurusan: { detailData, pending } }) => {
+const mapStateToProps = ({ sertifikatPrestasi: { detailData, pending } }) => {
   return {
     detailData,
     pending,
@@ -71,8 +71,8 @@ const mapStateToProps = ({ jurusan: { detailData, pending } }) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onSetJurusanModal: (modalType, isOpen) =>
-      dispatch(setJurusanModal(modalType, isOpen)),
+    onSetSertifikatPrestasiModal: (modalType, isOpen) =>
+      dispatch(setSertifikatPrestasiModal(modalType, isOpen)),
   };
 };
 

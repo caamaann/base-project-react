@@ -3,12 +3,12 @@ import { connect, useDispatch } from "react-redux";
 import { reduxForm } from "redux-form";
 import { ModalBody, ModalHeader } from "reactstrap";
 import { Button } from "@material-ui/core";
-import ProgramStudi, {
-  setProgramStudiModal,
-} from "../../../../store/actions/master/program-studi";
+import SertifikatOrganisasi, {
+  setSertifikatOrganisasiModal,
+} from "../../../../store/actions/sertifikat/organisasi";
 
 let Delete = ({
-  onSetProgramStudiModal,
+  onSetSertifikatOrganisasiModal,
   handleSubmit,
   detailData,
   handleRefresh,
@@ -21,16 +21,16 @@ let Delete = ({
       id: detailData.id,
     };
     const callback = () => {
-      onSetProgramStudiModal("", false);
+      onSetSertifikatOrganisasiModal("", false);
       handleRefresh();
     };
-    dispatch(ProgramStudi.deleted(param, callback));
+    dispatch(SertifikatOrganisasi.deleted(param, callback));
   };
   return (
     <>
-      <ModalHeader>Hapus Program Studi</ModalHeader>
+      <ModalHeader>Hapus Sertifikat Organisasi</ModalHeader>
       <ModalBody>
-        Apakah anda yakin untuk menghapus program studi {detailData.nama} ?
+        Apakah anda yakin untuk menghapus sertifikat Organisasi ?
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="d-flex justify-content-between">
             <Button
@@ -38,14 +38,14 @@ let Delete = ({
               className="mt-3"
               disabled={pending}
               color="primary"
-              onClick={() => onSetProgramStudiModal("", false)}
+              onClick={() => onSetSertifikatOrganisasiModal("", false)}
             >
               Batal
             </Button>
             <Button
               type="submit"
-              className="mt-3"
               disabled={pending}
+              className="mt-3"
               variant="contained"
               color="primary"
             >
@@ -59,10 +59,10 @@ let Delete = ({
 };
 
 Delete = reduxForm({
-  form: "programStudiDelete",
+  form: "sertifikatOrganisasiDelete",
 })(Delete);
 
-const mapStateToProps = ({ programStudi: { detailData, pending } }) => {
+const mapStateToProps = ({ sertifikatOrganisasi: { detailData, pending } }) => {
   return {
     detailData,
     pending,
@@ -71,8 +71,8 @@ const mapStateToProps = ({ programStudi: { detailData, pending } }) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onSetProgramStudiModal: (modalType, isOpen) =>
-      dispatch(setProgramStudiModal(modalType, isOpen)),
+    onSetSertifikatOrganisasiModal: (modalType, isOpen) =>
+      dispatch(setSertifikatOrganisasiModal(modalType, isOpen)),
   };
 };
 

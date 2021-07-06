@@ -4,19 +4,19 @@ import { reduxForm, Field } from "redux-form";
 import { ModalBody, ModalHeader } from "reactstrap";
 import { Button } from "@material-ui/core";
 import { formInput } from "../../../../components/commons/form";
-import { setJurusanModal } from "../../../../store/actions/master/jurusan";
+import { setSertifikatPrestasiModal } from "../../../../store/actions/sertifikat/prestasi";
 import LabelInputVerticalComponent from "../../../../components/global-components/LabelInputVertical";
 
-let detail = ({ onSetJurusanModal, pending }) => {
+let detail = ({ onSetSertifikatPrestasiModal, pending }) => {
   return (
     <>
-      <ModalHeader>Lihat Jurusan</ModalHeader>
+      <ModalHeader>Lihat SertifikatPrestasi</ModalHeader>
       <ModalBody>
         <form>
-          <LabelInputVerticalComponent label="Nama Jurusan">
+          <LabelInputVerticalComponent label="Nama SertifikatPrestasi">
             <Field
               name="nama"
-              placeholder="Nama Jurusan"
+              placeholder="Nama SertifikatPrestasi"
               component={formInput}
               disabled
             />
@@ -27,7 +27,7 @@ let detail = ({ onSetJurusanModal, pending }) => {
           className="mt-3"
           disabled={pending}
           color="primary"
-          onClick={() => onSetJurusanModal("", false)}
+          onClick={() => onSetSertifikatPrestasiModal("", false)}
         >
           Kembali
         </Button>
@@ -37,10 +37,10 @@ let detail = ({ onSetJurusanModal, pending }) => {
 };
 
 detail = reduxForm({
-  form: "jurusanDetail",
+  form: "sertifikatPrestasiDetail",
 })(detail);
 
-const mapStateToProps = ({ jurusan: { detailData, pending } }) => {
+const mapStateToProps = ({ sertifikatPrestasi: { detailData, pending } }) => {
   let initialValues = {};
   if (detailData) {
     initialValues = {
@@ -55,8 +55,8 @@ const mapStateToProps = ({ jurusan: { detailData, pending } }) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onSetJurusanModal: (modalType, isOpen) =>
-      dispatch(setJurusanModal(modalType, isOpen)),
+    onSetSertifikatPrestasiModal: (modalType, isOpen) =>
+      dispatch(setSertifikatPrestasiModal(modalType, isOpen)),
   };
 };
 

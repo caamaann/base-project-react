@@ -41,6 +41,7 @@ let Index = ({
   dataPerbandingan,
   mahasiswa,
   pending,
+  detailData,
 }) => {
   const dispatch = useDispatch();
   const user = getUser();
@@ -220,18 +221,24 @@ let Index = ({
         ) : (
           <div></div>
         )}
-        <Button
-          disabled={mahasiswa.pending}
-          variant="contained"
-          color="primary"
-          type="submit"
-        >
-          {step < steps.length - 1
-            ? "Selanjutnya"
-            : user.role_code === "mahasiswa"
-            ? "Daftar Beasiswa"
-            : "Submit"}
-        </Button>
+        {user.role_code === "mahasiswa" ? (
+          detailData?.status === 0 ? (
+            <Button
+              disabled={mahasiswa.pending}
+              variant="contained"
+              color="primary"
+              type="submit"
+            >
+              Daftar Beasiswa
+            </Button>
+          ) : (
+            <div></div>
+          )
+        ) : (
+          <Button variant="contained" color="primary" type="submit">
+            {step < steps.length - 1 ? "Selanjutnya" : "Submit"}
+          </Button>
+        )}
       </div>
     </form>
   );
