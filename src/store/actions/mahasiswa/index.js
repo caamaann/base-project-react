@@ -16,6 +16,12 @@ export const PUT_MAHASISWA_ERROR = "PUT_MAHASISWA_ERROR";
 export const DELETE_MAHASISWA_PENDING = "DELETE_MAHASISWA_PENDING";
 export const DELETE_MAHASISWA_SUCCESS = "DELETE_MAHASISWA_SUCCESS";
 export const DELETE_MAHASISWA_ERROR = "DELETE_MAHASISWA_ERROR";
+export const BERKAS_MAHASISWA_PENDING = "BERKAS_MAHASISWA_PENDING";
+export const BERKAS_MAHASISWA_SUCCESS = "BERKAS_MAHASISWA_SUCCESS";
+export const BERKAS_MAHASISWA_ERROR = "BERKAS_MAHASISWA_ERROR";
+export const SERTIFIKAT_MAHASISWA_PENDING = "SERTIFIKAT_MAHASISWA_PENDING";
+export const SERTIFIKAT_MAHASISWA_SUCCESS = "SERTIFIKAT_MAHASISWA_SUCCESS";
+export const SERTIFIKAT_MAHASISWA_ERROR = "SERTIFIKAT_MAHASISWA_ERROR";
 
 export const MAHASISWA_DATA = "MAHASISWA_DATA";
 export const ADD_MAHASISWA_DATA = "ADD_MAHASISWA_DATA";
@@ -74,6 +80,44 @@ const post = (param, callback) => (dispatch) => {
     });
 };
 
+const uploadBerkas = (param, callback) => (dispatch) => {
+  dispatch(actionPending(BERKAS_MAHASISWA_PENDING));
+  API.post(MAHASISWA_URL + "/berkas_wajib", param)
+    .then((res) => {
+      if (res.error) {
+        throw res.error;
+      }
+      dispatch(actionSuccess(BERKAS_MAHASISWA_SUCCESS, res));
+      toastSuccess("Berkas berhasil diupload");
+      if (callback) {
+        callback();
+      }
+    })
+    .catch((err) => {
+      dispatch(actionError(BERKAS_MAHASISWA_ERROR));
+      toastError(err?.response?.data?.message);
+    });
+};
+
+const uploadSertifikat = (param, callback) => (dispatch) => {
+  dispatch(actionPending(SERTIFIKAT_MAHASISWA_PENDING));
+  API.post(MAHASISWA_URL + "/sertifikat_wajib", param)
+    .then((res) => {
+      if (res.error) {
+        throw res.error;
+      }
+      dispatch(actionSuccess(SERTIFIKAT_MAHASISWA_SUCCESS, res));
+      toastSuccess("Sertifikat berhasil diupload");
+      if (callback) {
+        callback();
+      }
+    })
+    .catch((err) => {
+      dispatch(actionError(SERTIFIKAT_MAHASISWA_ERROR));
+      toastError(err?.response?.data?.message);
+    });
+};
+
 const put = (param, callback) => (dispatch) => {
   dispatch(actionPending(PUT_MAHASISWA_PENDING));
   API.put(MAHASISWA_URL, param)
@@ -112,16 +156,23 @@ const deleted = (param, callback) => (dispatch) => {
     });
 };
 
-const Mahasiswa = { get, post, put, deleted };
+const Mahasiswa = { get, post, put, deleted, uploadBerkas, uploadSertifikat };
 export default Mahasiswa;
 
 export const setMahasiswaData = (data) => (dispatch) =>
   dispatch({ type: MAHASISWA_DATA, data });
 
-export const setMahasiswaModal = (modalType, isOpen) => (dispatch) =>
-  dispatch(
-    actionSuccess(SET_MAHASISWA_MODAL, { modalType: modalType, isOpen: isOpen })
-  );
+export const setMahasiswaModal =
+  (modalType, isOpen, title, folderName, fileName) => (dispatch) =>
+    dispatch(
+      actionSuccess(SET_MAHASISWA_MODAL, {
+        modalType: modalType,
+        isOpen: isOpen,
+        title: title,
+        folderName: folderName,
+        fileName: fileName,
+      })
+    );
 
 export const setMahasiswaStep = (step) => (dispatch) =>
   dispatch({ type: MAHASISWA_STEP, step });

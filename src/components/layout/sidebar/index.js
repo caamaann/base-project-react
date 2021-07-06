@@ -9,6 +9,8 @@ import MenuItemComponent from "./MenuItem";
 import AdminIcon from "../../../assets/icon/icon-admin";
 import IconBurger from "../../../assets/icon/icon-burger";
 import BenefitIcon from "../../../assets/icon/icon-benefit";
+import BerkasIcon from "../../../assets/icon/icon-berkas";
+import Berkas2Icon from "../../../assets/icon/icon-berkas-2";
 import IconDashboard from "../../../assets/icon/icon-dashboard";
 import EventIcon from "../../../assets/icon/icon-event";
 import FinanceIcon from "../../../assets/icon/icon-finance";
@@ -147,21 +149,46 @@ const Index = ({ onChange, selectedItem }) => {
                     active={selectedItem === "Orang Tua"}
                   />
                 </NavLink>
+                <NavLink to="/saudara" exact className={css(styles.navlink)}>
+                  <MenuItemComponent
+                    title="Saudara"
+                    icon={AdminIcon}
+                    onClick={() => onItemClicked("Saudara")}
+                    active={selectedItem === "Saudara"}
+                  />
+                </NavLink>
+                <NavLink
+                  to="/data-berkas"
+                  exact
+                  className={css(styles.navlink)}
+                >
+                  <MenuItemComponent
+                    title="Data Berkas"
+                    icon={BerkasIcon}
+                    onClick={() => onItemClicked("Data Berkas")}
+                    active={selectedItem === "Data Berkas"}
+                  />
+                </NavLink>
                 {/* <MenuItemComponent
-                  title="Data Orang Tua"
-                  icon={SystemIcon}
+                  title="Data Berkas"
+                  icon={BerkasIcon}
                   onClick={() => onItemClicked("Data Orang Tua")}
                   active={selectedItem === "Data Orang Tua"}
                   child={[
                     {
-                      icon: AdminIcon,
-                      title: "Ayah",
-                      link: "/orang-tua/ayah",
+                      icon: Berkas2Icon,
+                      title: "Berkas Wajib",
+                      link: "/berkas-sertifikat",
                     },
                     {
-                      icon: AdminIcon,
-                      title: "Ibu",
-                      link: "/orang-tua/ibu",
+                      icon: Berkas2Icon,
+                      title: "Sertifikat Organisasi",
+                      link: "/sertifikat/organisasi",
+                    },
+                    {
+                      icon: Berkas2Icon,
+                      title: "Sertifikat Prestasi",
+                      link: "/sertifikat/prestasi",
                     },
                   ]}
                 /> */}

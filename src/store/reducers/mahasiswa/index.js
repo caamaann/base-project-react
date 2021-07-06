@@ -5,6 +5,12 @@ import {
   POST_MAHASISWA_PENDING,
   POST_MAHASISWA_SUCCESS,
   POST_MAHASISWA_ERROR,
+  BERKAS_MAHASISWA_PENDING,
+  BERKAS_MAHASISWA_SUCCESS,
+  BERKAS_MAHASISWA_ERROR,
+  SERTIFIKAT_MAHASISWA_PENDING,
+  SERTIFIKAT_MAHASISWA_SUCCESS,
+  SERTIFIKAT_MAHASISWA_ERROR,
   PUT_MAHASISWA_PENDING,
   PUT_MAHASISWA_SUCCESS,
   PUT_MAHASISWA_ERROR,
@@ -25,6 +31,9 @@ const initialState = {
   isOpenModal: false,
   modalType: "",
   step: 0,
+  title: "",
+  folderName: "",
+  fileName: "",
 };
 
 const mahasiswa = (state = initialState, action) => {
@@ -58,6 +67,40 @@ const mahasiswa = (state = initialState, action) => {
         data: action.data,
       };
     case POST_MAHASISWA_ERROR:
+      return {
+        ...state,
+        pending: false,
+        error: action.error,
+      };
+    case BERKAS_MAHASISWA_PENDING:
+      return {
+        ...state,
+        pending: true,
+      };
+    case BERKAS_MAHASISWA_SUCCESS:
+      return {
+        ...state,
+        pending: false,
+        data: action.data,
+      };
+    case BERKAS_MAHASISWA_ERROR:
+      return {
+        ...state,
+        pending: false,
+        error: action.error,
+      };
+    case SERTIFIKAT_MAHASISWA_PENDING:
+      return {
+        ...state,
+        pending: true,
+      };
+    case SERTIFIKAT_MAHASISWA_SUCCESS:
+      return {
+        ...state,
+        pending: false,
+        data: action.data,
+      };
+    case SERTIFIKAT_MAHASISWA_ERROR:
       return {
         ...state,
         pending: false,
@@ -107,6 +150,9 @@ const mahasiswa = (state = initialState, action) => {
         ...state,
         isOpenModal: action.data.isOpen,
         modalType: action.data.modalType,
+        title: action.data.title,
+        folderName: action.data.folderName,
+        fileName: action.data.fileName,
       };
     case MAHASISWA_STEP:
       return {
