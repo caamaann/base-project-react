@@ -3,8 +3,20 @@ import { k_combinations } from "../../../utils/combination";
 import Slider from "../../commons/form/slider";
 import { Field } from "redux-form";
 
-let Index = ({ data }) => {
-  let dataKriteria = Object.keys(data).filter((key) => data[key] === true);
+let Index = ({ data, disabled }) => {
+  let dataKriteria = [];
+  if (data.prestasi === true || data.prestasi == "1") {
+    dataKriteria.push("prestasi");
+  }
+  if (data.organisasi === true || data.organisasi == "1") {
+    dataKriteria.push("organisasi");
+  }
+  if (data.sikap === true || data.sikap == "1") {
+    dataKriteria.push("sikap");
+  }
+  if (data.nilai_sma === true || data.nilai_sma == "1") {
+    dataKriteria.push("nilai_sma");
+  }
   dataKriteria.unshift("ipk_minimal", "penghasilan_orang_tua_maksimal");
 
   let tempNama = dataKriteria.map((item) => {
@@ -38,6 +50,7 @@ let Index = ({ data }) => {
               <Field
                 name={"perbandingan_" + index.toString()}
                 component={Slider}
+                disabled={disabled}
                 // validate={validate}
               />
             </div>

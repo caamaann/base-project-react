@@ -20,7 +20,7 @@ import mahasiswa from "./mahasiswa";
 import orangTua from "./orang-tua";
 import saudara from "./saudara";
 
-const rootReducer = combineReducers({
+const appReducer = combineReducers({
   form: formReducer,
   beasiswa,
   global,
@@ -40,5 +40,14 @@ const rootReducer = combineReducers({
   orangTua,
   saudara,
 });
+
+const rootReducer = (state, action) => {
+  // when a logout action is dispatched it will reset redux state
+  if (action.type === "RESET_ALL_REDUX") {
+    state = undefined;
+  }
+
+  return appReducer(state, action);
+};
 
 export default rootReducer;

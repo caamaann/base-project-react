@@ -2,6 +2,9 @@ import {
   GET_BEASISWA_PENDING,
   GET_BEASISWA_SUCCESS,
   GET_BEASISWA_ERROR,
+  GET_DETAIL_BEASISWA_PENDING,
+  GET_DETAIL_BEASISWA_SUCCESS,
+  GET_DETAIL_BEASISWA_ERROR,
   POST_BEASISWA_PENDING,
   POST_BEASISWA_SUCCESS,
   POST_BEASISWA_ERROR,
@@ -41,6 +44,24 @@ const beasiswa = (state = initialState, action) => {
         data: action.data,
       };
     case GET_BEASISWA_ERROR:
+      return {
+        ...state,
+        pending: false,
+        error: action.error,
+      };
+    case GET_DETAIL_BEASISWA_PENDING:
+      return {
+        ...state,
+        pending: true,
+      };
+    case GET_DETAIL_BEASISWA_SUCCESS:
+      return {
+        ...state,
+        pending: false,
+        detailData: action.data.data.data[0],
+        data: action.data.data.data[0],
+      };
+    case GET_DETAIL_BEASISWA_ERROR:
       return {
         ...state,
         pending: false,

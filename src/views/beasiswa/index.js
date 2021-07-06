@@ -50,6 +50,7 @@ const Index = ({
 
   const setDetail = (type, data) => {
     onSetAddBeasiswaData(data);
+    // onSetBeasiswaData(data);
     history.push(`/beasiswa/${type}/${data.id}`);
   };
 

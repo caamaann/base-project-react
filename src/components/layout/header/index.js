@@ -72,6 +72,9 @@ const HeaderComponent = ({
                 className={css(styles.goBack)}
                 onClick={() => {
                   history.goBack();
+                  dispatch({
+                    type: "RESET_ALL_REDUX",
+                  });
                 }}
               >
                 <ArrowLeft fill="#676d73" /> Kembali

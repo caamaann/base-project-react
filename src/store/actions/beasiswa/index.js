@@ -7,6 +7,9 @@ import { toastError, toastSuccess } from "../../../components/commons/toast";
 export const GET_BEASISWA_PENDING = "GET_BEASISWA_PENDING";
 export const GET_BEASISWA_SUCCESS = "GET_BEASISWA_SUCCESS";
 export const GET_BEASISWA_ERROR = "GET_BEASISWA_ERROR";
+export const GET_DETAIL_BEASISWA_PENDING = "GET_DETAIL_BEASISWA_PENDING";
+export const GET_DETAIL_BEASISWA_SUCCESS = "GET_DETAIL_BEASISWA_SUCCESS";
+export const GET_DETAIL_BEASISWA_ERROR = "GET_DETAIL_BEASISWA_ERROR";
 export const POST_BEASISWA_PENDING = "POST_BEASISWA_PENDING";
 export const POST_BEASISWA_SUCCESS = "POST_BEASISWA_SUCCESS";
 export const POST_BEASISWA_ERROR = "POST_BEASISWA_ERROR";
@@ -51,6 +54,36 @@ const get = (param, resolve, reject, callback) => (dispatch) => {
     })
     .catch((err) => {
       dispatch(actionError(GET_BEASISWA_ERROR));
+      toastError(err?.response?.data?.message);
+    });
+};
+
+const getDetail = (param, resolve, reject, callback) => (dispatch) => {
+  dispatch(actionPending(GET_DETAIL_BEASISWA_PENDING));
+  API.get(BEASISWA_URL, { params: param })
+    .then((res) => {
+      if (res.error) {
+        throw res.error;
+      }
+      dispatch(actionSuccess(GET_DETAIL_BEASISWA_SUCCESS, res));
+      const records_total = res.data.recordsTotal;
+      let data = res.data.data.map((item, i) => ({
+        ...item,
+        no: i + 1 + (param?.page - 1) * param?.length,
+      }));
+      if (resolve) {
+        resolve({
+          data: data,
+          page: param?.page - 1,
+          totalCount: records_total,
+        });
+      }
+      if (callback) {
+        callback();
+      }
+    })
+    .catch((err) => {
+      dispatch(actionError(GET_DETAIL_BEASISWA_ERROR));
       toastError(err?.response?.data?.message);
     });
 };
@@ -112,7 +145,7 @@ const deleted = (param, callback) => (dispatch) => {
     });
 };
 
-const Beasiswa = { get, post, put, deleted };
+const Beasiswa = { get, post, put, deleted, getDetail };
 export default Beasiswa;
 
 export const setBeasiswaData = (data) => (dispatch) =>

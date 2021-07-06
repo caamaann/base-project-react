@@ -29,6 +29,7 @@ import moment from "moment";
 import { k_combinations } from "../../../utils/combination";
 import { getUser } from "../../../utils/user";
 import { compareTime } from "../../../utils/date";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 let Index = ({
   onSetBeasiswaStep,
@@ -39,6 +40,7 @@ let Index = ({
   data,
   dataPerbandingan,
   mahasiswa,
+  pending,
 }) => {
   const dispatch = useDispatch();
   const user = getUser();
@@ -56,6 +58,12 @@ let Index = ({
   const handleBack = () => {
     onSetBeasiswaStep(step - 1);
   };
+
+  useEffect(() => {
+    getDetailBeasiswa();
+  }, []);
+
+  const getDetailBeasiswa = () => dispatch(Beasiswa.getDetail({ id: id }));
 
   const onSubmit = (values) => {
     let param = {};
@@ -231,15 +239,17 @@ let Index = ({
   const StepSecond = (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="row-12">
-        <BobotKriteria data={data} />
+        <BobotKriteria data={data} disabled />
       </div>
       <div className="d-flex justify-content-between">
         <Button variant="outlined" disabled={step === 0} onClick={handleBack}>
           Kembali
         </Button>
-        <Button variant="contained" color="primary" type="submit">
-          {step < steps.length - 1 ? "Selanjutnya" : "Submit"}
-        </Button>
+        {step < steps.length - 1 && (
+          <Button disabled variant="contained" color="primary" type="submit">
+            Selanjutnya
+          </Button>
+        )}
       </div>
     </form>
   );
@@ -247,16 +257,22 @@ let Index = ({
   return (
     <Container>
       <div className="p-4">
-        <Stepper activeStep={step} alternativeLabel>
-          {steps.map((label, index) => {
-            return (
-              <Step key={index}>
-                <StepLabel>{label}</StepLabel>
-              </Step>
-            );
-          })}
-        </Stepper>
-        <div>{step === 0 ? StepFirst : StepSecond}</div>
+        {pending ? (
+          <CircularProgress color="primary" />
+        ) : (
+          <>
+            <Stepper activeStep={step} alternativeLabel>
+              {steps.map((label, index) => {
+                return (
+                  <Step key={index}>
+                    <StepLabel>{label}</StepLabel>
+                  </Step>
+                );
+              })}
+            </Stepper>
+            <div>{step === 0 ? StepFirst : StepSecond}</div>
+          </>
+        )}
       </div>
     </Container>
   );
@@ -268,7 +284,10 @@ Index = reduxForm({
   enableReinitialize: true,
 })(Index);
 
-const mapStateToProps = ({ beasiswa: { step, data }, mahasiswa }) => {
+const mapStateToProps = ({
+  beasiswa: { step, data, detailData, pending },
+  mahasiswa,
+}) => {
   const initialValues = {
     step: step,
     nama: data?.nama,
@@ -279,12 +298,12 @@ const mapStateToProps = ({ beasiswa: { step, data }, mahasiswa }) => {
     akhir_penerimaan: data?.akhir_penerimaan,
     ipk_minimal: data?.ipk_minimal,
     penghasilan_orang_tua_maksimal: data?.penghasilan_orang_tua_maksimal,
-    biaya_pendidikan: data?.biaya_pendidikan ? data.biaya_pendidikan : 0,
-    biaya_hidup: data?.biaya_hidup ? data.biaya_hidup : 0,
-    prestasi: data?.prestasi,
-    organisasi: data?.organisasi,
-    sikap: data?.sikap,
-    nilai_sma: data?.nilai_sma,
+    biaya_pendidikan: data?.biaya_pendidikan,
+    biaya_hidup: data?.biaya_hidup,
+    prestasi: data?.prestasi == 1 ? true : false,
+    organisasi: data?.organisasi == 1 ? true : false,
+    sikap: data?.sikap == 1 ? true : false,
+    nilai_sma: data?.nilai_sma == 1 ? true : false,
   };
 
   let dataKriteria = [];
@@ -292,16 +311,47 @@ const mapStateToProps = ({ beasiswa: { step, data }, mahasiswa }) => {
   let total = 0;
 
   if (data) {
-    dataKriteria = Object.keys(data).filter((key) => data[key] === true);
+    if (data.prestasi === true || data.prestasi == "1") {
+      dataKriteria.push("prestasi");
+    }
+    if (data.organisasi === true || data.organisasi == "1") {
+      dataKriteria.push("organisasi");
+    }
+    if (data.sikap === true || data.sikap == "1") {
+      dataKriteria.push("sikap");
+    }
+    if (data.nilai_sma === true || data.nilai_sma == "1") {
+      dataKriteria.push("nilai_sma");
+    }
     dataKriteria.unshift("ipk_minimal", "penghasilan_orang_tua_maksimal");
     dataPerbandingan = k_combinations(dataKriteria, 2);
     total = dataPerbandingan.length;
-    for (let i = 0; i < total; i++) {
-      initialValues["perbandingan_" + i] = data["perbandingan_" + i];
-    }
+    // for (let i = 0; i < total; i++) {
+    //   initialValues["perbandingan_" + i] = data["perbandingan_" + i];
+    // }
+  }
+  if (detailData) {
+    detailData.pembobotan.map((item, index) => {
+      if (item.bobot_1 > item.bobot_2) {
+        initialValues["perbandingan_" + index] = 2 - item.bobot_1;
+      } else if (item.bobot_1 < item.bobot_2) {
+        initialValues["perbandingan_" + index] = item.bobot_2;
+      } else {
+        initialValues["perbandingan_" + index] = 1;
+      }
+    });
   }
 
-  return { step, initialValues, data, total, dataPerbandingan, mahasiswa };
+  return {
+    step,
+    initialValues,
+    detailData,
+    total,
+    dataPerbandingan,
+    pending,
+    mahasiswa,
+    data,
+  };
 };
 
 const mapDispatchToProps = (dispatch) => {

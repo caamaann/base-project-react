@@ -1,15 +1,15 @@
-import React, { useState, useRef, useEffect } from 'react'
-import { withRouter } from 'react-router-dom'
-import { connect, useDispatch } from 'react-redux'
-import { reduxForm, Field, FieldArray } from 'redux-form'
+import React, { useState, useRef, useEffect } from "react";
+import { withRouter } from "react-router-dom";
+import { connect, useDispatch } from "react-redux";
+import { reduxForm, Field, FieldArray } from "redux-form";
 import Beasiswa, {
   setBeasiswaData,
   setBeasiswaModal,
   setBeasiswaStep,
   setAddBeasiswaData,
-} from '../../../store/actions/beasiswa'
-import { Row } from 'simple-flexbox'
-import { Button, Stepper, Step, StepLabel } from '@material-ui/core'
+} from "../../../store/actions/beasiswa";
+import { Row } from "simple-flexbox";
+import { Button, Stepper, Step, StepLabel } from "@material-ui/core";
 import {
   formInput,
   formTextArea,
@@ -18,15 +18,15 @@ import {
   formDatePicker,
   normalizeDates,
   formatDates,
-} from '../../../components/commons/form'
-import LabelInputVerticalComponent from '../../../components/global-components/LabelInputVertical'
-import Container from '../../../components/container'
-import BobotKriteria from '../../../components/content/bobot-kriteria'
-import debounce from 'lodash.debounce'
-import { history } from '../../../utils'
-import moment from 'moment'
-import { k_combinations } from '../../../utils/combination'
-import { compareTime } from '../../../utils/date'
+} from "../../../components/commons/form";
+import LabelInputVerticalComponent from "../../../components/global-components/LabelInputVertical";
+import Container from "../../../components/container";
+import BobotKriteria from "../../../components/content/bobot-kriteria";
+import debounce from "lodash.debounce";
+import { history } from "../../../utils";
+import moment from "moment";
+import { k_combinations } from "../../../utils/combination";
+import { compareTime } from "../../../utils/date";
 
 let Index = ({
   onSetBeasiswaStep,
@@ -36,29 +36,30 @@ let Index = ({
   handleSubmit,
   data,
   dataPerbandingan,
+  pending,
 }) => {
-  const dispatch = useDispatch()
-  const steps = ['Data Beasiswa', 'Pembobotan Kriteria']
+  const dispatch = useDispatch();
+  const steps = ["Data Beasiswa", "Pembobotan Kriteria"];
 
   const handleNext = () => {
-    onSetBeasiswaStep(step + 1)
-  }
+    onSetBeasiswaStep(step + 1);
+  };
 
   const handleBack = () => {
-    onSetBeasiswaStep(step - 1)
-  }
+    onSetBeasiswaStep(step - 1);
+  };
 
   const onSubmit = (values) => {
-    let param = {}
+    let param = {};
     if (step === steps.length - 1) {
-      let pembobotan = []
+      let pembobotan = [];
       dataPerbandingan.map((item, index) => {
-        let bobot_1 = 1
-        let bobot_2 = 1
-        if (values['perbandingan_' + index] > 1) {
-          bobot_2 = values['perbandingan_' + index]
-        } else if (values['perbandingan_' + index] < 1) {
-          bobot_1 = 2 - values['perbandingan_' + index]
+        let bobot_1 = 1;
+        let bobot_2 = 1;
+        if (values["perbandingan_" + index] > 1) {
+          bobot_2 = values["perbandingan_" + index];
+        } else if (values["perbandingan_" + index] < 1) {
+          bobot_1 = 2 - values["perbandingan_" + index];
         }
 
         pembobotan.push({
@@ -66,48 +67,48 @@ let Index = ({
           bobot_1,
           kriteria_2: item[1],
           bobot_2,
-        })
-      })
+        });
+      });
 
       param = {
         nama: values.nama,
         deskripsi: values.deskripsi,
-        awal_pendaftaran: moment(values.awal_pendaftaran).format('yyyy-MM-DD'),
+        awal_pendaftaran: moment(values.awal_pendaftaran).format("yyyy-MM-DD"),
         akhir_pendaftaran: moment(values.akhir_pendaftaran).format(
-          'yyyy-MM-DD',
+          "yyyy-MM-DD"
         ),
-        awal_penerimaan: moment(values.awal_penerimaan).format('yyyy-MM-DD'),
-        akhir_penerimaan: moment(values.akhir_penerimaan).format('yyyy-MM-DD'),
+        awal_penerimaan: moment(values.awal_penerimaan).format("yyyy-MM-DD"),
+        akhir_penerimaan: moment(values.akhir_penerimaan).format("yyyy-MM-DD"),
         ipk_minimal: values.ipk_minimal,
         penghasilan_orang_tua_maksimal: values.penghasilan_orang_tua_maksimal
-          ? values.penghasilan_orang_tua_maksimal.toString().replace(/\D/g, '')
+          ? values.penghasilan_orang_tua_maksimal.toString().replace(/\D/g, "")
           : null,
         biaya_pendidikan: values.biaya_pendidikan
-          ? values.biaya_pendidikan.toString().replace(/\D/g, '')
+          ? values.biaya_pendidikan.toString().replace(/\D/g, "")
           : null,
         biaya_hidup: values.biaya_hidup
-          ? values.biaya_hidup.toString().replace(/\D/g, '')
+          ? values.biaya_hidup.toString().replace(/\D/g, "")
           : null,
         prestasi: values.prestasi ? 1 : 0,
         organisasi: values.organisasi ? 1 : 0,
         sikap: values.sikap ? 1 : 0,
         nilai_sma: values.nilai_sma ? 1 : 0,
         pembobotan,
-      }
-      console.log(param)
+      };
+      console.log(param);
     }
-    onSetAddBeasiswaData(values)
+    onSetAddBeasiswaData(values);
     if (step < steps.length - 1) {
-      handleNext()
+      handleNext();
     } else {
       const callback = () => {
-        history.push('/beasiswa')
-        onSetAddBeasiswaData(null)
-        onSetBeasiswaStep(0)
-      }
-      dispatch(Beasiswa.post(param, callback))
+        history.push("/beasiswa");
+        onSetAddBeasiswaData(null);
+        onSetBeasiswaStep(0);
+      };
+      dispatch(Beasiswa.post(param, callback));
     }
-  }
+  };
 
   const StepFirst = (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -219,11 +220,11 @@ let Index = ({
           Kembali
         </Button>
         <Button variant="contained" color="primary" type="submit">
-          {step < steps.length - 1 ? 'Selanjutnya' : 'Submit'}
+          {step < steps.length - 1 ? "Selanjutnya" : "Submit"}
         </Button>
       </div>
     </form>
-  )
+  );
 
   const StepSecond = (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -234,12 +235,17 @@ let Index = ({
         <Button variant="outlined" disabled={step === 0} onClick={handleBack}>
           Kembali
         </Button>
-        <Button variant="contained" color="primary" type="submit">
-          {step < steps.length - 1 ? 'Selanjutnya' : 'Submit'}
+        <Button
+          disabled={pending}
+          variant="contained"
+          color="primary"
+          type="submit"
+        >
+          {step < steps.length - 1 ? "Selanjutnya" : "Submit"}
         </Button>
       </div>
     </form>
-  )
+  );
 
   return (
     <Container>
@@ -250,14 +256,14 @@ let Index = ({
               <Step key={index}>
                 <StepLabel>{label}</StepLabel>
               </Step>
-            )
+            );
           })}
         </Stepper>
         <div>{step === 0 ? StepFirst : StepSecond}</div>
       </div>
     </Container>
-  )
-}
+  );
+};
 
 const validate = (values, allProps) => {
   const {
@@ -276,62 +282,62 @@ const validate = (values, allProps) => {
     organisasi,
     sikap,
     nilai_sma,
-  } = values
-  const errors = {}
+  } = values;
+  const errors = {};
   if (!nama) {
-    errors.nama = 'Nama beasiswa harus diisi'
+    errors.nama = "Nama beasiswa harus diisi";
   }
   if (!awal_pendaftaran) {
-    errors.awal_pendaftaran = 'Awal Pendaftaran Beasiswa harus diisi'
+    errors.awal_pendaftaran = "Awal Pendaftaran Beasiswa harus diisi";
   }
   if (!akhir_pendaftaran) {
-    errors.akhir_pendaftaran = 'Akhir Pendaftaran Beasiswa harus diisi'
+    errors.akhir_pendaftaran = "Akhir Pendaftaran Beasiswa harus diisi";
   } else if (!compareTime(awal_pendaftaran, akhir_pendaftaran)) {
     errors.akhir_pendaftaran =
-      'Tanggal Akhir Pendaftaran harus lebih besar dari Awal Pendaftaran '
+      "Tanggal Akhir Pendaftaran harus lebih besar dari Awal Pendaftaran ";
   }
   if (!awal_penerimaan) {
-    errors.awal_penerimaan = 'Awal Penerimaan Beasiswa harus diisi'
+    errors.awal_penerimaan = "Awal Penerimaan Beasiswa harus diisi";
   }
   if (!akhir_penerimaan) {
-    errors.akhir_penerimaan = 'Akhir Penerimaan Beasiswa harus diisi'
+    errors.akhir_penerimaan = "Akhir Penerimaan Beasiswa harus diisi";
   } else if (!compareTime(awal_penerimaan, akhir_penerimaan)) {
     errors.akhir_penerimaan =
-      'Tanggal Akhir Penerimaan harus lebih besar dari Awal Penerimaan'
+      "Tanggal Akhir Penerimaan harus lebih besar dari Awal Penerimaan";
   }
   if (!ipk_minimal) {
-    errors.ipk_minimal = 'IPK Minimal harus diisi'
+    errors.ipk_minimal = "IPK Minimal harus diisi";
   } else if (ipk_minimal < 0 || ipk_minimal > 4) {
-    errors.ipk_minimal = 'IPK Minimal harus diisi antara 0 - 4'
+    errors.ipk_minimal = "IPK Minimal harus diisi antara 0 - 4";
   }
   if (!penghasilan_orang_tua_maksimal) {
     errors.penghasilan_orang_tua_maksimal =
-      'Penghasilan Orangtua Maksimal harus diisi'
+      "Penghasilan Orangtua Maksimal harus diisi";
   }
-  if (!biaya_hidup) {
-    errors.biaya_hidup = 'Nominal Bantuan Biaya Hidup harus diisi'
-  }
-  if (!biaya_pendidikan) {
-    errors.biaya_pendidikan = 'Nominal Bantuan Biaya Pendidikan harus diisi'
+  // if (!biaya_hidup) {
+  //   errors.biaya_hidup = "Nominal Bantuan Biaya Hidup harus diisi";
+  // }
+  if (!biaya_hidup && !biaya_pendidikan) {
+    errors.biaya_pendidikan = "Nominal Bantuan Biaya Pendidikan harus diisi";
   }
 
   for (let i = 0; i < allProps.total; i++) {
-    if (!values['perbandingan_' + i] && values['perbandingan_' + i] !== 0) {
-      errors['perbandingan_' + i] = 'Perbandingan harus diisi'
+    if (!values["perbandingan_" + i] && values["perbandingan_" + i] !== 0) {
+      errors["perbandingan_" + i] = "Perbandingan harus diisi";
     }
   }
 
-  return errors
-}
+  return errors;
+};
 
 Index = reduxForm({
-  form: 'beasiswaAdd',
+  form: "beasiswaAdd",
   validate: validate,
   shouldError: () => true,
   enableReinitialize: true,
-})(Index)
+})(Index);
 
-const mapStateToProps = ({ beasiswa: { step, data } }) => {
+const mapStateToProps = ({ beasiswa: { step, data, pending } }) => {
   const initialValues = {
     step: step,
     nama: data?.nama,
@@ -348,24 +354,24 @@ const mapStateToProps = ({ beasiswa: { step, data } }) => {
     organisasi: data?.organisasi,
     sikap: data?.sikap,
     nilai_sma: data?.nilai_sma,
-  }
+  };
 
-  let dataKriteria = []
-  let dataPerbandingan = []
-  let total = 0
+  let dataKriteria = [];
+  let dataPerbandingan = [];
+  let total = 0;
 
   if (data) {
-    dataKriteria = Object.keys(data).filter((key) => data[key] === true)
-    dataKriteria.unshift('ipk_minimal', 'penghasilan_orang_tua_maksimal')
-    dataPerbandingan = k_combinations(dataKriteria, 2)
-    total = dataPerbandingan.length
+    dataKriteria = Object.keys(data).filter((key) => data[key] === true);
+    dataKriteria.unshift("ipk_minimal", "penghasilan_orang_tua_maksimal");
+    dataPerbandingan = k_combinations(dataKriteria, 2);
+    total = dataPerbandingan.length;
     for (let i = 0; i < total; i++) {
-      initialValues['perbandingan_' + i] = data['perbandingan_' + i]
+      initialValues["perbandingan_" + i] = data["perbandingan_" + i];
     }
   }
 
-  return { step, initialValues, data, total, dataPerbandingan }
-}
+  return { step, initialValues, data, total, dataPerbandingan, pending };
+};
 
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -374,7 +380,7 @@ const mapDispatchToProps = (dispatch) => {
     onSetBeasiswaData: (data) => dispatch(setBeasiswaData(data)),
     onSetAddBeasiswaData: (data) => dispatch(setAddBeasiswaData(data)),
     onSetBeasiswaStep: (step) => dispatch(setBeasiswaStep(step)),
-  }
-}
+  };
+};
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Index))
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Index));
