@@ -281,10 +281,10 @@ const mapStateToProps = ({ beasiswa: { step, data }, mahasiswa }) => {
     penghasilan_orang_tua_maksimal: data?.penghasilan_orang_tua_maksimal,
     biaya_pendidikan: data?.biaya_pendidikan ? data.biaya_pendidikan : 0,
     biaya_hidup: data?.biaya_hidup ? data.biaya_hidup : 0,
-    prestasi: data?.prestasi,
-    organisasi: data?.organisasi,
-    sikap: data?.sikap,
-    nilai_sma: data?.nilai_sma,
+    prestasi: data?.prestasi == 1 ? true : false,
+    organisasi: data?.organisasi == 1 ? true : false,
+    sikap: data?.sikap == 1 ? true : false,
+    nilai_sma: data?.nilai_sma == 1 ? true : false,
   };
 
   let dataKriteria = [];
@@ -301,6 +301,7 @@ const mapStateToProps = ({ beasiswa: { step, data }, mahasiswa }) => {
     }
   }
 
+  console.log(initialValues);
   return { step, initialValues, data, total, dataPerbandingan, mahasiswa };
 };
 
