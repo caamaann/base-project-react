@@ -21,6 +21,8 @@ import orangTua from "./orang-tua";
 import saudara from "./saudara";
 import sertifikatOrganisasi from "./sertifikat/organisasi";
 import sertifikatPrestasi from "./sertifikat/prestasi";
+import ahp from "./ahp";
+import waliKelas from "./wali-kelas";
 
 const appReducer = combineReducers({
   form: formReducer,
@@ -43,6 +45,8 @@ const appReducer = combineReducers({
   saudara,
   sertifikatOrganisasi,
   sertifikatPrestasi,
+  ahp,
+  waliKelas,
 });
 
 const rootReducer = (state, action) => {

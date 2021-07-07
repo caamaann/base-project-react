@@ -37,6 +37,7 @@ let Index = ({
   data,
   dataPerbandingan,
   pending,
+  dataKriteria,
 }) => {
   const dispatch = useDispatch();
   const steps = ["Data Beasiswa", "Pembobotan Kriteria"];
@@ -94,8 +95,8 @@ let Index = ({
         sikap: values.sikap ? 1 : 0,
         nilai_sma: values.nilai_sma ? 1 : 0,
         pembobotan,
+        total_kriteria: dataKriteria.length,
       };
-      console.log(param);
     }
     onSetAddBeasiswaData(values);
     if (step < steps.length - 1) {
@@ -321,6 +322,7 @@ const validate = (values, allProps) => {
     errors.biaya_pendidikan = "Nominal Bantuan Biaya Pendidikan harus diisi";
   }
 
+  console.log(values);
   for (let i = 0; i < allProps.total; i++) {
     if (!values["perbandingan_" + i] && values["perbandingan_" + i] !== 0) {
       errors["perbandingan_" + i] = "Perbandingan harus diisi";
@@ -370,7 +372,15 @@ const mapStateToProps = ({ beasiswa: { step, data, pending } }) => {
     }
   }
 
-  return { step, initialValues, data, total, dataPerbandingan, pending };
+  return {
+    step,
+    initialValues,
+    data,
+    total,
+    dataPerbandingan,
+    pending,
+    dataKriteria,
+  };
 };
 
 const mapDispatchToProps = (dispatch) => {

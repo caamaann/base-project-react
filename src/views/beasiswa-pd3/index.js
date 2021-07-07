@@ -141,7 +141,7 @@ const Index = ({
             variant="contained"
             disabled={pending}
             // onClick={() => setModal("add", true, null)}
-            onClick={() => history.push("/beasiswa/add")}
+            onClick={() => history.push("/pd3/beasiswa/add")}
           >
             Tambah Beasiswa
           </Button>
