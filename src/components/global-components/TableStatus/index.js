@@ -3,16 +3,12 @@ import { string } from "prop-types";
 import { StyleSheet, css } from "aphrodite";
 
 const bgColor = {
-  Aktif: "#E9F8F0",
-  AktifLabel: "#2CB96A",
-  Nonaktif: "#FDE9E9",
-  NonaktifLabel: "#ED2A2A",
-  Baru: "#f58337",
-  BaruLabel: "#fef2ea",
-  Diterima: "#E9F8F0",
-  DiterimaLabel: "#2CB96A",
-  Ditolak: "#FDE9E9",
-  DitolakLabel: "#ED2A2A",
+  "Belum mendaftar": "#fef2ea",
+  "Belum mendaftarLabel": "#f58337",
+  "Sudah mendaftar": "#E9F8F0",
+  "Sudah mendaftarLabel": "#3f00ff",
+  "Menerima beasiswa": "#E9F8F0",
+  "Menerima beasiswaLabel": "#2CB96A",
 };
 
 function TableStatusComponent(props) {

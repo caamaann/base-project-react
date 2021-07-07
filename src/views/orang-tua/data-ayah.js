@@ -3,6 +3,7 @@ import { connect, useDispatch } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { reduxForm, Field, formValueSelector } from "redux-form";
 import FormContainer from "../../components/container/Form";
+import CircularProgress from "@material-ui/core/CircularProgress";
 import {
   formInput,
   formSelect,
@@ -104,6 +105,8 @@ let Index = ({
                 Submit
               </Button>
             </>
+          ) : pending ? (
+            <CircularProgress color="primary" style={{ marginRight: 10 }} />
           ) : (
             <Button
               variant="contained"

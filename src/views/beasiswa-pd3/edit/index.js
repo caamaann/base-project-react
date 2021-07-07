@@ -8,7 +8,6 @@ import Beasiswa, {
   setBeasiswaStep,
   setAddBeasiswaData,
 } from "../../../store/actions/beasiswa";
-import Mahasiswa from "../../../store/actions/mahasiswa";
 import { Row } from "simple-flexbox";
 import { Button, Stepper, Step, StepLabel } from "@material-ui/core";
 import {
@@ -27,7 +26,6 @@ import debounce from "lodash.debounce";
 import { history } from "../../../utils";
 import moment from "moment";
 import { k_combinations } from "../../../utils/combination";
-import { getUser } from "../../../utils/user";
 import { compareTime } from "../../../utils/date";
 
 let Index = ({
@@ -38,16 +36,9 @@ let Index = ({
   handleSubmit,
   data,
   dataPerbandingan,
-  mahasiswa,
 }) => {
   const dispatch = useDispatch();
-  const user = getUser();
-  const path = window.location.pathname;
-  const id = path.split("/").pop();
-  const steps =
-    user.role_code === "pd3"
-      ? ["Data Beasiswa", "Pembobotan Kriteria"]
-      : ["Data Beasiswa"];
+  const steps = ["Data Beasiswa", "Pembobotan Kriteria"];
 
   const handleNext = () => {
     onSetBeasiswaStep(step + 1);
@@ -60,9 +51,50 @@ let Index = ({
   const onSubmit = (values) => {
     let param = {};
     if (step === steps.length - 1) {
+      let pembobotan = [];
+      dataPerbandingan.map((item, index) => {
+        let bobot_1 = 1;
+        let bobot_2 = 1;
+        if (values["perbandingan_" + index] > 1) {
+          bobot_2 = values["perbandingan_" + index];
+        } else if (values["perbandingan_" + index] < 1) {
+          bobot_1 = 2 - values["perbandingan_" + index];
+        }
+
+        pembobotan.push({
+          kriteria_1: item[0],
+          bobot_1,
+          kriteria_2: item[1],
+          bobot_2,
+        });
+      });
+
       param = {
-        beasiswa_id: id,
+        nama: values.nama,
+        deskripsi: values.deskripsi,
+        awal_pendaftaran: moment(values.awal_pendaftaran).format("yyyy-MM-DD"),
+        akhir_pendaftaran: moment(values.akhir_pendaftaran).format(
+          "yyyy-MM-DD"
+        ),
+        awal_penerimaan: moment(values.awal_penerimaan).format("yyyy-MM-DD"),
+        akhir_penerimaan: moment(values.akhir_penerimaan).format("yyyy-MM-DD"),
+        ipk_minimal: values.ipk_minimal,
+        penghasilan_orang_tua_maksimal: values.penghasilan_orang_tua_maksimal
+          ? values.penghasilan_orang_tua_maksimal.toString().replace(/\D/g, "")
+          : null,
+        biaya_pendidikan: values.biaya_pendidikan
+          ? values.biaya_pendidikan.toString().replace(/\D/g, "")
+          : null,
+        biaya_hidup: values.biaya_hidup
+          ? values.biaya_hidup.toString().replace(/\D/g, "")
+          : null,
+        prestasi: values.prestasi ? 1 : 0,
+        organisasi: values.organisasi ? 1 : 0,
+        sikap: values.sikap ? 1 : 0,
+        nilai_sma: values.nilai_sma ? 1 : 0,
+        pembobotan,
       };
+      console.log(param);
     }
     onSetAddBeasiswaData(values);
     if (step < steps.length - 1) {
@@ -73,11 +105,7 @@ let Index = ({
         onSetAddBeasiswaData(null);
         onSetBeasiswaStep(0);
       };
-      if (user.role_code === "mahasiswa") {
-        dispatch(Mahasiswa.post(param, callback));
-      } else {
-        dispatch(Beasiswa.post(param, callback));
-      }
+      dispatch(Beasiswa.post(param, callback));
     }
   };
 
@@ -88,7 +116,6 @@ let Index = ({
           <LabelInputVerticalComponent label="Nama">
             <Field
               name="nama"
-              disabled
               placeholder="Nama Beasiswa"
               component={formInput}
             />
@@ -96,7 +123,6 @@ let Index = ({
           <LabelInputVerticalComponent label="Deskripsi">
             <Field
               name="deskripsi"
-              disabled
               placeholder="Deskripsi Beasiswa"
               component={formTextArea}
               rows={5}
@@ -105,7 +131,6 @@ let Index = ({
           <LabelInputVerticalComponent label="Awal Pendaftaran">
             <Field
               name="awal_pendaftaran"
-              disabled
               placeholder="Awal Pendaftaran"
               fullWidth
               component={formDatePicker}
@@ -114,7 +139,6 @@ let Index = ({
           <LabelInputVerticalComponent label="Akhir Pendaftaran">
             <Field
               name="akhir_pendaftaran"
-              disabled
               placeholder="Akhir Pendaftaran"
               fullWidth
               component={formDatePicker}
@@ -123,7 +147,6 @@ let Index = ({
           <LabelInputVerticalComponent label="Awal Penerimaan">
             <Field
               name="awal_penerimaan"
-              disabled
               placeholder="Awal Penerimaan"
               fullWidth
               component={formDatePicker}
@@ -132,7 +155,6 @@ let Index = ({
           <LabelInputVerticalComponent label="Akhir Penerimaan">
             <Field
               name="akhir_penerimaan"
-              disabled
               placeholder="Akhir Penerimaan"
               fullWidth
               component={formDatePicker}
@@ -143,7 +165,6 @@ let Index = ({
           <LabelInputVerticalComponent label="IPK Minimal">
             <Field
               name="ipk_minimal"
-              disabled
               placeholder="IPK Minimal"
               component={formInputNumber}
             />
@@ -151,7 +172,6 @@ let Index = ({
           <LabelInputVerticalComponent label="Penghasilan Orang Tua Maksimal">
             <Field
               name="penghasilan_orang_tua_maksimal"
-              disabled
               placeholder="Penghasilan Orang Tua Maksimal"
               thousandSeparator
               component={formInputNumber}
@@ -160,7 +180,6 @@ let Index = ({
           <LabelInputVerticalComponent label="Nominal Bantuan Pendidikan">
             <Field
               name="biaya_pendidikan"
-              disabled
               placeholder="Nominal Bantuan Pendidikan"
               thousandSeparator
               component={formInputNumber}
@@ -169,7 +188,6 @@ let Index = ({
           <LabelInputVerticalComponent label="Nominal Bantuan Biaya Hidup">
             <Field
               name="biaya_hidup"
-              disabled
               placeholder="Nominal Bantuan Biaya Hidup"
               thousandSeparator
               component={formInputNumber}
@@ -179,25 +197,17 @@ let Index = ({
           <LabelInputVerticalComponent label="Kriteria Lainnya">
             <Field
               name="prestasi"
-              disabled
               component={formCheckbox}
               label="Prestasi &#38; Ekstra Kurikuler"
             />
             <Field
               name="organisasi"
-              disabled
               component={formCheckbox}
               label="Organisasi"
             />
-            <Field
-              name="sikap"
-              disabled
-              component={formCheckbox}
-              label="Sikap"
-            />
+            <Field name="sikap" component={formCheckbox} label="Sikap" />
             <Field
               name="nilai_sma"
-              disabled
               component={formCheckbox}
               label="Nilai Rapot SMA"
             />
@@ -205,24 +215,11 @@ let Index = ({
         </div>
       </div>
       <div className="d-flex justify-content-between">
-        {steps.length > 1 ? (
-          <Button variant="outlined" disabled={step === 0} onClick={handleBack}>
-            Kembali
-          </Button>
-        ) : (
-          <div></div>
-        )}
-        <Button
-          disabled={mahasiswa.pending}
-          variant="contained"
-          color="primary"
-          type="submit"
-        >
-          {step < steps.length - 1
-            ? "Selanjutnya"
-            : user.role_code === "mahasiswa"
-            ? "Daftar Beasiswa"
-            : "Submit"}
+        <Button variant="outlined" disabled={step === 0} onClick={handleBack}>
+          Kembali
+        </Button>
+        <Button variant="contained" color="primary" type="submit">
+          {step < steps.length - 1 ? "Selanjutnya" : "Submit"}
         </Button>
       </div>
     </form>
@@ -262,13 +259,79 @@ let Index = ({
   );
 };
 
+const validate = (values, allProps) => {
+  const {
+    step,
+    nama,
+    deskripsi,
+    awal_pendaftaran,
+    akhir_pendaftaran,
+    awal_penerimaan,
+    akhir_penerimaan,
+    ipk_minimal,
+    penghasilan_orang_tua_maksimal,
+    biaya_pendidikan,
+    biaya_hidup,
+    prestasi,
+    organisasi,
+    sikap,
+    nilai_sma,
+  } = values;
+  const errors = {};
+  if (!nama) {
+    errors.nama = "Nama beasiswa harus diisi";
+  }
+  if (!awal_pendaftaran) {
+    errors.awal_pendaftaran = "Awal Pendaftaran Beasiswa harus diisi";
+  }
+  if (!akhir_pendaftaran) {
+    errors.akhir_pendaftaran = "Akhir Pendaftaran Beasiswa harus diisi";
+  } else if (!compareTime(awal_pendaftaran, akhir_pendaftaran)) {
+    errors.akhir_pendaftaran =
+      "Tanggal Akhir Pendaftaran harus lebih besar dari Awal Pendaftaran ";
+  }
+  if (!awal_penerimaan) {
+    errors.awal_penerimaan = "Awal Penerimaan Beasiswa harus diisi";
+  }
+  if (!akhir_penerimaan) {
+    errors.akhir_penerimaan = "Akhir Penerimaan Beasiswa harus diisi";
+  } else if (!compareTime(awal_penerimaan, akhir_penerimaan)) {
+    errors.akhir_penerimaan =
+      "Tanggal Akhir Penerimaan harus lebih besar dari Awal Penerimaan";
+  }
+  if (!ipk_minimal) {
+    errors.ipk_minimal = "IPK Minimal harus diisi";
+  } else if (ipk_minimal < 0 || ipk_minimal > 4) {
+    errors.ipk_minimal = "IPK Minimal harus diisi antara 0 - 4";
+  }
+  if (!penghasilan_orang_tua_maksimal) {
+    errors.penghasilan_orang_tua_maksimal =
+      "Penghasilan Orangtua Maksimal harus diisi";
+  }
+  if (!biaya_hidup) {
+    errors.biaya_hidup = "Nominal Bantuan Biaya Hidup harus diisi";
+  }
+  if (!biaya_pendidikan) {
+    errors.biaya_pendidikan = "Nominal Bantuan Biaya Pendidikan harus diisi";
+  }
+
+  for (let i = 0; i < allProps.total; i++) {
+    if (!values["perbandingan_" + i] && values["perbandingan_" + i] !== 0) {
+      errors["perbandingan_" + i] = "Perbandingan harus diisi";
+    }
+  }
+
+  return errors;
+};
+
 Index = reduxForm({
   form: "beasiswaAdd",
+  validate: validate,
   shouldError: () => true,
   enableReinitialize: true,
 })(Index);
 
-const mapStateToProps = ({ beasiswa: { step, data }, mahasiswa }) => {
+const mapStateToProps = ({ beasiswa: { step, data } }) => {
   const initialValues = {
     step: step,
     nama: data?.nama,
@@ -279,8 +342,8 @@ const mapStateToProps = ({ beasiswa: { step, data }, mahasiswa }) => {
     akhir_penerimaan: data?.akhir_penerimaan,
     ipk_minimal: data?.ipk_minimal,
     penghasilan_orang_tua_maksimal: data?.penghasilan_orang_tua_maksimal,
-    biaya_pendidikan: data?.biaya_pendidikan ? data.biaya_pendidikan : 0,
-    biaya_hidup: data?.biaya_hidup ? data.biaya_hidup : 0,
+    biaya_pendidikan: data?.biaya_pendidikan,
+    biaya_hidup: data?.biaya_hidup,
     prestasi: data?.prestasi,
     organisasi: data?.organisasi,
     sikap: data?.sikap,
@@ -301,7 +364,7 @@ const mapStateToProps = ({ beasiswa: { step, data }, mahasiswa }) => {
     }
   }
 
-  return { step, initialValues, data, total, dataPerbandingan, mahasiswa };
+  return { step, initialValues, data, total, dataPerbandingan };
 };
 
 const mapDispatchToProps = (dispatch) => {

@@ -68,7 +68,7 @@ const Index = ({ onSetJurusanModal, onSetJurusanData, pending }) => {
               width: 40,
             },
             {
-              title: "Nama Jurusan",
+              title: "Nama",
               render: ({ nama }) => {
                 return nama ? nama : "-";
               },

@@ -112,13 +112,13 @@ const Index = ({
               width: 40,
             },
             {
-              title: "Nama Program Studi",
+              title: "Nama",
               render: ({ nama }) => {
                 return nama ? nama : "-";
               },
             },
             {
-              title: "Nama Jurusan",
+              title: "Jurusan",
               render: ({ jurusan_nama }) => {
                 return jurusan_nama ? jurusan_nama : "-";
               },

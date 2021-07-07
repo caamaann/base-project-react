@@ -72,6 +72,9 @@ const HeaderComponent = ({
                 className={css(styles.goBack)}
                 onClick={() => {
                   history.goBack();
+                  dispatch({
+                    type: "RESET_ALL_REDUX",
+                  });
                 }}
               >
                 <ArrowLeft fill="#676d73" /> Kembali
@@ -112,14 +115,11 @@ const HeaderComponent = ({
           </MenuItem>
           <MenuItem
             className={css(styles.dropdownProfile)}
-            onClick={() => history.push("/notification")}
-          >
-            <span className={css(styles.menuList)}>Notifikasi</span>
-          </MenuItem>
-          <MenuItem
-            className={css(styles.dropdownProfile)}
             onClick={() => {
               history.push("/login");
+              dispatch({
+                type: "RESET_ALL_REDUX",
+              });
             }}
           >
             <span style={{ color: "red" }} className={css(styles.menuList)}>

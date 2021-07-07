@@ -9,6 +9,8 @@ import MenuItemComponent from "./MenuItem";
 import AdminIcon from "../../../assets/icon/icon-admin";
 import IconBurger from "../../../assets/icon/icon-burger";
 import BenefitIcon from "../../../assets/icon/icon-benefit";
+import BerkasIcon from "../../../assets/icon/icon-berkas";
+import Berkas2Icon from "../../../assets/icon/icon-berkas-2";
 import IconDashboard from "../../../assets/icon/icon-dashboard";
 import EventIcon from "../../../assets/icon/icon-event";
 import FinanceIcon from "../../../assets/icon/icon-finance";
@@ -19,6 +21,7 @@ import MemberIcon from "../../../assets/icon/icon-member";
 import MessageBlastIcon from "../../../assets/icon/icon-message-blast";
 import NotificationIcon from "../../../assets/icon/icon-notification";
 import PollingIcon from "../../../assets/icon/icon-polling";
+import PositionIcon from "../../../assets/icon/icon-position";
 import RequestIcon from "../../../assets/icon/icon-request";
 import SystemIcon from "../../../assets/icon/icon-system";
 import UserIcon from "../../../assets/icon/icon-user";
@@ -131,7 +134,11 @@ const Index = ({ onChange, selectedItem }) => {
                     active={selectedItem === "Profil"}
                   />
                 </NavLink>
-                <NavLink to="/beasiswa" exact className={css(styles.navlink)}>
+                <NavLink
+                  to="/mahasiswa/beasiswa"
+                  exact
+                  className={css(styles.navlink)}
+                >
                   <MenuItemComponent
                     title="Beasiswa"
                     icon={FinanceIcon}
@@ -142,42 +149,114 @@ const Index = ({ onChange, selectedItem }) => {
                 <NavLink to="/orang-tua" exact className={css(styles.navlink)}>
                   <MenuItemComponent
                     title="Orang Tua"
-                    icon={AdminIcon}
+                    icon={MemberIcon}
                     onClick={() => onItemClicked("Orang Tua")}
                     active={selectedItem === "Orang Tua"}
                   />
                 </NavLink>
-                {/* <MenuItemComponent
-                  title="Data Orang Tua"
-                  icon={SystemIcon}
-                  onClick={() => onItemClicked("Data Orang Tua")}
-                  active={selectedItem === "Data Orang Tua"}
+                <NavLink to="/saudara" exact className={css(styles.navlink)}>
+                  <MenuItemComponent
+                    title="Saudara"
+                    icon={AdminIcon}
+                    onClick={() => onItemClicked("Saudara")}
+                    active={selectedItem === "Saudara"}
+                  />
+                </NavLink>
+                <NavLink
+                  to="/data-berkas"
+                  exact
+                  className={css(styles.navlink)}
+                >
+                  <MenuItemComponent
+                    title="Data Berkas"
+                    icon={BerkasIcon}
+                    onClick={() => onItemClicked("Data Berkas")}
+                    active={selectedItem === "Data Berkas"}
+                  />
+                </NavLink>
+                <MenuItemComponent
+                  title="Sertifikat"
+                  icon={BerkasIcon}
+                  onClick={() => onItemClicked("Sertifikat")}
+                  active={selectedItem === "Sertifikat"}
                   child={[
                     {
-                      icon: AdminIcon,
-                      title: "Ayah",
-                      link: "/orang-tua/ayah",
+                      icon: Berkas2Icon,
+                      title: "Prestasi",
+                      link: "/sertifikat/prestasi",
                     },
                     {
-                      icon: AdminIcon,
-                      title: "Ibu",
-                      link: "/orang-tua/ibu",
+                      icon: Berkas2Icon,
+                      title: "Organisasi",
+                      link: "/sertifikat/organisasi",
                     },
                   ]}
-                /> */}
+                />
+              </>
+            )}
+            {role === "waliKelas" && (
+              <>
+                <NavLink
+                  to="/wali-kelas/beasiswa"
+                  exact
+                  className={css(styles.navlink)}
+                >
+                  <MenuItemComponent
+                    title="Beasiswa"
+                    icon={FinanceIcon}
+                    onClick={() => onItemClicked("Beasiswa")}
+                    active={selectedItem === "Beasiswa"}
+                  />
+                </NavLink>
+              </>
+            )}
+            {role === "ketuaProdi" && (
+              <>
+                <NavLink
+                  to="/ketua-prodi/beasiswa"
+                  exact
+                  className={css(styles.navlink)}
+                >
+                  <MenuItemComponent
+                    title="Beasiswa"
+                    icon={FinanceIcon}
+                    onClick={() => onItemClicked("Beasiswa")}
+                    active={selectedItem === "Beasiswa"}
+                  />
+                </NavLink>
+              </>
+            )}
+            {role === "ketuaJurusan" && (
+              <>
+                <NavLink
+                  to="/ketua-jurusan/beasiswa"
+                  exact
+                  className={css(styles.navlink)}
+                >
+                  <MenuItemComponent
+                    title="Beasiswa"
+                    icon={FinanceIcon}
+                    onClick={() => onItemClicked("Beasiswa")}
+                    active={selectedItem === "Beasiswa"}
+                  />
+                </NavLink>
               </>
             )}
             {role === "pd3" && (
               <>
-                <NavLink to="/dashboard" exact className={css(styles.navlink)}>
+                {/* <NavLink to="/dashboard" exact className={css(styles.navlink)}>
                   <MenuItemComponent
                     title="Dashboard"
                     icon={AdminIcon}
                     onClick={() => onItemClicked("Dashboard")}
                     active={selectedItem === "Dashboard"}
                   />
-                </NavLink>
-                <NavLink to="/beasiswa" exact className={css(styles.navlink)}>
+                </NavLink> */}
+                <NavLink
+                  to="/pd-3/beasiswa"
+                  exact
+                  className={css(styles.navlink)}
+                >
                   <MenuItemComponent
                     title="Beasiswa"
                     icon={FinanceIcon}

@@ -1,6 +1,10 @@
 export const regexPassword = /^.*(?=.{8,})(?=.*\d)(?=.*[a-zA-Z]).*$/;
 export const regexEmail =
   /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+export const FOLDER_BERKAS_WAJIB = "berkas_wajib";
+export const FOLDER_SERTIFIKAT_WAJIB = "sertifikat_wajib";
+export const FOLDER_SERTIFIKAT_PRESTASI = "sertifikat_prestasi";
+export const FOLDER_SERTIFIKAT_ORGANISASI = "sertifikat_organisasi";
 
 export const optionsAHP = [
   {
@@ -70,5 +74,35 @@ export const optionsAHP = [
   {
     value: 9,
     label: 9,
+  },
+];
+
+export const optionsSertifikatPrestasi = [
+  {
+    value: "Internasional",
+    label: "Internasional",
+  },
+  {
+    value: "Nasional",
+    label: "Nasional",
+  },
+  {
+    value: "Provinsi",
+    label: "Provinsi",
+  },
+  {
+    value: "Kota",
+    label: "Kota",
+  },
+];
+
+export const optionsSertifikatOrganisasi = [
+  {
+    value: "Pengurus Organisasi",
+    label: "Pengurus Organisasi",
+  },
+  {
+    value: "Kepanitiaan Program Kerja Kemahasiswaan",
+    label: "Kepanitiaan Program Kerja Kemahasiswaan",
   },
 ];

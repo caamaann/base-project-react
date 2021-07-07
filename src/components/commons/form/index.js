@@ -356,7 +356,12 @@ export const formCheckbox = (field) => {
       <div className="mb-1"></div>
       <label className={`custom-check ${disabled && "custom-check-disabled"}`}>
         {field.label}
-        <input type="checkbox" {...field.input} checked={value} />
+        <input
+          type="checkbox"
+          {...field.input}
+          disabled={disabled}
+          checked={value}
+        />
         <span
           className={`checkmark-check ${
             disabled && "checkmark-check-disabled"

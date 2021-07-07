@@ -585,3 +585,41 @@ Mui-expanded {
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
 }
+
+.img-document {
+  max-height: 500px;
+  max-width: 500px;
+  object-fit: contain;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.sudut-0 {
+  transform: rotate(0deg);
+}
+
+.sudut-90 {
+  transform: rotate(90deg);
+}
+
+.sudut-180 {
+  transform: rotate(180deg);
+}
+
+.sudut-270 {
+  transform: rotate(270deg);
+}
+
+.rotate {
+  animation: rotate-keyframes 1s;
+}
+
+@keyframes rotate-keyframes {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(90deg);
+  }
+}
