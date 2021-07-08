@@ -54,7 +54,33 @@ const Index = ({
     history.push(`/ketua-prodi/beasiswa/${type}/${data.id}`);
   };
 
-  let columns = [
+  return (
+    <Container>
+      <Row className="m-3 justify-content-between">
+        {user.role_code === "pd3" ? (
+          <Button
+            color="primary"
+            variant="contained"
+            disabled={pending}
+            // onClick={() => setModal("add", true, null)}
+            onClick={() => history.push("/beasiswa/add")}
+          >
+            Tambah Beasiswa
+          </Button>
+        ) : (
+          <div></div>
+        )}
+        <InputComponent
+          onChange={(e) => handleSearchChange(e)}
+          placeholder="Cari nama beasiswa"
+          endIcon={SearchIcon}
+        />
+      </Row>
+      <div className="m-3">
+        <MaterialTable
+          tableRef={tableRef}
+          title="Beasiswa"
+          columns={[
     {
       title: "No",
       field: "no",
@@ -84,73 +110,25 @@ const Index = ({
     },
     {
       title: "Aksi",
-      width: 80,
+      width: 150,
       cellStyle: {
         paddingLeft: 0,
       },
       render: (rowData) => {
         return (
-          // <DetailButtonComponent>
+          <div className="p-3">
           <Button
             color="primary"
-            varint="outlined"
+            variant="outlined"
             onClick={() => setDetail("detail", rowData)}
           >
-            Detail
+            Pemilihan
           </Button>
-          // </DetailButtonComponent>
+          </div>
         );
       },
     },
-  ];
-
-  if (user.role_code === "mahasiswa") {
-    columns.splice(4, 0, {
-      title: "Status Pendaftaran",
-      render: ({ status }) => {
-        return status > -1 ? (
-          <TableStatus
-            status={
-              status === 0
-                ? "Belum mendaftar"
-                : status === 1
-                ? "Sudah mendaftar"
-                : "Menerima beasiswa"
-            }
-          />
-        ) : (
-          "-"
-        );
-      },
-    });
-  }
-  return (
-    <Container>
-      <Row className="m-3 justify-content-between">
-        {user.role_code === "pd3" ? (
-          <Button
-            color="primary"
-            variant="contained"
-            disabled={pending}
-            // onClick={() => setModal("add", true, null)}
-            onClick={() => history.push("/beasiswa/add")}
-          >
-            Tambah Beasiswa
-          </Button>
-        ) : (
-          <div></div>
-        )}
-        <InputComponent
-          onChange={(e) => handleSearchChange(e)}
-          placeholder="Cari nama beasiswa"
-          endIcon={SearchIcon}
-        />
-      </Row>
-      <div className="m-3">
-        <MaterialTable
-          tableRef={tableRef}
-          title="Beasiswa"
-          columns={columns}
+  ]}
           data={(q) =>
             new Promise((resolve) => {
               let param = {

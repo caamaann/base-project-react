@@ -23,7 +23,6 @@ const Index = ({
     dispatch(setGoBack(back));
   }, [head, dispatch]);
 
-  console.log(Component);
   return (
     <Route
       {...rest}
