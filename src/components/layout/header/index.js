@@ -116,10 +116,10 @@ const HeaderComponent = ({
           <MenuItem
             className={css(styles.dropdownProfile)}
             onClick={() => {
-              history.push("/login");
               dispatch({
                 type: "RESET_ALL_REDUX",
               });
+              history.push("/login");
             }}
           >
             <span style={{ color: "red" }} className={css(styles.menuList)}>

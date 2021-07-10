@@ -23,6 +23,9 @@ import sertifikatOrganisasi from "./sertifikat/organisasi";
 import sertifikatPrestasi from "./sertifikat/prestasi";
 import ahp from "./ahp";
 import waliKelas from "./wali-kelas";
+import kuota from "./kuota";
+import ketuaProgramStudi from "./ketua-prodi";
+import ketuaJurusan from "./ketua-jurusan";
 
 const appReducer = combineReducers({
   form: formReducer,
@@ -47,6 +50,9 @@ const appReducer = combineReducers({
   sertifikatPrestasi,
   ahp,
   waliKelas,
+  kuota,
+  ketuaProgramStudi,
+  ketuaJurusan,
 });
 
 const rootReducer = (state, action) => {

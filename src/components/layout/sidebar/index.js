@@ -208,6 +208,18 @@ const Index = ({ onChange, selectedItem }) => {
                     active={selectedItem === "Beasiswa"}
                   />
                 </NavLink>
+                <NavLink
+                  to="/wali-kelas/mahasiswa"
+                  exact
+                  className={css(styles.navlink)}
+                >
+                  <MenuItemComponent
+                    title="Mahasiswa"
+                    icon={MemberIcon}
+                    onClick={() => onItemClicked("Mahasiswa")}
+                    active={selectedItem === "Mahasiswa"}
+                  />
+                </NavLink>
               </>
             )}
             {role === "ketuaProdi" && (

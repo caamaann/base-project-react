@@ -18,6 +18,7 @@ import debounce from "lodash.debounce";
 import { history } from "../../utils";
 import { getUser } from "../../utils/user";
 import moment from "moment";
+import { isMoreTime } from "../../utils/date";
 
 const Index = ({
   onSetBeasiswaModal,
@@ -54,92 +55,10 @@ const Index = ({
     history.push(`/ketua-jurusan/beasiswa/${type}/${data.id}`);
   };
 
-  let columns = [
-    {
-      title: "No",
-      field: "no",
-      width: 40,
-    },
-    {
-      title: "Nama Beasiswa",
-      render: ({ nama }) => {
-        return nama ? nama : "-";
-      },
-    },
-    {
-      title: "Awal Pendaftaran",
-      render: ({ awal_pendaftaran }) => {
-        return awal_pendaftaran
-          ? moment(awal_pendaftaran).format("DD MMMM YYYY")
-          : "-";
-      },
-    },
-    {
-      title: "Akhir Pendaftaran",
-      render: ({ akhir_pendaftaran }) => {
-        return akhir_pendaftaran
-          ? moment(akhir_pendaftaran).format("DD MMMM YYYY")
-          : "-";
-      },
-    },
-    {
-      title: "Aksi",
-      width: 80,
-      cellStyle: {
-        paddingLeft: 0,
-      },
-      render: (rowData) => {
-        return (
-          // <DetailButtonComponent>
-          <Button
-            color="primary"
-            varint="outlined"
-            onClick={() => setDetail("detail", rowData)}
-          >
-            Detail
-          </Button>
-          // </DetailButtonComponent>
-        );
-      },
-    },
-  ];
-
-  if (user.role_code === "mahasiswa") {
-    columns.splice(4, 0, {
-      title: "Status Pendaftaran",
-      render: ({ status }) => {
-        return status > -1 ? (
-          <TableStatus
-            status={
-              status === 0
-                ? "Belum mendaftar"
-                : status === 1
-                ? "Sudah mendaftar"
-                : "Menerima beasiswa"
-            }
-          />
-        ) : (
-          "-"
-        );
-      },
-    });
-  }
   return (
     <Container>
       <Row className="m-3 justify-content-between">
-        {user.role_code === "pd3" ? (
-          <Button
-            color="primary"
-            variant="contained"
-            disabled={pending}
-            // onClick={() => setModal("add", true, null)}
-            onClick={() => history.push("/beasiswa/add")}
-          >
-            Tambah Beasiswa
-          </Button>
-        ) : (
-          <div></div>
-        )}
+        <div></div>
         <InputComponent
           onChange={(e) => handleSearchChange(e)}
           placeholder="Cari nama beasiswa"
@@ -150,7 +69,69 @@ const Index = ({
         <MaterialTable
           tableRef={tableRef}
           title="Beasiswa"
-          columns={columns}
+          columns={[
+            {
+              title: "No",
+              field: "no",
+              width: 40,
+            },
+            {
+              title: "Nama Beasiswa",
+              render: ({ nama }) => {
+                return nama ? nama : "-";
+              },
+            },
+            {
+              title: "Awal Pendaftaran",
+              render: ({ awal_pendaftaran }) => {
+                return awal_pendaftaran
+                  ? moment(awal_pendaftaran).format("DD MMMM YYYY")
+                  : "-";
+              },
+            },
+            {
+              title: "Akhir Pendaftaran",
+              render: ({ akhir_pendaftaran }) => {
+                return akhir_pendaftaran
+                  ? moment(akhir_pendaftaran).format("DD MMMM YYYY")
+                  : "-";
+              },
+            },
+            {
+              title: "Total Pendaftar",
+              render: ({ total_pendaftar }) => {
+                return total_pendaftar ? total_pendaftar : 0;
+              },
+            },
+            {
+              title: "Aksi",
+              width: 120,
+              cellStyle: {
+                paddingLeft: 0,
+              },
+              render: (rowData) => {
+                return (
+                  <div className="p-3">
+                    <Button
+                      color="primary"
+                      variant="outlined"
+                      disabled={
+                        !isMoreTime(
+                          rowData.awal_pendaftaran,
+                          rowData.akhir_pendaftaran
+                        ) ||
+                        rowData.status === 1 ||
+                        rowData.total_pendaftar === 0
+                      }
+                      onClick={() => setDetail("detail", rowData)}
+                    >
+                      Penilaian
+                    </Button>
+                  </div>
+                );
+              },
+            },
+          ]}
           data={(q) =>
             new Promise((resolve) => {
               let param = {

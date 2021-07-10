@@ -1,34 +1,29 @@
 import React, { useState, useRef, useEffect } from "react";
 import { withRouter } from "react-router-dom";
 import { connect, useDispatch } from "react-redux";
-import Beasiswa, {
-  setBeasiswaData,
-  setAddBeasiswaData,
-  setBeasiswaModal,
-} from "../../store/actions/beasiswa";
+import WaliKelas, {
+  setWaliKelasData,
+  setWaliKelasModal,
+} from "../../store/actions/wali-kelas";
 import { Row } from "simple-flexbox";
 import MaterialTable from "material-table";
 import SearchIcon from "@material-ui/icons/Search";
 import { Paper, Button, MenuItem } from "@material-ui/core";
 import DetailButtonComponent from "../../components/global-components/DetailButton";
-import TableStatus from "../../components/global-components/TableStatus";
 import InputComponent from "../../components/commons/form/input";
 import Container from "../../components/container";
+import Modal from "./modal";
 import debounce from "lodash.debounce";
-import { history } from "../../utils";
-import { getUser } from "../../utils/user";
-import moment from "moment";
-import { isMoreTime } from "../../utils/date";
 
 const Index = ({
-  onSetBeasiswaModal,
-  onSetBeasiswaData,
-  onSetAddBeasiswaData,
+  onSetWaliKelasModal,
+  onSetWaliKelasData,
   pending,
+  jurusan,
+  programStudi,
 }) => {
   const [searchText, setSearchText] = useState("");
   const dispatch = useDispatch();
-  const user = getUser();
   const tableRef = useRef();
 
   const handleRefresh = (state) => {
@@ -45,30 +40,25 @@ const Index = ({
   };
 
   const setModal = (modalType, isOpen, data) => {
-    onSetBeasiswaModal(modalType, isOpen);
-    onSetBeasiswaData(data);
-  };
-
-  const setDetail = (type, data) => {
-    onSetAddBeasiswaData(data);
-    // onSetBeasiswaData(data);
-    history.push(`/ketua-prodi/beasiswa/${type}/${data.id}`);
+    onSetWaliKelasModal(modalType, isOpen);
+    onSetWaliKelasData(data);
   };
 
   return (
     <Container>
+      <Modal handleRefresh={(state) => handleRefresh(state)} />
       <Row className="m-3 justify-content-between">
         <div></div>
         <InputComponent
           onChange={(e) => handleSearchChange(e)}
-          placeholder="Cari nama beasiswa"
+          placeholder="Cari nama mahasiswa"
           endIcon={SearchIcon}
         />
       </Row>
       <div className="m-3">
         <MaterialTable
           tableRef={tableRef}
-          title="Beasiswa"
+          title="WaliKelas"
           columns={[
             {
               title: "No",
@@ -76,58 +66,71 @@ const Index = ({
               width: 40,
             },
             {
-              title: "Nama Beasiswa",
+              title: "Nama Mahasiswa",
               render: ({ nama }) => {
                 return nama ? nama : "-";
               },
             },
             {
-              title: "Awal Pendaftaran",
-              render: ({ awal_pendaftaran }) => {
-                return awal_pendaftaran
-                  ? moment(awal_pendaftaran).format("DD MMMM YYYY")
+              title: "IPK",
+              render: ({ ipk }) => {
+                return ipk ? ipk : "-";
+              },
+            },
+            {
+              title: "Penghasilan Orangtua",
+              render: ({ orang_tua_mahasiswa }) => {
+                let total = 0;
+                if (orang_tua_mahasiswa) {
+                  total =
+                    orang_tua_mahasiswa.penghasilan_ayah +
+                    orang_tua_mahasiswa.penghasilan_ibu +
+                    orang_tua_mahasiswa.penghasilan_sambilan_ayah +
+                    orang_tua_mahasiswa.penghasilan_sambilan_ibu;
+                }
+                return orang_tua_mahasiswa
+                  ? "Rp " +
+                      total.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.")
                   : "-";
               },
             },
             {
-              title: "Akhir Pendaftaran",
-              render: ({ akhir_pendaftaran }) => {
-                return akhir_pendaftaran
-                  ? moment(akhir_pendaftaran).format("DD MMMM YYYY")
-                  : "-";
-              },
-            },
-            {
-              title: "Total Pendaftar",
-              render: ({ total_pendaftar }) => {
-                return total_pendaftar ? total_pendaftar : 0;
+              title: "Jumlah Tanggungan",
+              render: ({ saudara_mahasiswa, orang_tua_mahasiswa }) => {
+                let filter = saudara_mahasiswa.filter(
+                  (item) => item.status_pekerjaan === "Belum bekerja"
+                );
+                let total = filter.length + 1;
+                if (orang_tua_mahasiswa) {
+                  if (
+                    orang_tua_mahasiswa.penghasilan_ayah === 0 &&
+                    orang_tua_mahasiswa.penghasilan_sambilan_ayah === 0
+                  ) {
+                    total++;
+                  }
+                  if (
+                    orang_tua_mahasiswa.penghasilan_ibu === 0 &&
+                    orang_tua_mahasiswa.penghasilan_sambilan_ibu === 0
+                  ) {
+                    total++;
+                  }
+                }
+                return total;
               },
             },
             {
               title: "Aksi",
-              width: 120,
+              width: 80,
               cellStyle: {
                 paddingLeft: 0,
               },
               render: (rowData) => {
                 return (
-                  <div className="p-3">
-                    <Button
-                      color="primary"
-                      variant="outlined"
-                      disabled={
-                        !isMoreTime(
-                          rowData.awal_pendaftaran,
-                          rowData.akhir_pendaftaran
-                        ) ||
-                        rowData.status === 1 ||
-                        rowData.total_pendaftar === 0
-                      }
-                      onClick={() => setDetail("detail", rowData)}
-                    >
-                      Penilaian
-                    </Button>
-                  </div>
+                  <DetailButtonComponent>
+                    <MenuItem onClick={() => setModal("detail", true, rowData)}>
+                      Lihat Detail
+                    </MenuItem>
+                  </DetailButtonComponent>
                 );
               },
             },
@@ -139,7 +142,7 @@ const Index = ({
                 length: 10,
                 search_text: searchText,
               };
-              dispatch(Beasiswa.get(param, resolve));
+              dispatch(WaliKelas.getMahasiswa(param, resolve));
             })
           }
           options={{
@@ -169,16 +172,15 @@ const Index = ({
   );
 };
 
-const mapStateToProps = ({ beasiswa: { pending } }) => {
-  return { pending };
+const mapStateToProps = ({ waliKelas: { pending }, jurusan, programStudi }) => {
+  return { pending, jurusan, programStudi };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onSetBeasiswaModal: (modalType, isOpen) =>
-      dispatch(setBeasiswaModal(modalType, isOpen)),
-    onSetBeasiswaData: (data) => dispatch(setBeasiswaData(data)),
-    onSetAddBeasiswaData: (data) => dispatch(setAddBeasiswaData(data)),
+    onSetWaliKelasModal: (modalType, isOpen) =>
+      dispatch(setWaliKelasModal(modalType, isOpen)),
+    onSetWaliKelasData: (data) => dispatch(setWaliKelasData(data)),
   };
 };
 
