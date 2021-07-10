@@ -39,10 +39,16 @@ import BeasiswaKetuaProdi from "./views/beasiswa-ketuaprodi";
 import DetailBeasiswaKetuaProdi from "./views/beasiswa-ketuaprodi/detail";
 import BeasiswaKetuaJurusan from "./views/beasiswa-ketuajurusan";
 import DetailBeasiswaKetuaJurusan from "./views/beasiswa-ketuajurusan/detail";
+import MahasiswaWaliKelas from "./views/mahasiswa-walikelas";
+import KuotaBeasiswa from "./views/beasiswa-pd3/kuota";
 
 const theme = createMuiTheme({
   palette: {
     primary: {
+      main: "#00008B",
+      contrastText: "#FFFFFF",
+    },
+    secondary: {
       main: "#00008B",
       contrastText: "#FFFFFF",
     },
@@ -292,10 +298,20 @@ const App = () => {
             component={SertifikatPrestasi}
           />
           <PrivateRoute
-            roles={[]}
+            head={["Mahasiswa"]}
+            path="/wali-kelas/mahasiswa"
+            roles={["walikelas"]}
             exact
-            component={() => <div>Naha Kadieu</div>}
+            component={MahasiswaWaliKelas}
           />
+          <PrivateRoute
+            head={["Beasiswa", "Kuota Beasiswa"]}
+            path="/pd3/beasiswa/kuota/:id"
+            roles={["pd3"]}
+            exact
+            component={KuotaBeasiswa}
+          />
+          <PrivateRoute roles={[]} exact component={() => <div></div>} />
         </Switch>
       </Layout>
     );

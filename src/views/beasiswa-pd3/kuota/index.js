@@ -1,35 +1,28 @@
 import React, { useState, useRef, useEffect } from "react";
 import { withRouter } from "react-router-dom";
 import { connect, useDispatch } from "react-redux";
-import KetuaJurusan, {
-  setKetuaJurusanData,
-  setKetuaJurusanModal,
-} from "../../../store/actions/ketua-jurusan";
+import Kuota, {
+  setKuotaData,
+  setKuotaModal,
+} from "../../../store/actions/kuota";
 import { Row } from "simple-flexbox";
 import MaterialTable from "material-table";
 import SearchIcon from "@material-ui/icons/Search";
 import { Paper, Button, MenuItem } from "@material-ui/core";
+import DetailButtonComponent from "../../../components/global-components/DetailButton";
 import InputComponent from "../../../components/commons/form/input";
+import SelectComponent from "../../../components/commons/form/select";
 import Container from "../../../components/container";
+import Modal from "./modal";
 import debounce from "lodash.debounce";
 import { history } from "../../../utils";
-import { getUser } from "../../../utils/user";
-import moment from "moment";
-import { isMoreTime } from "../../../utils/date";
-import HeaderDetailKuota from "../../../components/header-content/detail-kuota";
 
-const Index = ({
-  onSetKetuaJurusanModal,
-  onSetKetuaJurusanData,
-  pending,
-  chosenMahasiswa,
-}) => {
+const Index = ({ onSetKuotaModal, onSetKuotaData, pending }) => {
   const [searchText, setSearchText] = useState("");
-  const dispatch = useDispatch();
-  const user = getUser();
-  const tableRef = useRef();
   const path = window.location.pathname.split("/");
   const id = path.pop();
+  const dispatch = useDispatch();
+  const tableRef = useRef();
 
   const handleRefresh = (state) => {
     setSearchText(state);
@@ -44,50 +37,45 @@ const Index = ({
     delayedQuery(e.target.value);
   };
 
-  const onSubmit = () => {
-    let mahasiswa_ids = chosenMahasiswa.map((item) => item.id);
-    const param = {
-      beasiswa_id: id,
-      mahasiswa_ids,
-    };
-    const callback = () => {
-      history.push("/ketua-prodi/beasiswa");
-    };
-    dispatch(KetuaJurusan.put(param, callback));
+  const setModal = (modalType, isOpen, data) => {
+    onSetKuotaModal(modalType, isOpen);
+    onSetKuotaData(data);
   };
 
   return (
     <Container>
-      <div className="p-3">
+      <Modal handleRefresh={(state) => handleRefresh(state)} />
+      <Row className="m-3 justify-content-between">
         <Button
           color="primary"
-          variant="contained"
-          onClick={() => onSubmit()}
           disabled={pending}
+          variant="contained"
+          onClick={() => setModal("add", true, null)}
         >
-          Submit
+          Tambah Kuota
         </Button>
-      </div>
+        <InputComponent
+          onChange={(e) => handleSearchChange(e)}
+          placeholder="Cari nama program studi"
+          endIcon={SearchIcon}
+        />
+      </Row>
       <div className="m-3">
         <MaterialTable
           tableRef={tableRef}
-          title="KetuaJurusan"
+          title="Kuota"
           columns={[
             {
               title: "No",
-              // field: "no",
+              field: "no",
               width: 40,
-              render: ({ no }) => {
-                return <div className="my-3">{no}</div>;
-              },
             },
             {
-              title: "Program Studi",
-              render: ({ program_studi_nama }) => {
-                return program_studi_nama ? program_studi_nama : "-";
+              title: "Nama Program Studi",
+              render: ({ nama }) => {
+                return nama ? nama : "-";
               },
             },
-
             {
               title: "Angkatan",
               render: ({ angkatan }) => {
@@ -95,15 +83,31 @@ const Index = ({
               },
             },
             {
-              title: "Nama Mahasiswa",
-              render: ({ nama }) => {
-                return nama ? nama : "-";
+              title: "Kuota",
+              render: ({ kuota }) => {
+                return kuota ? kuota : "-";
               },
             },
             {
-              title: "Nama Wali Kelas",
-              render: ({ wali_kelas_nama }) => {
-                return wali_kelas_nama ? wali_kelas_nama : "-";
+              title: "Aksi",
+              width: 80,
+              cellStyle: {
+                paddingLeft: 0,
+              },
+              render: (rowData) => {
+                return (
+                  <DetailButtonComponent>
+                    {/* <MenuItem onClick={() => setModal("detail", true, rowData)}>
+                      Lihat Detail
+                    </MenuItem> */}
+                    <MenuItem onClick={() => setModal("edit", true, rowData)}>
+                      Edit Data
+                    </MenuItem>
+                    <MenuItem onClick={() => setModal("delete", true, rowData)}>
+                      Hapus Data
+                    </MenuItem>
+                  </DetailButtonComponent>
+                );
               },
             },
           ]}
@@ -115,7 +119,7 @@ const Index = ({
                 search_text: searchText,
                 beasiswa_id: id,
               };
-              dispatch(KetuaJurusan.get(param, resolve));
+              dispatch(Kuota.get(param, resolve));
             })
           }
           options={{
@@ -129,9 +133,6 @@ const Index = ({
               backgroundColor: "#fff",
               fontWeight: "bold",
             },
-            selectionProps: (rowData) => ({
-              color: "primary",
-            }),
           }}
           localization={{
             body: {
@@ -148,16 +149,15 @@ const Index = ({
   );
 };
 
-const mapStateToProps = ({ ketuaJurusan: { data, pending }, kuota }) => {
-  const chosenMahasiswa = data?.data?.data;
-  return { pending, kuota, chosenMahasiswa };
+const mapStateToProps = ({ kuota: { pending } }) => {
+  return { pending };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onSetKetuaJurusanModal: (modalType, isOpen) =>
-      dispatch(setKetuaJurusanModal(modalType, isOpen)),
-    onSetKetuaJurusanData: (data) => dispatch(setKetuaJurusanData(data)),
+    onSetKuotaModal: (modalType, isOpen) =>
+      dispatch(setKuotaModal(modalType, isOpen)),
+    onSetKuotaData: (data) => dispatch(setKuotaData(data)),
   };
 };
 

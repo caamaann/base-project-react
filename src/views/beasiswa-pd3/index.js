@@ -95,16 +95,15 @@ const Index = ({
             <MenuItem onClick={() => setDetail("detail", rowData)}>
               Lihat Detail
             </MenuItem>
-            {user.role_code === "pd3" && (
-              <>
-                <MenuItem onClick={() => setDetail("edit", rowData)}>
-                  Edit Data
-                </MenuItem>
-                <MenuItem onClick={() => setModal("delete", true, rowData)}>
-                  Hapus Data
-                </MenuItem>
-              </>
-            )}
+            <MenuItem onClick={() => setDetail("edit", rowData)}>
+              Edit Data
+            </MenuItem>
+            <MenuItem onClick={() => setDetail("kuota", rowData)}>
+              Atur Kuota
+            </MenuItem>
+            <MenuItem onClick={() => setModal("delete", true, rowData)}>
+              Hapus Data
+            </MenuItem>
           </DetailButtonComponent>
         );
       },

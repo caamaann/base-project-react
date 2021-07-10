@@ -100,9 +100,7 @@ const Index = ({
             {
               title: "Total Pendaftar",
               render: ({ total_pendaftar }) => {
-                return total_pendaftar
-                  ? total_pendaftar
-                  : 0;
+                return total_pendaftar ? total_pendaftar : 0;
               },
             },
             {
@@ -121,7 +119,9 @@ const Index = ({
                         !isMoreTime(
                           rowData.awal_pendaftaran,
                           rowData.akhir_pendaftaran
-                        ) || rowData.status === 1 || rowData.total_pendaftar === 0
+                        ) ||
+                        rowData.status === 1 ||
+                        rowData.total_pendaftar < 2
                       }
                       onClick={() => setDetail("detail", rowData)}
                     >
