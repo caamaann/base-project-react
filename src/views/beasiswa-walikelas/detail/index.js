@@ -265,14 +265,16 @@ const mapStateToProps = ({
     });
   }
   if (data?.data?.data) {
-    let temp = data.data.data.map((item) => {
+    let temp = data.data.data?.map((item) => {
       return {
         nama: item.nama,
         id: item.id,
       };
     });
 
-    dataPerbandingan = k_combinations(temp, 2);
+    if (temp) {
+      dataPerbandingan = k_combinations(temp, 2);
+    }
   }
 
   return {
