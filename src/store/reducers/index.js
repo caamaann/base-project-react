@@ -26,6 +26,7 @@ import waliKelas from "./wali-kelas";
 import kuota from "./kuota";
 import ketuaProgramStudi from "./ketua-prodi";
 import ketuaJurusan from "./ketua-jurusan";
+import pd3 from "./pd-3";
 
 const appReducer = combineReducers({
   form: formReducer,
@@ -53,6 +54,7 @@ const appReducer = combineReducers({
   kuota,
   ketuaProgramStudi,
   ketuaJurusan,
+  pd3,
 });
 
 const rootReducer = (state, action) => {

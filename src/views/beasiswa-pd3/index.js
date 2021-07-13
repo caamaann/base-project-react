@@ -84,6 +84,12 @@ const Index = ({
       },
     },
     {
+      title: "Status",
+      render: ({ status_pendaftaran }) => {
+        return status_pendaftaran ? status_pendaftaran : "-";
+      },
+    },
+    {
       title: "Aksi",
       width: 80,
       cellStyle: {
@@ -100,6 +106,9 @@ const Index = ({
             </MenuItem>
             <MenuItem onClick={() => setDetail("kuota", rowData)}>
               Atur Kuota
+            </MenuItem>
+            <MenuItem onClick={() => setDetail("pendaftar", rowData)}>
+              Pendaftar Beasiswa
             </MenuItem>
             <MenuItem onClick={() => setModal("delete", true, rowData)}>
               Hapus Data

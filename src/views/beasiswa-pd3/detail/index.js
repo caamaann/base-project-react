@@ -286,7 +286,7 @@ let Index = ({
 };
 
 Index = reduxForm({
-  form: "beasiswaAdd",
+  form: "beasiswaDetail",
   shouldError: () => true,
   enableReinitialize: true,
 })(Index);

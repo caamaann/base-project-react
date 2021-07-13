@@ -322,7 +322,6 @@ const validate = (values, allProps) => {
     errors.biaya_pendidikan = "Nominal Bantuan Biaya Pendidikan harus diisi";
   }
 
-  console.log(values);
   for (let i = 0; i < allProps.total; i++) {
     if (!values["perbandingan_" + i] && values["perbandingan_" + i] !== 0) {
       errors["perbandingan_" + i] = "Perbandingan harus diisi";

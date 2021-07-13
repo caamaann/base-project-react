@@ -36,9 +36,13 @@ let Index = ({
   handleSubmit,
   data,
   dataPerbandingan,
+  pending,
+  dataKriteria,
 }) => {
   const dispatch = useDispatch();
   const steps = ["Data Beasiswa", "Pembobotan Kriteria"];
+  const path = window.location.pathname;
+  const id = path.split("/").pop();
 
   const handleNext = () => {
     onSetBeasiswaStep(step + 1);
@@ -47,6 +51,12 @@ let Index = ({
   const handleBack = () => {
     onSetBeasiswaStep(step - 1);
   };
+
+  useEffect(() => {
+    getDetailBeasiswa();
+  }, []);
+
+  const getDetailBeasiswa = () => dispatch(Beasiswa.getDetail({ id: id }));
 
   const onSubmit = (values) => {
     let param = {};
@@ -70,6 +80,7 @@ let Index = ({
       });
 
       param = {
+        id: id,
         nama: values.nama,
         deskripsi: values.deskripsi,
         awal_pendaftaran: moment(values.awal_pendaftaran).format("yyyy-MM-DD"),
@@ -93,8 +104,8 @@ let Index = ({
         sikap: values.sikap ? 1 : 0,
         nilai_sma: values.nilai_sma ? 1 : 0,
         pembobotan,
+        total_kriteria: dataKriteria.length,
       };
-      console.log(param);
     }
     onSetAddBeasiswaData(values);
     if (step < steps.length - 1) {
@@ -105,7 +116,7 @@ let Index = ({
         onSetAddBeasiswaData(null);
         onSetBeasiswaStep(0);
       };
-      dispatch(Beasiswa.post(param, callback));
+      dispatch(Beasiswa.put(param, callback));
     }
   };
 
@@ -234,7 +245,12 @@ let Index = ({
         <Button variant="outlined" disabled={step === 0} onClick={handleBack}>
           Kembali
         </Button>
-        <Button variant="contained" color="primary" type="submit">
+        <Button
+          disabled={pending}
+          variant="contained"
+          color="primary"
+          type="submit"
+        >
           {step < steps.length - 1 ? "Selanjutnya" : "Submit"}
         </Button>
       </div>
@@ -325,13 +341,16 @@ const validate = (values, allProps) => {
 };
 
 Index = reduxForm({
-  form: "beasiswaAdd",
+  form: "beasiswaEdit",
   validate: validate,
   shouldError: () => true,
   enableReinitialize: true,
 })(Index);
 
-const mapStateToProps = ({ beasiswa: { step, data } }) => {
+const mapStateToProps = ({
+  beasiswa: { step, data, detailData, pending },
+  mahasiswa,
+}) => {
   const initialValues = {
     step: step,
     nama: data?.nama,
@@ -344,10 +363,10 @@ const mapStateToProps = ({ beasiswa: { step, data } }) => {
     penghasilan_orang_tua_maksimal: data?.penghasilan_orang_tua_maksimal,
     biaya_pendidikan: data?.biaya_pendidikan,
     biaya_hidup: data?.biaya_hidup,
-    prestasi: data?.prestasi,
-    organisasi: data?.organisasi,
-    sikap: data?.sikap,
-    nilai_sma: data?.nilai_sma,
+    prestasi: data?.prestasi == 1 ? true : false,
+    organisasi: data?.organisasi == 1 ? true : false,
+    sikap: data?.sikap == 1 ? true : false,
+    nilai_sma: data?.nilai_sma == 1 ? true : false,
   };
 
   let dataKriteria = [];
@@ -355,16 +374,47 @@ const mapStateToProps = ({ beasiswa: { step, data } }) => {
   let total = 0;
 
   if (data) {
-    dataKriteria = Object.keys(data).filter((key) => data[key] === true);
+    if (data.prestasi === true || data.prestasi == "1") {
+      dataKriteria.push("prestasi");
+    }
+    if (data.organisasi === true || data.organisasi == "1") {
+      dataKriteria.push("organisasi");
+    }
+    if (data.sikap === true || data.sikap == "1") {
+      dataKriteria.push("sikap");
+    }
+    if (data.nilai_sma === true || data.nilai_sma == "1") {
+      dataKriteria.push("nilai_sma");
+    }
     dataKriteria.unshift("ipk_minimal", "penghasilan_orang_tua_maksimal");
     dataPerbandingan = k_combinations(dataKriteria, 2);
     total = dataPerbandingan.length;
-    for (let i = 0; i < total; i++) {
-      initialValues["perbandingan_" + i] = data["perbandingan_" + i];
-    }
+    // for (let i = 0; i < total; i++) {
+    //   initialValues["perbandingan_" + i] = data["perbandingan_" + i];
+    // }
   }
-
-  return { step, initialValues, data, total, dataPerbandingan };
+  if (detailData) {
+    detailData.pembobotan.map((item, index) => {
+      if (item.bobot_1 > item.bobot_2) {
+        initialValues["perbandingan_" + index] = 2 - item.bobot_1;
+      } else if (item.bobot_1 < item.bobot_2) {
+        initialValues["perbandingan_" + index] = item.bobot_2;
+      } else {
+        initialValues["perbandingan_" + index] = 1;
+      }
+    });
+  }
+  return {
+    step,
+    initialValues,
+    detailData,
+    total,
+    dataPerbandingan,
+    pending,
+    mahasiswa,
+    data,
+    dataKriteria,
+  };
 };
 
 const mapDispatchToProps = (dispatch) => {
