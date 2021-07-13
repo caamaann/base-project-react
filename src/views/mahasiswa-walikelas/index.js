@@ -83,10 +83,10 @@ const Index = ({
                 let total = 0;
                 if (orang_tua_mahasiswa) {
                   total =
-                    orang_tua_mahasiswa.penghasilan_ayah +
-                    orang_tua_mahasiswa.penghasilan_ibu +
-                    orang_tua_mahasiswa.penghasilan_sambilan_ayah +
-                    orang_tua_mahasiswa.penghasilan_sambilan_ibu;
+                    parseInt(orang_tua_mahasiswa.penghasilan_ayah) +
+                    parseInt(orang_tua_mahasiswa.penghasilan_ibu) +
+                    parseInt(orang_tua_mahasiswa.penghasilan_sambilan_ayah) +
+                    parseInt(orang_tua_mahasiswa.penghasilan_sambilan_ibu);
                 }
                 return orang_tua_mahasiswa
                   ? "Rp " +

@@ -184,7 +184,7 @@ let Index = ({
 
 const validateItem = (value, allValues, name) => {
   const isRequired = allValues[name] === undefined;
-  if (isRequired && !value) return "Perbandingan harus diisi";
+  if (isRequired && !value && value !== 0) return "Perbandingan harus diisi";
 };
 
 // const validate = (values, allProps) => {
@@ -265,14 +265,16 @@ const mapStateToProps = ({
     });
   }
   if (data?.data?.data) {
-    let temp = data.data.data.map((item) => {
+    let temp = data.data.data?.map((item) => {
       return {
         nama: item.nama,
         id: item.id,
       };
     });
 
-    dataPerbandingan = k_combinations(temp, 2);
+    if (temp) {
+      dataPerbandingan = k_combinations(temp, 2);
+    }
   }
 
   return {
