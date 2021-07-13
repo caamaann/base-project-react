@@ -184,7 +184,7 @@ let Index = ({
 
 const validateItem = (value, allValues, name) => {
   const isRequired = allValues[name] === undefined;
-  if (isRequired && !value) return "Perbandingan harus diisi";
+  if (isRequired && !value && value !== 0) return "Perbandingan harus diisi";
 };
 
 // const validate = (values, allProps) => {
