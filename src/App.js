@@ -41,6 +41,7 @@ import BeasiswaKetuaJurusan from "./views/beasiswa-ketuajurusan";
 import DetailBeasiswaKetuaJurusan from "./views/beasiswa-ketuajurusan/detail";
 import MahasiswaWaliKelas from "./views/mahasiswa-walikelas";
 import KuotaBeasiswa from "./views/beasiswa-pd3/kuota";
+import PendaftarBeasiswa from "./views/beasiswa-pd3/pendaftar";
 
 const theme = createMuiTheme({
   palette: {
@@ -201,6 +202,14 @@ const App = () => {
             exact
             goBack
             component={DetailBeasiswa}
+          />
+          <PrivateRoute
+            head={["Beasiswa", "Pendaftar Beasiswa"]}
+            path="/pd3/beasiswa/pendaftar/:id"
+            roles={["pd3"]}
+            exact
+            goBack
+            component={PendaftarBeasiswa}
           />
           <PrivateRoute
             head={["Beasiswa"]}

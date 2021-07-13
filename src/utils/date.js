@@ -17,18 +17,7 @@ export function compareTime(start_date, end_date) {
   let D1 = new Date(start_date);
   let D2 = new Date(end_date);
 
-  if (D1.getFullYear() <= D2.getFullYear()) {
-    if (D1.getMonth() <= D2.getMonth()) {
-      if (
-        D1.getDate() < D2.getDate() ||
-        (D1.getDate() == D2.getDate() && D1.getFullYear() < D2.getFullYear())
-      ) {
-        return true;
-      }
-    }
-  }
-
-  return false;
+  return D1 < D2;
 }
 
 export function yearOptions(beforeThisYear = 5) {
