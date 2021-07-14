@@ -2,6 +2,9 @@ import {
   GET_WALI_KELAS_PENDING,
   GET_WALI_KELAS_SUCCESS,
   GET_WALI_KELAS_ERROR,
+  GET_ALL_WALI_KELAS_PENDING,
+  GET_ALL_WALI_KELAS_SUCCESS,
+  GET_ALL_WALI_KELAS_ERROR,
   GET_MAHASISWA_WALI_KELAS_PENDING,
   GET_MAHASISWA_WALI_KELAS_SUCCESS,
   GET_MAHASISWA_WALI_KELAS_ERROR,
@@ -51,6 +54,23 @@ const waliKelas = (state = initialState, action) => {
         data: action.data,
       };
     case GET_WALI_KELAS_ERROR:
+      return {
+        ...state,
+        pending: false,
+        error: action.error,
+      };
+    case GET_ALL_WALI_KELAS_PENDING:
+      return {
+        ...state,
+        pending: true,
+      };
+    case GET_ALL_WALI_KELAS_SUCCESS:
+      return {
+        ...state,
+        pending: false,
+        data: action.data,
+      };
+    case GET_ALL_WALI_KELAS_ERROR:
       return {
         ...state,
         pending: false,

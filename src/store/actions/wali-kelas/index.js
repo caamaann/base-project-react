@@ -7,6 +7,9 @@ import { toastError, toastSuccess } from "../../../components/commons/toast";
 export const GET_WALI_KELAS_PENDING = "GET_WALI_KELAS_PENDING";
 export const GET_WALI_KELAS_SUCCESS = "GET_WALI_KELAS_SUCCESS";
 export const GET_WALI_KELAS_ERROR = "GET_WALI_KELAS_ERROR";
+export const GET_ALL_WALI_KELAS_PENDING = "GET_ALL_WALI_KELAS_PENDING";
+export const GET_ALL_WALI_KELAS_SUCCESS = "GET_ALL_WALI_KELAS_SUCCESS";
+export const GET_ALL_WALI_KELAS_ERROR = "GET_ALL_WALI_KELAS_ERROR";
 export const GET_MAHASISWA_WALI_KELAS_PENDING =
   "GET_MAHASISWA_WALI_KELAS_PENDING";
 export const GET_MAHASISWA_WALI_KELAS_SUCCESS =
@@ -68,6 +71,36 @@ const get = (param, resolve, reject, callback) => (dispatch) => {
     })
     .catch((err) => {
       dispatch(actionError(GET_WALI_KELAS_ERROR));
+      toastError(err?.response?.data?.message);
+    });
+};
+
+const getAllPendaftar = (param, resolve, reject, callback) => (dispatch) => {
+  dispatch(actionPending(GET_ALL_WALI_KELAS_PENDING));
+  API.get(WALI_KELAS_URL + "/beasiswa/all", { params: param })
+    .then((res) => {
+      if (res.error) {
+        throw res.error;
+      }
+      dispatch(actionSuccess(GET_ALL_WALI_KELAS_SUCCESS, res));
+      const records_total = res.data.recordsTotal;
+      let data = res.data.data.map((item, i) => ({
+        ...item,
+        no: i + 1 + (param?.page - 1) * param?.length,
+      }));
+      if (resolve) {
+        resolve({
+          data: data,
+          page: param?.page - 1,
+          totalCount: records_total,
+        });
+      }
+      if (callback) {
+        callback();
+      }
+    })
+    .catch((err) => {
+      dispatch(actionError(GET_ALL_WALI_KELAS_ERROR));
       toastError(err?.response?.data?.message);
     });
 };
@@ -140,7 +173,7 @@ const post = (param, callback) => (dispatch) => {
         throw res.error;
       }
       dispatch(actionSuccess(POST_WALI_KELAS_SUCCESS, res));
-      toastSuccess("Berhasil menambahkan penilaian");
+      toastSuccess("Mahasiswa berhasil disubmit");
       if (callback) {
         callback();
       }
@@ -189,7 +222,15 @@ const deleted = (param, callback) => (dispatch) => {
     });
 };
 
-const WaliKelas = { get, post, put, deleted, getSertifikat, getMahasiswa };
+const WaliKelas = {
+  get,
+  post,
+  put,
+  deleted,
+  getSertifikat,
+  getMahasiswa,
+  getAllPendaftar,
+};
 export default WaliKelas;
 
 export const setWaliKelasData = (data) => (dispatch) =>

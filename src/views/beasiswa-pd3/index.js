@@ -90,6 +90,12 @@ const Index = ({
       },
     },
     {
+      title: "Total Kuota",
+      render: ({ total_kuota }) => {
+        return total_kuota ? total_kuota : "-";
+      },
+    },
+    {
       title: "Aksi",
       width: 80,
       cellStyle: {

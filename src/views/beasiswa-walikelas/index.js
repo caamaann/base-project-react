@@ -111,23 +111,18 @@ const Index = ({
               },
               render: (rowData) => {
                 return (
-                  <div className="p-3">
-                    <Button
-                      color="primary"
-                      variant="outlined"
-                      disabled={
-                        !isMoreTime(
-                          rowData.awal_pendaftaran,
-                          rowData.akhir_pendaftaran
-                        ) ||
-                        rowData.status === 1 ||
-                        rowData.total_pendaftar < 2
-                      }
-                      onClick={() => setDetail("detail", rowData)}
-                    >
-                      Penilaian
-                    </Button>
-                  </div>
+                  <DetailButtonComponent>
+                    {isMoreTime(rowData.akhir_pendaftaran) &&
+                      rowData.status === 0 &&
+                      rowData.total_pendaftar > 1 && (
+                        <MenuItem onClick={() => setDetail("detail", rowData)}>
+                          Penilaian
+                        </MenuItem>
+                      )}
+                    <MenuItem onClick={() => setDetail("pendaftar", rowData)}>
+                      Pendaftar
+                    </MenuItem>
+                  </DetailButtonComponent>
                 );
               },
             },
