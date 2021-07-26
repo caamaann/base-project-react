@@ -78,7 +78,7 @@ let Index = ({
       handleNext();
     } else {
       const callback = () => {
-        history.push("/beasiswa");
+        history.push("/mahasiswa/beasiswa");
         onSetAddBeasiswaData(null);
         onSetBeasiswaStep(0);
       };
