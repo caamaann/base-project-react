@@ -1,30 +1,30 @@
-import React, { useState, useEffect } from 'react'
-import { Column, Row } from 'simple-flexbox'
-import { connect, useDispatch } from 'react-redux'
-import { StyleSheet, css } from 'aphrodite'
-import Button from '@material-ui/core/Button'
-import { reduxForm, Field } from 'redux-form'
-import { formInput } from '../../components/commons/form'
-import IconInput from '../../assets/icon/icon-input'
-import CircularProgress from '@material-ui/core/CircularProgress'
-import Grid from '@material-ui/core/Grid'
-import { history } from '../../utils'
-import LoginImage from '../../assets/img/gedung_h-2.jpg'
+import React, { useState, useEffect } from "react";
+import { Column, Row } from "simple-flexbox";
+import { connect, useDispatch } from "react-redux";
+import { StyleSheet, css } from "aphrodite";
+import Button from "@material-ui/core/Button";
+import { reduxForm, Field } from "redux-form";
+import { formInput } from "../../components/commons/form";
+import IconInput from "../../assets/icon/icon-input";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import Grid from "@material-ui/core/Grid";
+import { history } from "../../utils";
+import LoginImage from "../../assets/img/gedung_h-2.jpg";
 
 // ACTION REDUX
-import Auth from '../../store/actions/auth'
+import Auth from "../../store/actions/auth";
 
 let Login = ({ handleSubmit, loggingIn }) => {
-  const [isVisible, setIsVisible] = useState(false)
-  const dispatch = useDispatch()
+  const [isVisible, setIsVisible] = useState(false);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    Auth.logout()
-  }, [])
+    Auth.logout();
+  }, []);
 
   const onSubmit = ({ username, password }) => {
-    dispatch(Auth.auth_login({ username, password }))
-  }
+    dispatch(Auth.auth_login({ username, password }));
+  };
 
   return (
     <Grid container>
@@ -71,7 +71,7 @@ let Login = ({ handleSubmit, loggingIn }) => {
             <Field
               name="password"
               placeholder="Password"
-              type={!isVisible ? 'password' : 'text'}
+              type={!isVisible ? "password" : "text"}
               autoComplete="current-password"
               isVisible={isVisible}
               setIsVisible={() => setIsVisible(!isVisible)}
@@ -81,7 +81,7 @@ let Login = ({ handleSubmit, loggingIn }) => {
             />
             <Row horizontal="space-between">
               <Button
-                style={{ width: '120px' }}
+                style={{ width: "120px" }}
                 type="submit"
                 variant="contained"
                 color="primary"
@@ -111,98 +111,123 @@ let Login = ({ handleSubmit, loggingIn }) => {
               </Column>
             </Row>
           </form>
+          <span className={css(styles.loginHelp)}>
+            Untuk informasi lebih lanjut, hubungi:{" "}
+            <a href="mailto:kemahasiswaan@polban.ac.id">
+              kemahasiswaan@polban.ac.id
+            </a>
+          </span>
+          <span className={css(styles.loginCredits)}>
+            Created with &#9829; in Ciwaruga by{" "}
+            <a href="https://www.linkedin.com/in/caamaann/" target="_blank">
+              Salman
+            </a>{" "}
+            and
+            <a href="https://www.linkedin.com/in/ahmadaji/" target="_blank">
+              {" "}
+              Aji
+            </a>
+          </span>
         </Column>
       </Grid>
     </Grid>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   sideContainer: {
-    height: '100vh',
-    '@media (max-width: 600px)': {
-      display: 'none',
+    height: "100vh",
+    "@media (max-width: 600px)": {
+      display: "none",
     },
   },
   loginImg: {
-    objectFit: 'cover',
-    width: '100%',
-    display: 'block',
-    height: '100vh',
+    objectFit: "cover",
+    width: "100%",
+    display: "block",
+    height: "100vh",
   },
   loginContainer: {
     // width: "auto",
-    margin: 'auto',
+    margin: "auto",
   },
   loginTitle: {
-    color: '#00008B',
+    color: "#00008B",
     fontSize: 36,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     margin: 15,
   },
   loginDesc: {
     fontSize: 16,
-    margin: '0 15px',
+    margin: "0 15px",
+  },
+  loginHelp: {
+    fontSize: 16,
+    margin: "50px 0 0 15px",
+  },
+  loginCredits: {
+    fontSize: 14,
+    margin: "15px 0 0 15px",
   },
   loginSeparator: {
     maxWidth: 400,
-    margin: '20px 15px',
+    margin: "20px 15px",
     // borderTop: '2px solid rgba(0,0,0,0.1)',
-    '@media (max-width: 480px)': {
-      width: '100%',
+    "@media (max-width: 480px)": {
+      width: "100%",
     },
   },
   loginForm: {
     width: 400,
     marginLeft: 15,
-    '@media (max-width: 480px)': {
-      width: '100%',
+    "@media (max-width: 480px)": {
+      width: "100%",
     },
   },
   approveButton: {
-    background: '#00008B 0% 0% no-repeat padding-box',
-    boxShadow: 'none',
-    margin: '15px 0',
+    background: "#00008B 0% 0% no-repeat padding-box",
+    boxShadow: "none",
+    margin: "15px 0",
   },
   inputMargin: {
-    margin: '15px 0',
+    margin: "15px 0",
   },
   inputLink: {
     fontSize: 16,
-    color: 'black',
-    textDecoration: 'none',
+    color: "black",
+    textDecoration: "none",
     marginLeft: 15,
     marginTop: 30,
-    ':hover': {
-      cursor: 'pointer',
+    ":hover": {
+      cursor: "pointer",
     },
   },
-})
+});
 
 const validate = ({ username, password }) => {
-  const errors = {}
+  const errors = {};
   if (!username) {
-    errors.username = 'Username harus diisi'
+    errors.username = "Username harus diisi";
   }
   if (!password) {
-    errors.password = 'Password harus diisi'
+    errors.password = "Password harus diisi";
   }
-  return errors
-}
+  return errors;
+};
 
 Login = reduxForm({
-  form: 'Login',
+  form: "Login",
   validate: validate,
   shouldError: () => true,
   enableReinitialize: true,
-})(Login)
+})(Login);
 
 const mapStateToProps = ({ auth: { loggingIn } }) => {
-  return { loggingIn }
-}
+  return { loggingIn };
+};
 
 const mapDispatchToProps = (dispatch) => {
-  return {}
-}
+  return {};
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login)
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
